@@ -1,4 +1,52 @@
-// 
+// Approach 2 -> Using reverse STL function...
+// Changing the original string.. and storing index in stack. 
+
+class Solution {
+public:
+    string reverseParentheses(string s){
+        int n= s.length();
+        
+        // stack to store index of opening '('
+        stack<int> st;
+        for(int i=0; i<n; i++)
+        {
+            // reverse the chars of stack until we found '('
+            if(s[i]== '(')
+            {
+                st.push(i);
+            }
+            
+            // reverse the string from recent '(' to curr ')' bracket..
+            else if(s[i]== ')')
+            {
+                int recentOpeningBracket= st.top();
+                st.pop();
+
+                reverse(s.begin()+ recentOpeningBracket+ 1, s.begin() + i);
+            }
+        }
+
+        // now given string s will contain our ans ... just remove opening closing bracket
+        string ans= "";
+        for(int i=0; i<s.length(); i++)
+        {
+            if(s[i]== ')' || s[i]== '('){
+                continue;
+            }
+            ans= ans+ s[i];
+        }
+    return ans;
+    }
+};  
+
+
+
+
+
+// Approach 1 ->> Without using reverse stl function
+// Tc= O(N)   Sc= O(N)
+
+/*
 
 class Solution {
 public:
@@ -47,3 +95,5 @@ public:
        return ans; 
     }
 };
+
+*/
