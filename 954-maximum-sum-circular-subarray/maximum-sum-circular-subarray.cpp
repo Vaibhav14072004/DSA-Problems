@@ -1,4 +1,41 @@
-// Optimal Approach 1 -> Using Kadane's Algorithm
+// Optimal Approach 2 ->  Using global and curr maxima, minima
+
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& arr) {
+        int n= arr.size();
+        
+        int globalMax= arr[0], globalMin= arr[0];
+        int currMax= arr[0], currMin= arr[0], totalSum= arr[0];
+
+        for(int i=1; i<n; i++)
+        {
+            currMax= max(currMax+ arr[i], arr[i]);
+            currMin= min(currMin+ arr[i], arr[i]);
+            totalSum+= arr[i];
+
+            globalMax= max(globalMax, currMax);
+            globalMin= min(globalMin, currMin);
+        }
+        
+        // base case ->> If all elements of array are negative -> return absolute greatest number.
+        if(globalMax < 0)
+        {
+            return globalMax;
+        }
+     
+        // final ans will be max of the above 2 cases...
+        return max(globalMax, totalSum- globalMin);
+    }
+};
+
+
+
+
+
+
+
+// Optimal Approach 1 -> Using Kadane's Algorithm -> Beats 63.78 % 
 
 // In case of circular subarray ->> if some elements on end and some on start together form max Subarray sum
 // 1. In that case using kadane algo for finding min subarray sum by inverting the original array..
@@ -7,6 +44,9 @@
 //2. In case if all elements on one side form max Subarray sum... directly find it using kadane algo
 
 // Tc= O(N)
+
+/*
+
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& arr) {
@@ -54,6 +94,10 @@ public:
        return max(maxSum, maxCircularSum);
     }
 };
+
+
+*/
+
 
 
 
