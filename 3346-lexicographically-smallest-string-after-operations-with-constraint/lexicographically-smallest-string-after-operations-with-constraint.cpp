@@ -1,10 +1,49 @@
-// TC= O(N)
+// Approach 2 
 
 class Solution {
 public:
     string getSmallestString(string s, int k) {
         int n= s.length();
-        
+
+        for(int i=0; i<n; i++)
+        {
+             if(k <= 0){
+               break;
+             }
+
+            int left= s[i]- 'a';
+            int right= 'z'- s[i]+ 1;
+            
+            if(k >= min(left,right))
+            {
+                s[i]= 'a';
+                k= k- min(left,right);
+            }
+
+            else
+            {
+                s[i]= s[i]-k;
+                k= 0;
+            }
+        }
+    return s;
+    }
+};
+
+
+
+
+
+// Approach 1 
+// TC= O(N)
+
+/*
+
+class Solution {
+public:
+    string getSmallestString(string s, int k) {
+        int n= s.length();
+
         string ans= "";
         for(int i=0; i<n; i++)
         {
@@ -28,3 +67,5 @@ public:
         return ans;
     }
 };
+
+*/
