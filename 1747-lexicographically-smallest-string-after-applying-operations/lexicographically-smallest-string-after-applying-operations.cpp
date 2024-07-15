@@ -1,3 +1,73 @@
+// Approach 1 -> Using DFS 
+// TC= O(N)
+
+class Solution{
+public:
+    string add(string s, int a){
+        
+        // add a to odd indexies only..
+        for(int i=1; i<s.length(); i+=2)
+        {
+            // s[i]- '0' converts string to integer... +'0' converts int to str
+            s[i]= (((s[i]-'0') + a) % 10) + '0';
+        }
+        return s;
+    }
+
+
+    string rotate(string s, int b){
+        int n= s.length();
+        s= s.substr(n-b)+ s.substr(0,n-b);
+        return s;
+    }
+
+
+    void dfs(string s, string &ans, unordered_set<string> &st, int a, int b){
+
+        // if this curr node is already present in st..
+        if(st.find(s) != st.end()) {
+           return;
+        }
+
+        st.insert(s);
+        
+         // ans should contain lexographically smallest string..
+         if(s < ans){
+            ans= s;
+         }
+        
+        string added= add(s,a);
+        dfs(added,ans,st,a,b);
+
+        string rotated= rotate(s,b);
+        dfs(rotated,ans,st,a,b);
+    }
+
+
+    string findLexSmallestString(string s, int a, int b) {
+        int n= s.length();
+
+       // set to keep track whether this node has been visited before.. 
+       unordered_set<string> st;
+       string ans= s;
+
+       dfs(s,ans,st,a,b);
+       return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+// Approach 1 -> USing BFS -> Beats 68.03 % users in C++
+
+/*
+
 class Solution {
 public:
     string add(string s, int a)
@@ -70,3 +140,5 @@ public:
     return ans;
     }
 };
+
+*/
