@@ -1,4 +1,4 @@
-// TC= O(N)
+// TC= O[N* d^2]
 
 class Solution {
 public:
