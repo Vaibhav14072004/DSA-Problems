@@ -3,6 +3,8 @@
 
 // Approach 1 -> Using vector.. No need to do reverse
 
+/*
+
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& arr) {
@@ -44,13 +46,12 @@ public:
     }
 };
 
-
+*/
 
 
 
 
 // Approach 2 -> Using stack ... we have to do reverse
-/*
 
 class Solution{
   public:
@@ -103,4 +104,3 @@ class Solution{
     }      
 };
 
-*/
