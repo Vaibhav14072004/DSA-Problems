@@ -4,6 +4,8 @@
 
 // TC= O(sqrt(N))
 
+/*
+
 class Solution{
 public:
     bool checkPerfectNumber(int num) {
@@ -31,13 +33,13 @@ public:
     }
 };
 
+*/
 
 
 
 
 // Approach 1 ->  TC= O(N)
 
-/*
 
 class Solution {
 public:
@@ -63,5 +65,3 @@ public:
       return sum== num;
     }
 };
-
-*/
