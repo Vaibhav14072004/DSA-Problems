@@ -1,1 +1,1 @@
-<h2>ugly-number-ii Notes</h2><hr>[ Time taken: 48 m 53 s ]
+<h2>ugly-number-ii Notes</h2><hr>[ Time taken: 5 s ]
