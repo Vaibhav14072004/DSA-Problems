@@ -1,6 +1,8 @@
 // Approach  3 -> ... Using Simple array...
 // TC= O(N)
 
+/*
+
 class Solution{
 public:
     int nthUglyNumber(int n) {
@@ -38,6 +40,8 @@ public:
     }
 };
 
+*/
+
 
 
 
@@ -48,8 +52,6 @@ public:
 
  // TC= O(N* 3* 2* log n) ->  O(6* N log N)
  // TC= O(N log N)
-
-/*
 
 class Solution{
  public:
@@ -81,8 +83,7 @@ class Solution{
         return int(top);  
     }
  };
-
-*/
+ 
 
 
 
