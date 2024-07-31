@@ -1,7 +1,6 @@
 // Approach  3 -> ... Using Simple array...
+// Beats 75.29 % users ...
 // TC= O(N)
-
-/*
 
 class Solution{
 public:
@@ -40,8 +39,6 @@ public:
     }
 };
 
-*/
-
 
 
 
@@ -49,9 +46,12 @@ public:
 
 
 // Approach 2 -> Using Min Heap (Priority_queue) and set..
+// Beats 8.67 % users in C++
 
  // TC= O(N* 3* 2* log n) ->  O(6* N log N)
  // TC= O(N log N)
+
+/*
 
 class Solution{
  public:
@@ -83,12 +83,15 @@ class Solution{
         return int(top);  
     }
  };
- 
+
+*/
 
 
 
 
 
+
+//  ----- TLE ----
 // Approach 1 -> Brute Force Approach
 // TC= O(N log N)
 
