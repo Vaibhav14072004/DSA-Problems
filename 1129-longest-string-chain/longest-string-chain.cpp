@@ -1,5 +1,102 @@
-// Approach 1 -> DP (Memoization)
+// Approach 3 -> 1D Dp -> Using for loop
+
+// TC= O(N log N) + O[(n1+n2)* N^2]
+
+// SC= O(N)
+
+class Solution{
+public:
+    bool isPred(string &prevStr, string &currStr)
+    {
+         int n1= prevStr.size();
+         int n2= currStr.size();
+
+         if(n2-n1 != 1){
+            return false;
+         }
+
+         int i=0, j=0;
+         while(i < n1 && j < n2)
+         {
+            // currStr has > length than prevStr..
+             if(prevStr[i] != currStr[j])
+             {
+                j++;
+             }
+             else 
+             {
+                i++;
+                j++;
+             }
+         }
+      return i== n1;
+    }
+
+
+    int solve(int index, vector<string> &words, vector<int> &dp)
+    {
+        int n= words.size();
+
+         // base case
+         if(index== n)
+         {
+            return 0;
+         }
+
+         if(dp[index] != -1)
+         {
+            return dp[index];
+         }
+        
+        // ans is starting from 1 bcoz we can consider single element as chain also.
+        int ans= 1;
+         for(int j= index+1; j<n; j++)
+         {
+            if(isPred(words[index], words[j]))
+            {
+                ans= max(ans, 1 + solve(j,words,dp));
+            }
+         }
+    return dp[index]= ans;
+    }
+
+  
+    static bool cmp(string &a, string &b)
+    {
+        return a.length() < b.length();
+    }
+  
+
+    int longestStrChain(vector<string>& words)
+    {
+        int n= words.size(); 
+        sort(words.begin(), words.end(), cmp);  // sort in ascending order...
+
+        vector<int> dp(n, -1);
+        
+        int ans= 1;
+        for(int i=0; i<n; i++)
+        {
+            ans= max(ans, solve(i, words, dp));
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
+
+// Approach 1 -> 2D DP ->> LIS Pattern
+
 // TC= O(N log N) + O[N^2 * (n1+n2)]
+
+// SC= O(N^2)
+
+/*
 
 class Solution{
 public:
@@ -69,11 +166,15 @@ public:
 
         // sort in ascending order of length...
         sort(words.begin(), words.end(), cmp);
-        
+
         vector<vector<int>> dp(n, vector<int> (n+1, -1));
         return solve(0, -1, words, dp);
     }
 };
+
+*/
+
+
 
 
 
@@ -152,3 +253,5 @@ public:
 };
 
 */
+
+
