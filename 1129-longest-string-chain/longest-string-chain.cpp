@@ -1,11 +1,87 @@
-// Approach 3 -> 1D Dp -> Using for loop
+// Approach 3.2 -> 1D Dp (Tabulation) 
+
+// we can either run (i from 0 to n-1) and (j from i-1 to 0)
+
+// OR we can run (i from n-1 to 0) and (j from i+1 to n)
+
+// TC= O(N log N) + O[(n1+n2)* N^2]
+// SC= O(N)
+
+
+class Solution{
+public:
+    bool isPred(string &prevStr, string &currStr)
+    {
+        int n1= prevStr.size();
+        int n2= currStr.size();
+
+         if(n2-n1 != 1){
+            return false;
+         }
+
+         int i=0, j=0;
+         while(i < n1 && j < n2)
+         {
+            // currStr has > length than prevStr..
+             if(prevStr[i] != currStr[j])
+             {
+                j++;
+             }
+             else 
+             {
+                i++;
+                j++;
+             }
+         }
+      return i== n1;
+    } 
+  
+  
+    static bool cmp(string &a, string &b)
+    {
+        return a.length() < b.length();
+    }
+
+    int longestStrChain(vector<string>& words)
+    {
+        int n= words.size(); 
+        sort(words.begin(), words.end(), cmp);  // sort in ascending order...
+       
+       // we can take only 1 individual as string chain also...
+        vector<int> dp(n, 1);
+        
+        int ans= 1;
+        for(int i= 0; i<n; i++)
+        {
+            for(int j= i-1; j>=0; j--)
+            {
+                if(isPred(words[j],words[i]))
+                {
+                    dp[i]= max(dp[i], 1+ dp[j]);
+                }
+            }
+            ans= max(ans, dp[i]);
+        }  
+    return ans;
+    }
+};
+
+
+
+
+
+
+
+// Approach 3 -> 1D Dp (Memoization) -> Using for loop
 
 // TC= O(N log N) + O[(n1+n2)* N^2]
 
 // SC= O(N)
 
+/*
+
 class Solution{
-public:
+public: 
     bool isPred(string &prevStr, string &currStr)
     {
          int n1= prevStr.size();
@@ -83,7 +159,7 @@ public:
     }
 };
 
-
+*/
 
 
 
