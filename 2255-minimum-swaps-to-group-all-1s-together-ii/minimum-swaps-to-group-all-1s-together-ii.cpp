@@ -33,12 +33,10 @@ public:
                 }
                 i++;
             }
-           
-           if(j-i+1== ones)
-           {
-              minSwaps= min(minSwaps, ones-cnt);
-           }
-           
+            
+            // if(j-i+1 == ones)
+            minSwaps= min(minSwaps, ones-cnt);
+
            j++;
         }
       return minSwaps;  
