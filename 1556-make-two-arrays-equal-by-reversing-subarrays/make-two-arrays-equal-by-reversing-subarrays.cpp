@@ -1,5 +1,33 @@
+// Approach 2 -> Sorting
+// TC= O(N log N) + O(N)
+
+class Solution {
+public:
+    bool canBeEqual(vector<int>& target, vector<int>& arr){
+        int n= target.size();
+
+        sort(arr.begin(),arr.end());
+        sort(target.begin(), target.end());
+
+        for(int i=0; i<n; i++)
+        {
+            if(arr[i] != target[i])
+            {
+                return false;
+            }
+        }
+    return true;
+    }
+};
+
+
+
+
+
 // TC= O(3* N)
 // SC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -33,3 +61,5 @@ public:
        return true; 
     }
 };
+
+*/
