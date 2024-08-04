@@ -1,11 +1,58 @@
+// Approach 2.2 -> Optimized using Min Heap(Priority_queue)
+// TC= O(N log N) + O(N^2 log N)
+
+// SC= O(N) bcoz At Max n elements will be there in pq 
+
+class Solution{
+public:
+    #define MOD 1000000007
+
+    int rangeSum(vector<int>& nums, int n, int left, int right){
+
+        // {subarray Sum, END Index}
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+
+        for(int i=0; i<n; i++)
+        {
+            pq.push({nums[i], i});
+        }
+        
+        int ans= 0;
+        for(int i=1; i<= right; i++)
+        {
+            int currSum= pq.top().first;
+            int endIndex= pq.top().second;
+            pq.pop();
+
+            if(i >= left)
+            {
+                ans= (ans+ currSum) % MOD;
+            }
+
+            if(endIndex+1 < n)
+            {
+                pq.push({currSum + nums[endIndex+1], endIndex+1});
+            }
+        }
+      return ans;
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 -> Using Min heap (Priority_queue)
 // TC= O(N* log N) + O[(n*(n+1)/2 * log (n*(n+1)/2)] + O(N)
 // TC= O(N* log N) + O[N^2 log N^2] + O(N)
 
 // TC= O(N* log N) + O(N^2 log N) + O(N)
 
-// SC= O((n* (n+1))/2 =>>  O(N^2)
+// SC= O(N) ->> At max there would be n elements in priority_queue (One pop operation, one addition)
 
+/*
 
 class Solution{
 public:
