@@ -1,7 +1,4 @@
-// Given that all letters appear only once... so we have taken set 
-
-// TC= O(N) + O(N/8) for while loop
-
+// Aproach 3 -> Using map
 // TC= O(N)
 // SC= O(N)
 
@@ -10,24 +7,80 @@ public:
     int minimumPushes(string word){
         int n= word.length();
 
-        unordered_set<char> st;
+        unordered_map<int,int> mp;
+        int digitNo= 2;
+        
+        int ans= 0;
         for(int i=0; i<n; i++)
         {
-            st.insert(word[i]);
+            if(digitNo > 9)
+            {
+                digitNo= 2;
+            }
+            mp[digitNo]++;
+            ans+= mp[digitNo];
+            digitNo++;
         }
+      return ans;  
+    }
+};
 
+
+
+
+
+
+// Optimized Approach 
+// TC= O(N)
+// SC= O(1)
+
+/*
+
+class Solution{
+public:
+  int minimumPushes(string word)
+    {
+        int n= word.length();
+        
+        int ans= 0;
+        for(int i=0; i<n; i++)
+        {
+            ans+= 1 + (i/8);
+        }
+    return ans;
+    }
+};
+
+*/
+
+
+
+
+
+
+// Approach 1 
+
+// TC= O(N/8) ->> O(N)
+// SC= O(N)
+
+/*
+
+class Solution {
+public:
+    int minimumPushes(string word){
+        int n= word.length();
        long long ans= 0;
 
        // we can accumulate 8 chars on first place of 8 buttons..
-       if(st.size() <= 8)
+       if(n <= 8)
        {
-          return st.size();
+          return n;
        } 
 
        // one double press needed... if all 8 buttons first place got filled 
        else
        {
-           int rem= st.size();
+           int rem= n;
            int i= 1;
            while(rem > 0)
            {
@@ -48,3 +101,5 @@ public:
     return static_cast<int> (ans);
     }
 };
+
+*/
