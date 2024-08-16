@@ -1,4 +1,7 @@
+// Best Approach 
 // TC= O(M)
+
+/*
 
 class Solution {
 public:
@@ -21,6 +24,56 @@ public:
     return maxDiff;
     }
 };
+
+*/
+
+
+
+
+
+
+// Approach 2 -> Using 2 heaps (1 Max heap and 1 min heap)
+// TC= O(2*M log (2*M))
+
+// Overall TC= O(M* log M)
+
+class Solution{
+public:
+    int maxDistance(vector<vector<int>>& arrays)
+    {
+        int m= arrays.size();
+
+     // {element, index}
+     priority_queue<pair<int,int>> maxHeap;
+     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> minHeap;
+
+     for(int i=0; i<m; i++)
+     {
+        minHeap.push({arrays[i][0], i});
+        maxHeap.push({arrays[i].back(), i});
+     }
+
+     int maxVal= maxHeap.top().first;
+     int idx1= maxHeap.top().second;
+     maxHeap.pop();
+
+     int minVal= minHeap.top().first;
+     int idx2= minHeap.top().second;
+     minHeap.pop();
+
+     if(idx1 != idx2)
+     {
+        return maxVal-minVal;
+     }
+
+     int secondMin= minHeap.top().first;
+     int secondMax= maxHeap.top().first;
+
+     return max(maxVal- secondMin, secondMax- minVal);
+    }
+};
+
+
 
 
 
