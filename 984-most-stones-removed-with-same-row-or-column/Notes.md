@@ -1,1 +1,1 @@
-<h2>most-stones-removed-with-same-row-or-column Notes</h2><hr>[ Time taken: 29 m 27 s ]
+<h2>most-stones-removed-with-same-row-or-column Notes</h2><hr>[ Time taken: 19 m 40 s ]
