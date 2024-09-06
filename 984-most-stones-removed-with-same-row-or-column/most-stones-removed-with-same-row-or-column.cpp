@@ -1,8 +1,3 @@
-// Approach 1 -> Disjoint Set Union....
-
-// TC= O(N^2 * alpha) where alpha is TC of unionByRank
-// TC= O(N^2)
-
 /*
 Intuition ->> Merge all stones that lie in same column or row into one 
           component.... In every component, we can only remove (elements -1)
@@ -13,6 +8,56 @@ Intuition ->> Merge all stones that lie in same column or row into one
     ->> Ans= n - (no of components) where n is no of total stones...
 */
 
+// Approach 2 -> Using DFS
+// TC= O(N^2)
+
+class Solution{
+public:
+    void dfs(int node, vector<int> &visited, vector<vector<int>> &stones)
+    {
+        visited[node]= 1;
+        for(int i=0; i<stones.size(); i++)
+        {
+           // if the curr stone is NOT visited & has same row or column, call dfs for it as it belongs to same component
+           if(!visited[i] && (stones[i][0]== stones[node][0] || stones[i][1]== stones[node][1]))
+            {
+                dfs(i,visited,stones);
+            }
+        }
+    }
+
+    int removeStones(vector<vector<int>>& stones) {
+        int n= stones.size();
+        vector<int> visited(n, 0);
+        
+        int groups= 0;
+        for(int i=0; i<n; i++)
+        {
+            if(!visited[i])
+            {
+                groups++;
+                dfs(i, visited, stones);
+            }
+        }
+    return n- groups;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+// Approach 1 -> Disjoint Set Union....
+
+// TC= O(N^2 * alpha) where alpha is TC of unionByRank
+// TC= O(N^2)
+
+/*
 
 class Solution {
 public:
@@ -92,4 +137,4 @@ public:
     }
 };
 
-
+*/
