@@ -1,8 +1,6 @@
 // Approach 2 -> Best Approach (Calculating prefix xor array)...
 // TC= O(M+N)
 
-/*
-
 class Solution {
 public:
     vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries)
@@ -39,7 +37,6 @@ public:
     }
 };
 
-*/
 
 
 
@@ -48,6 +45,8 @@ public:
 
 // Approach 1 -> Brute Force Approach
 // TC= O(N*M)
+
+/*
 
 class Solution{
  public:
@@ -71,3 +70,5 @@ class Solution{
       return vec; 
     }
 };
+
+*/
