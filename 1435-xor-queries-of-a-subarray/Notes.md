@@ -1,1 +1,1 @@
-<h2>xor-queries-of-a-subarray Notes</h2><hr>[ Time taken: 41 m 27 s ]
+<h2>xor-queries-of-a-subarray Notes</h2><hr>[ Time taken: 13 m 24 s ]
