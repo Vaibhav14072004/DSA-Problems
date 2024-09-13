@@ -1,6 +1,8 @@
 // Approach 2 -> Best Approach (Calculating prefix xor array)...
 // TC= O(M+N)
 
+/*
+
 class Solution {
 public:
     vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries)
@@ -34,5 +36,38 @@ public:
            }
         }
        return ans; 
+    }
+};
+
+*/
+
+
+
+
+
+
+// Approach 1 -> Brute Force Approach
+// TC= O(N*M)
+
+class Solution{
+ public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries)
+    {
+        vector<int> vec;
+
+       for(int i=0; i<queries.size(); i++)
+       {
+           int left= queries[i][0];
+           int right= queries[i][1];
+           int ans= 0;
+
+           for(int j=left; j<= right; j++)
+           {
+              ans= ans^ arr[j];
+           }
+
+        vec.push_back(ans);   
+       }
+      return vec; 
     }
 };
