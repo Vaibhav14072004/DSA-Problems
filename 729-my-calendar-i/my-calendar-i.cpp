@@ -1,9 +1,46 @@
+// Approach 2 -> Using vector<pair<int,int> 
+// TC= O(N)
+
+//          start ----------- end
+//     a --------------- b  
+
+// Condition for overlapping ->> (start < b && a < end)
+
+class MyCalendar {
+public:
+    vector<pair<int,int>> vec;
+
+    MyCalendar() { 
+    }
+    
+    bool book(int start, int end) {
+        for(auto it: vec)
+        {
+            if(start < it.second && it.first < end)
+            {
+                return false;
+            }
+        }
+
+        vec.push_back({start,end});
+        return true;
+    }
+};
+
+
+
+
+
+
+
+
+
 // Approach 1 -> Using ordered_map
 // TC= O(N log N)
 
 // NOTE ->> We CANNOT use unordered_map bcoz it doesn't maintain any specific order of elements, and you need the map to be sorted by the event start times so we use ordered_map (map)
 
-
+/*
 
 class MyCalendar {
 public:
@@ -39,9 +76,14 @@ public:
     }
 };
 
+*/
+
+
 
 /**
  * Your MyCalendar object will be instantiated and called as such:
  * MyCalendar* obj = new MyCalendar();
  * bool param_1 = obj->book(start,end);
  */
+
+ 
