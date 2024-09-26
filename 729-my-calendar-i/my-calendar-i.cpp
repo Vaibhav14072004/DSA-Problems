@@ -1,10 +1,54 @@
-// Approach 2 -> Using vector<pair<int,int> 
-// TC= O(N)
-
 //          start ----------- end
 //     a --------------- b  
 
 // Condition for overlapping ->> (start < b && a < end)
+
+
+// Approach 3 -> Using lower_bound()
+// TC= O(log n)
+// SC= O(n)
+
+
+class MyCalendar {
+public:
+   set<pair<int,int>> st;
+
+    MyCalendar() { 
+    }
+    
+    bool book(int start, int end)
+    {
+      // lower_bound() ->> to find just greater equal element...
+      auto it= st.lower_bound({start,end});
+      
+      // check for next value..
+      if(it != st.end() && it->first < end)
+      {
+         return false;
+      }
+      
+      // check for prev value...
+      if(it != st.begin() && prev(it)->second > start)
+      {
+        return false;
+      }
+
+      st.insert({start,end});
+      return true;
+    }
+};
+
+
+
+
+
+
+
+
+// Approach 2 -> Using vector<pair<int,int> 
+// TC= O(N)
+
+/*
 
 class MyCalendar {
 public:
@@ -26,6 +70,8 @@ public:
         return true;
     }
 };
+
+*/
 
 
 
