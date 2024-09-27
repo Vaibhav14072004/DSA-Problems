@@ -7,7 +7,7 @@
 //            a -------------- b
 //  start -------------- end
 
-
+//  OR We can also check, Condition for Overlap.. ->> max(start,a) < min(b,end)
 
 
 class MyCalendarTwo {
