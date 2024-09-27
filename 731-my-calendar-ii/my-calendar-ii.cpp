@@ -1,6 +1,63 @@
+// Approach 2 -> Using 2 separate vector for storing double Bookings and curr valid booking
+// TC= O(2* N)
+// SC= O(2* N)
+
+// Condition for overlap... ->> (start < b && a < end)
+
+//            a -------------- b
+//  start -------------- end
+
+
+
+
+class MyCalendarTwo {
+public:
+    vector<pair<int,int>> doubleBook;
+    vector<pair<int,int>> currBook;
+
+    MyCalendarTwo(){    
+    }
+    
+    bool book(int start, int end)
+    {
+        for(auto it: doubleBook)
+        {
+            // overlap...
+            if(start < it.second && it.first < end)
+            {
+                return false;
+            }
+        }
+
+        for(auto it: currBook)
+        {
+            // insert in double booking... if overlap
+            if(start < it.second && it.first < end)
+            {
+                doubleBook.push_back({max(start, it.first), min(end, it.second)});
+            } 
+        }
+        
+        currBook.push_back({start,end});
+        return true;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
 // Approach 1 -> Using ordered map...
 // TC= O(N* log N)
 // SC= O(N)
+
+/*
 
 class MyCalendarTwo {
 public:
@@ -33,6 +90,7 @@ public:
     }
 };
 
+*/
 
 
 
