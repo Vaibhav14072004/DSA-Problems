@@ -1,7 +1,58 @@
+// Approach 2 ->USing vector -> Best Approach
+// TC= O(2*N) ->> O(N)
+// SC= O(1)
+
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        int n= skill.size();
+
+        vector<int> freq(1001,0);
+        long long totalSum= 0;
+
+        for(int i=0; i<n; i++)
+        {
+            totalSum+= skill[i];
+            freq[skill[i]]++;
+        }
+
+        // base case
+        if(totalSum % (n/2) != 0)
+        {
+            return -1;
+        }
+        
+        long long chemistry= 0;
+        long long teamSize= totalSum/(n/2);
+
+        for(int i=0; i<n; i++)
+        {
+            int rem= teamSize-skill[i];
+            if(freq[rem] <= 0)
+            {
+               return -1;
+            }
+
+            chemistry+= skill[i]* (rem);
+            freq[rem]--;
+        }
+
+     // bcoz we have taken pairs (3,2) (2,3) twice into consideration..   
+     return chemistry/2; 
+    }
+};
+
+
+
+
+
+
+
 // Approach 1.1 -> Using unordered_map
 // TC= O(2* N) ->> O(N)
 // SC= O(N)
 
+/*
 class Solution {
 public:
     long long dividePlayers(vector<int>& skill) {
@@ -65,6 +116,8 @@ public:
      return chemistry;
     }
 };
+
+*/
 
 
 
