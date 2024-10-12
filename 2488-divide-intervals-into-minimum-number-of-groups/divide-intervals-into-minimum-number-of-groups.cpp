@@ -1,5 +1,57 @@
+// Approach 2 -> 2 Pointers -> Same as Min platforms Needed Ques...
+// Whenever we have to find only number, we can use this approach
+
+// TC= O(2*N log N) + O(2*N) ->> O(N log N)
+
+class Solution{
+public:
+   int minGroups(vector<vector<int>>& intervals) {
+        int n= intervals.size();
+        
+        vector<int> arrival, dept;
+        for(auto it: intervals)
+        {
+            arrival.push_back(it[0]);
+            dept.push_back(it[1]);
+        }
+        
+        // Sort arrival and dept vectors..
+        sort(arrival.begin(), arrival.end());
+        sort(dept.begin(), dept.end());
+        
+        int i= 1, j= 0;
+        int platformNeeded= 1, maxi= 1;
+
+        while(i< n && j < n)
+        {
+            // in case of overlap..
+            if(arrival[i] <= dept[j])
+            {
+                platformNeeded++;
+                i++;
+            }
+            else
+            {
+                platformNeeded--;
+                j++;
+            }
+            
+            maxi= max(maxi, platformNeeded);
+        }
+    return maxi;
+    }
+};
+
+
+
+
+
+
+
 // Approach 1.2 -> Priority_queue to store ending time of each separate group
 // TC= O(2* N log N) 
+
+/*
 
 class Solution{
 public:
@@ -32,6 +84,9 @@ public:
     return pq.size();
     }
 };
+
+*/
+
 
 
 
