@@ -1,19 +1,26 @@
+//   <--- Priority_queue Intuition ->>>
+// WE have to greedly add max score in ans after each iteration,
+// So we have to find max element after each iteration, which can be done by heap in O(log n)
+
+// Approach 1-> Using priority_queue
+//  TC= O(N log N)
+
 class Solution {
 public:
     long long maxKelements(vector<int>& nums, int k) {
-        ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-        priority_queue<long long> maxheap;
-        for(auto i : nums) maxheap.push(i);
+        int n= nums.size();
 
-        long long score = 0;
+        priority_queue<int> pq(nums.begin(),nums.end());
+        
+        long long ans= 0;
+        while(!pq.empty() && k-- > 0)
+        {
+            int top= pq.top();
+            pq.pop();
 
-        for(int i = 0; i < k; i++) {
-            int n = maxheap.top();
-            score += n;
-            maxheap.pop();
-            n = ceil((double) n/3);
-            maxheap.push(n);
+            ans+= top;
+            pq.push(ceil(top/3.0));
         }
-        return score;
+        return ans;
     }
 };
