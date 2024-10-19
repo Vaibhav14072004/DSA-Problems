@@ -1,3 +1,37 @@
+// We have to move all 0's to left and all 1's to right..
+
+// Approach 1 -> Count all 1's before 0, add it in ans as we have to do that no of swaps
+// TC= O(N)
+
+class Solution{
+public:
+    long long minimumSteps(string s) {  
+        int n= s.length();
+        
+        long long cnt1= 0, ans= 0;
+        for(int i=0; i<n; i++)
+        {
+            if(s[i]== '1')
+            {
+                cnt1++;
+            }
+            else
+            {
+               ans+= cnt1;
+            }
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+/*
+// Approach 2 -> Sliding Window
+// TC= O(N)
+
 class Solution {
 public:
     long long minimumSteps(string s) {
@@ -28,3 +62,5 @@ public:
         return ans;
     }
 };
+
+*/
