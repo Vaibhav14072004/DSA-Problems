@@ -1,38 +1,64 @@
+// Approach 1 -> Using priority_queue
+
+// We have to use the char that has max freq every time...
+// Considering the fact that no 3 consecutive 'a', 'b', 'c' come together
+
+// TC= O(a+b+c)
+// SC= O(a+b+c)
+
 class Solution {
 public:
-    string longestDiverseString(int a, int b, int c) {
-        string result = "";
-        std::vector<std::pair<int, char>> chars = {{a, 'a'}, {b, 'b'}, {c, 'c'}};
-        
-        while (true) {
-            // Sort characters by their remaining count
-            std::sort(chars.begin(), chars.end(), [](const std::pair<int, char>& p1, const std::pair<int, char>& p2) {
-                return p1.first > p2.first;
-            });
-            
-            bool added = false;
-            
-            // Try to add the most frequent character without violating the consecutive rule
-            for (int i = 0; i < 2; ++i) {
-                if (chars[i].first > 0) {
-                    int len = result.length();
-                    // Check if adding this character violates the consecutive rule
-                    if (len >= 2 && result[len - 1] == chars[i].second && result[len - 2] == chars[i].second) {
-                        continue;  // Skip if it does
+    string longestDiverseString(int a, int b, int c)
+    {
+        // max heap
+        priority_queue<pair<int,char>> pq;
+        string ans= "";
+
+        if(a> 0) pq.push({a,'a'});
+        if(b> 0) pq.push({b,'b'});
+        if(c> 0) pq.push({c,'c'});
+
+            while(!pq.empty())
+            {
+                int maxFreq= pq.top().first;
+                char ch= pq.top().second;
+                pq.pop();
+                
+                // if we have already appended 2 consecutive 'a', 'b' or 'c'
+                if(ans.size() >= 2 && ans.back()== ch && ans[ans.length()-2]== ch)
+                {
+                   // get the second mostfreq element..
+                   if(!pq.empty())
+                   {
+                       int secondFreq= pq.top().first;
+                       char secondCh= pq.top().second;
+                       pq.pop();
+
+                       ans+= secondCh;
+                       if(secondFreq-1 > 0)
+                       {
+                          pq.push({secondFreq-1, secondCh});
+                       }
+                       
+                    // push the max freq element back into pq after we have appended secondmost freq element
+                       pq.push({maxFreq,ch});
+                   }
+             
+                   else
+                   {
+                      break;
+                   }
+                }
+
+                else
+                {
+                    ans+= ch;
+                    if(maxFreq- 1 > 0)
+                    {
+                        pq.push({maxFreq-1, ch});
                     }
-                    // Add the character to the result and decrement its count
-                    result += chars[i].second;
-                    chars[i].first--;
-                    added = true;
-                    break;
                 }
             }
-            if (!added) {
-                // If no character can be added, stop the loop
-                break;
-            }
-        }
-        
-        return result;
+     return ans;   
     }
 };
