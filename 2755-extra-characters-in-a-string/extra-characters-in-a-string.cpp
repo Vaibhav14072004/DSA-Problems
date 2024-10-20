@@ -1,5 +1,48 @@
+// Approach 2 -> Bottom Up (Tabulation)
+// TC= O(N^2)
+
+class Solution{
+public:
+    int minExtraChar(string str, vector<string>& dict){
+        int n= str.length();
+        unordered_set<string> st(dict.begin(), dict.end());
+        
+        // In worst case extra full string is extra, so initialize with n
+        vector<int> dp(n+1,n);
+
+        // base case, no extra characters when considering an empty string from position n onwards
+        dp[n]= 0;
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            string curr= "";
+            for(int j= i; j<n; j++)
+            {
+                curr+= str[j];
+                int extra= 0;
+
+                if(st.find(curr) == st.end())
+                {
+                    extra+= curr.length();
+                }
+
+                dp[i]= min(dp[i], extra+ dp[j+1]);
+            }
+        }
+        return dp[0];
+    }
+};
+
+
+
+
+
+
+
 // Approach 1 -> Top Down Approach (Recursion + Memoization)
 // TC= O(N^2)
+
+/*
 
 class Solution{
 public:
@@ -43,6 +86,9 @@ public:
         return solve(0,str,dict,st,dp);
     }    
 };
+
+*/
+
 
 
 
