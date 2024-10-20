@@ -1,1 +1,1 @@
-<h2>extra-characters-in-a-string Notes</h2><hr>[ Time taken: 40 m 42 s ]
+<h2>extra-characters-in-a-string Notes</h2><hr>[ Time taken: 24 m 3 s ]
