@@ -13,8 +13,86 @@
 // Intuition ->> Sum of cousins= (Level Sum) - (Sibling sum)
 
 
-// Approach 1 ->>> 2 times traversing the tree, one for level order sum, other for
+// Approach 2 -> Traversing the tree only one time...
+// Replacing each node value with siblingSum and calculating the level Order sum of next level in prev iteration
+
+// TC= O(N)
+// SC= O(N)
+
+class Solution{
+public: 
+    TreeNode* replaceValueInTree(TreeNode* root) {
+        // base case
+        if(root== NULL)
+        {
+            return root;
+        }  
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        int levelSum= root->val;
+
+        while(!q.empty())
+        {
+            int n= q.size();
+            int nextLevelSum= 0;
+
+            while(n--)
+            {
+                TreeNode* node= q.front();
+                q.pop();
+                
+                // node->val= levelSum- siblingSum 
+                node->val= levelSum- node->val;
+
+                int siblingSum= 0;
+
+             // NOTE WE CANNOT calc siblingSum and nextLevelSum at same time, first calc siblingSum then after calculate nextLevelSum
+                if(node->left)
+                {
+                    siblingSum+= node->left->val;
+                }
+
+                if(node->right)
+                {
+                    siblingSum+= node->right->val;
+                }
+
+                if(node->left)
+                {
+                    nextLevelSum+= node->left->val;
+                    node->left->val= siblingSum;
+                    q.push(node->left);
+                }
+
+                if(node->right)
+                {
+                    nextLevelSum+= node->right->val;
+                    node->right->val= siblingSum;
+                    q.push(node->right);
+                }
+            }
+
+            levelSum= nextLevelSum;
+        }
+       return root; 
+    }
+};
+
+
+
+
+
+
+
+
+// Approach 1 ->>> 2 times traversing the tree, one for finding level order sum, other 
+// for replacing each node value with levelSum- siblingSum    
+
 // TC= O(2*N)
+// SC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -93,3 +171,5 @@ public:
     return root;
     }
 };
+
+*/
