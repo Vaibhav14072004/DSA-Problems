@@ -10,12 +10,82 @@
  * };
  */
 
+
+
+// Approach 2 -> Using Min heap(Priority_queue)
+// In case of finding largest ->> we use Min heap
+// In case of finding smallest ->> we use Max heap
+
+// TC= O(N log K)
+// SC= O(N) + O(K) -->> O(N)
+
+class Solution{
+public: 
+    long long kthLargestLevelSum(TreeNode* root, int k) {
+        // base case
+        if(root== NULL)
+        {
+            return -1;
+        }
+
+        priority_queue<long long,vector<long long>,greater<long long>> pq;
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        while(!q.empty())
+        {
+            int n= q.size();
+            long long levelSum= 0;
+
+            for(int i=0; i<n; i++)
+            {
+                TreeNode* node= q.front();
+                q.pop();
+                levelSum+= node->val;
+
+                if(node->left)
+                {
+                    q.push(node->left);
+                }
+                if(node->right)
+                {
+                    q.push(node->right);
+                }
+            }
+
+            // after completion of each level...
+            pq.push(levelSum); 
+
+            if(pq.size() > k)
+            {
+                pq.pop();
+            } 
+        }
+        
+        if(pq.size()== k)
+        {
+            return pq.top();
+        }
+       return -1; 
+    }
+};
+
+
+
+
+
+
+
+
+
 // Approach 1->>  Storing level order sums and then sorting it..
 // TC O(N) + O(N log N) -->> O(N log N)
 // SC= O(N) ->> worst case (skewed binary tree) but in balanced tree -> O(log n)
 
 // TC= O(N log N)
 // SC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -62,3 +132,5 @@ public:
         return -1;
     }
 };
+
+*/
