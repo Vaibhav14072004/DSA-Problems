@@ -10,39 +10,55 @@
  * };
  */
 
+// Approach 1->>  Storing level order sums and then sorting it..
+// TC O(N) + O(N log N) -->> O(N log N)
+// SC= O(N) ->> worst case (skewed binary tree) but in balanced tree -> O(log n)
+
+// TC= O(N log N)
+// SC= O(N)
+
 class Solution {
 public:
     long long kthLargestLevelSum(TreeNode* root, int k) {
-        if (!root) return -1; 
+        // base case
+        if(root== NULL)
+        {
+            return -1;
+        }
 
-        priority_queue<long long> pq;  
-        queue<TreeNode*> q;  
-        q.push(root); 
+        vector<long long> levelOrder;
+        queue<TreeNode*> q;
+        q.push(root);
 
-        while (!q.empty()) {
-            long long sum = 0;
-            int levelSize = q.size(); 
+        while(!q.empty())
+        {
+            int n= q.size();
+            long long levelSum= 0;
 
-           
-            for (int i = 0; i < levelSize; i++) {
-                TreeNode* temp = q.front();
+            for(int i=0; i<n; i++)
+            {
+                TreeNode* node= q.front();
                 q.pop();
-                sum += temp->val;  
+                levelSum+= node->val;
 
-                if (temp->left) q.push(temp->left);
-                if (temp->right) q.push(temp->right);
+                if(node->left)
+                {
+                    q.push(node->left);
+                }
+                if(node->right)
+                {
+                    q.push(node->right);
+                }
             }
-
-            pq.push(sum); 
+        levelOrder.push_back(levelSum);
         }
+        
+        // sort level order sum in descending order...
+        sort(levelOrder.rbegin(), levelOrder.rend());
+        
+        if(k-1 >= 0 && levelOrder.size() >= k)
+        return levelOrder[k-1];
 
-        long long ans = 0;
-        if(pq.size()<k) return -1;
-        while (k-- && !pq.empty()) {
-            ans = pq.top(); 
-            pq.pop();  
-        }
-
-        return ans; 
+        return -1;
     }
 };
