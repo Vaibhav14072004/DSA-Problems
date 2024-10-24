@@ -10,14 +10,78 @@
  * };
  */
 
+// Approach 2.2 ->> Using Max Heap
+// TC= O(N log K)
+// SC= O(N) 
+
+class Solution{
+public: 
+    long long kthLargestLevelSum(TreeNode* root, int k) {
+        // base case
+        if(root== NULL)
+        {
+            return -1;
+        }
+
+        priority_queue<long long> pq;
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty())
+        {
+            int n= q.size();
+            long long levelSum= 0;
+            while(n--)
+            {
+                TreeNode* node= q.front();
+                q.pop();
+                levelSum+= node->val;
+
+                if(node->left)
+                {
+                    q.push(node->left);
+                }
+
+                if(node->right)
+                {
+                    q.push(node->right);
+                }
+            }
+
+            // after completion of each level..
+            pq.push(levelSum);
+        }
+        
+        if(pq.size() < k)
+        {
+            return -1;
+        }
+        
+        long long ans= -1;
+        while(!pq.empty() && k--)
+        {
+           ans= pq.top();
+           pq.pop();
+        }
+       return ans; 
+    }
+};
 
 
-// Approach 2 -> Using Min heap(Priority_queue)
-// In case of finding largest ->> we use Min heap
-// In case of finding smallest ->> we use Max heap
+
+
+
+
+
+// Approach 2.1 -> Using Min heap(Priority_queue)
+
+// Generally In case of finding largest ->> we use Min heap
+// Generally In case of finding smallest ->> we use Max heap
 
 // TC= O(N log K)
 // SC= O(N) + O(K) -->> O(N)
+
+/*
 
 class Solution{
 public: 
@@ -69,6 +133,8 @@ public:
        return -1; 
     }
 };
+
+*/
 
 
 
