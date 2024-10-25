@@ -47,36 +47,3 @@ public:
         return maxCnt;
     }
 };
-
-
-
-
-/*
-
-class Solution {
-public:
-    int maxCnt = 0;
-    unordered_set<string_view> seen; 
-    void backtrack(int index, string s, int cnt){
-        if (cnt + (s.size() - index) <= maxCnt) return; 
-        if(index == s.size()) {
-            maxCnt = max(maxCnt, cnt);
-            return;
-        };
-
-        for(int i = index; i < s.size(); i++) {
-            std::string_view substr(s.data() + index, i - index + 1); 
-            // similar to `s.substr(i, i - index + 1);` but more efficient
-            if(seen.count(substr)) continue;
-            seen.insert(substr);
-            backtrack(i + 1, s, cnt + 1);
-            seen.erase(substr);
-        }
-    }
-    int maxUniqueSplit(string s) {
-        backtrack(0, s, 0);
-        return maxCnt;
-    }
-};
-
-*/
