@@ -1,0 +1,35 @@
+// Approach 1 ->> Using unordered_set
+// TC= O(N)
+
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        int n= nums.size();
+
+        unordered_set<int> st(nums.begin(), nums.end());
+
+        int maxLen= 0;
+        for(int i=0; i<n; i++)
+        {
+            long long curr= nums[i];
+            int len= 0;
+
+            while(st.find(curr) != st.end())
+            {
+                len++;
+                maxLen= max(maxLen,len);
+
+                curr= curr*curr;
+                if(curr > 100000)
+                {
+                    break;
+                }
+            }
+        }
+        
+        // subsequence should be min of length- 2
+        if(maxLen < 2) return -1;
+
+        return maxLen; 
+    }
+};
