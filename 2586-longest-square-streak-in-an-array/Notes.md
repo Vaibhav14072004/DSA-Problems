@@ -1,1 +1,1 @@
-<h2>longest-square-streak-in-an-array Notes</h2><hr>[ Time taken: 21 m 54 s ]
+<h2>longest-square-streak-in-an-array Notes</h2><hr>[ Time taken: 25 m 4 s ]
