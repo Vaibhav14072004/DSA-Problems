@@ -1,5 +1,46 @@
+// Approach 2 -> Sorting + unordered_map
+// TC= O(N log N)
+
+class Solution{
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        int n= nums.size();
+       
+        sort(nums.begin(), nums.end());
+        unordered_map<int,int> mp;
+        
+        int maxLen= 0;
+        for(int i=0; i<n; i++)
+        {
+            int sq= (int)sqrt(nums[i]);
+
+            if(sq*sq== nums[i] && mp.find(sq) != mp.end())
+            {
+                mp[nums[i]]= 1+ mp[sq];
+            }
+            else
+            {
+                mp[nums[i]]= 1;
+            }
+
+            maxLen= max(maxLen, mp[nums[i]]);
+        }
+
+        if(maxLen < 2) return -1;
+
+    return maxLen;
+    }
+};
+
+
+
+
+
+
 // Approach 1 ->> Using unordered_set
 // TC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -33,3 +74,5 @@ public:
         return maxLen; 
     }
 };
+
+*/
