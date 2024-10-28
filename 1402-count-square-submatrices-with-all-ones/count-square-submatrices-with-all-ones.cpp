@@ -1,5 +1,47 @@
+// Approach 3 -> Space Optimized
+// TC= O(N*M)
+// SC= O(M)
+
+class Solution{
+public: 
+    int countSquares(vector<vector<int>>& matrix) {
+        int n= matrix.size();     // rows
+        int m= matrix[0].size();  // col
+         
+        vector<int> next(m+1,0);
+
+        int ans= 0;
+        for(int i= n-1; i>=0; i--)
+        {
+            vector<int> curr(m+1,0);
+            for(int j=m-1; j>=0; j--)
+            {
+                if(matrix[i][j]== 1)
+                {
+                    int right= curr[j+1];         // dp[i][j+1]
+                    int down=  next[j];           // dp[i+1][j]
+                    int downDiagonal= next[j+1];  // dp[i+1][j+1]
+
+                    curr[j]=  1 + min(right, min(down,downDiagonal));
+                    ans+= curr[j];
+                }
+            }
+            next= curr;
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 -> Bottom UP (Tabulation)
 // TC= O(N*M)
+
+/*
 
 class Solution{
 public: 
@@ -40,6 +82,9 @@ public:
      return ans;
     }
 };
+
+*/
+
 
 
 
