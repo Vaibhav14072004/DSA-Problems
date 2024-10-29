@@ -1,3 +1,75 @@
+// Approach -> Using unordered_set
+// TC= O(N* K)
+
+class Solution {
+public:
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        unordered_set<string> st;
+        
+        // first insert obstacles in set..
+        for(vector<int> &it: obstacles)
+        {
+            string temp= to_string(it[0]) + '_' + to_string(it[1]);
+            st.insert(temp);
+        }
+        
+        // N E S W
+        vector<int> dirX= {0,1,0,-1};
+        vector<int> dirY= {1,0,-1,0};
+
+        // Initially robot is facing in north direction {0,1}
+        int dirIndex= 0;
+
+        int x= 0, y= 0;
+        int maxDist= 0;
+
+        for(int i=0; i<commands.size(); i++)
+        {
+            // 1. Turn in right direction 
+            if(commands[i]== -1)
+            {
+                dirIndex= (dirIndex+1)% 4; 
+            }
+
+            // turn in left direction
+            else if(commands[i]== -2)
+            {
+               dirIndex= (dirIndex-1 + 4) % 4;
+            }
+
+            // move forward until obstacle NOT found
+            else
+            {
+                for(int j=0; j<commands[i]; j++)
+                {
+                    int newX= x + dirX[dirIndex];
+                    int newY= y + dirY[dirIndex];
+
+                    string curr= to_string(newX) + '_' + to_string(newY);
+
+                    // if there is obstacle, break
+                    if(st.find(curr) != st.end())
+                    {
+                        break;
+                    }
+
+                   x= newX;
+                   y= newY;
+                }
+
+              maxDist= max(maxDist, x*x + y*y);
+            }
+        }
+        return maxDist;
+    }
+};
+
+
+
+
+
+
+/*
 class Solution {
 public:
     int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
@@ -62,3 +134,4 @@ public:
         return ans;
     }
 };
+*/
