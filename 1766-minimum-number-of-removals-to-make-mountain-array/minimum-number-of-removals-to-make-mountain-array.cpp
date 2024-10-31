@@ -10,8 +10,112 @@
 */
 
 
-// Approach 2 -> Finding LIS,LDS using Binary Search
+// Approach 3 -> Without using STL for Lower_bound()
+// TC= O(N log N)
+
+class Solution {
+public:
+    // TC= O(log N)
+    int lowerBound(vector<int> &temp, int val)
+    {
+        int n= temp.size();
+        int start= 0;
+        int end= n-1;
+        
+        int ans= -1;
+        while(start <= end)
+        {
+            int mid= start+(end-start)/2;
+            if(temp[mid]== val)
+            {
+                return mid;
+            }
+            
+            // we have to find nums[i] such that it is just greater equal to val
+            else if(temp[mid] > val)
+            {
+                ans= mid;
+                end= mid-1;
+            }
+
+            else
+            {
+              start= mid+1;
+            }
+        }
+        return ans;
+    }
+
+    
+    // TC= O(N log N)
+    void solve(vector<int> &nums, vector<int> &dp)
+    {
+        int n=  nums.size();
+        vector<int> temp;
+        temp.push_back(nums[0]);
+
+        for(int i=1; i<n; i++)
+        {
+            if(nums[i] > temp.back())
+            {
+                temp.push_back(nums[i]);
+                dp[i]= temp.size();  // to store len of LIS upto index i
+            }
+            else
+            {
+                int index= lowerBound(temp,nums[i]);
+                temp[index]= nums[i];
+                dp[i]= index+1;
+            }
+        }
+    }
+
+
+
+    int minimumMountainRemovals(vector<int>& nums) {
+        int n= nums.size();
+
+        // base case -> Mountain array should be min of length 3
+        if(n < 3)
+         return 0;
+        
+        vector<int> LIS(n,1);
+        vector<int> LDS(n,1);
+
+        solve(nums,LIS);
+
+        reverse(nums.begin(), nums.end());
+        solve(nums,LDS);
+        reverse(LDS.begin(), LDS.end());
+        
+        int ans= n;
+        for(int i=0; i<n; i++)
+        {
+            if(LIS[i] > 1 && LDS[i] > 1)
+            {
+                int rem= n+1 - LIS[i]- LDS[i];
+                ans= min(ans,rem);
+            }
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// Approach 2 -> Finding LIS,LDS using Binary Search (STL)
 // TC= O(N Log N)
+
+/*
 
 class Solution{
 public:
@@ -64,10 +168,7 @@ public:
     }
 };
 
-
-
-
-
+*/
 
 
 
