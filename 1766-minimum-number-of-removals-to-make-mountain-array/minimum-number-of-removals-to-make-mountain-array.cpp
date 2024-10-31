@@ -10,7 +10,77 @@
 */
 
 
+// Approach 2 -> Finding LIS,LDS using Binary Search
+// TC= O(N Log N)
+
+class Solution{
+public:
+    void solve(vector<int> &nums, vector<int> &dp,int n)
+    {
+        vector<int> vec;
+        vec.push_back(nums[0]);
+        for(int i=1; i<n; i++)
+        {
+            if(nums[i] > vec.back())
+            {
+                vec.push_back(nums[i]);
+                dp[i]= vec.size();   // to store length of LIS upto index i
+            }
+            else
+            {
+                // lower bound func to find index of just greater equal element than nums[i] in vec..
+                int index= lower_bound(vec.begin(),vec.end(),nums[i])- vec.begin();
+                vec[index]= nums[i];
+                dp[i]= index+1;
+            }
+        }
+        // return vec.size();
+    }
+
+
+    int minimumMountainRemovals(vector<int>& nums) {
+        int n= nums.size();
+
+        if(n< 3)return 0;
+        
+        vector<int> LIS(n,1);
+        solve(nums,LIS,n);
+
+        reverse(nums.begin(),nums.end());
+        vector<int> LDS(n,1);
+        solve(nums,LDS,n);
+        reverse(LDS.begin(),LDS.end());
+        
+        int ans= n;
+        for(int i=0; i<n; i++)
+        {
+            if(LIS[i] > 1 && LDS[i] > 1)
+            {
+                int rem= (n+1)- LIS[i]- LDS[i];
+                ans= min(ans,rem);
+            } 
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Approach 1 -> Finding LIS,LDS using nested for loops
 // TC= O(N^2)
+
+/*
+
 class Solution {
 public:
     int minimumMountainRemovals(vector<int>& nums) {
@@ -59,3 +129,5 @@ public:
     return ans;
     }
 };
+
+*/
