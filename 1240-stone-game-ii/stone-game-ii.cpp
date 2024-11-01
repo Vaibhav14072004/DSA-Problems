@@ -1,5 +1,88 @@
+/*
+   Top Down ->> 
+   1. Index goes from 0 to n-1
+   2. aliceTurn goes from 1 to 0 (1 means it is turn of Alice)
+   3. M goes from 1 to n
+
+   Bottom Up ->> Reverse order than Top Down
+   1. Index goes from n-1 to 0
+   2. aliceTurn goes from 0 to 1 (started from 0, bob)
+   3. M goes from 1 to n (It cannot be reversed...)
+        
+*/
+
+// Approach 2 -> Bottom Up(Tabulation)
+
+// TC= O(N^3)  -> more than memoization code of N^2
+
+
+class Solution{
+public:
+    int stoneGameII(vector<int>& piles) {
+        int n= piles.size();
+        
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int> (n+1,0)));
+
+        // populate suffix array to get sum of piles,bcoz index goes from backwards in tabulation..
+
+        vector<int> suffix(n+1,0);
+        for(int i=n-1; i>=0; i--)
+        {
+            suffix[i]= piles[i]+ suffix[i+1];
+        }
+        
+
+        for(int i=n-1; i>=0; i--)
+        {
+            for(int aliceTurn= 0; aliceTurn<= 1; aliceTurn++)
+            {
+                for(int M= 1; M<= n; M++)
+                {
+                    // in case of Alice, we have to take max, in case of bob, we expect min for alice
+                     if(aliceTurn== 1){
+                        dp[i][aliceTurn][M]= INT_MIN;
+                     }
+                     else{
+                        dp[i][aliceTurn][M]= INT_MAX;
+                     }
+
+                     for(int x= 1; x<= min(2* M, n-i); x++)
+                     {
+                         int stones= suffix[i]- suffix[i+x];
+                        
+                        // alice turn...
+                         if(aliceTurn== 1)
+                         {
+                            dp[i][aliceTurn][M]= max(dp[i][aliceTurn][M], stones + dp[i+x][0][max(M,x)]);
+                         }
+
+                         // bob turn..
+                         else
+                         {
+                            dp[i][aliceTurn][M]= min(dp[i][aliceTurn][M], dp[i+x][1][max(M,x)]);
+                         }
+                     }
+                }
+            }
+        }
+
+        return dp[0][1][1];
+    }
+};
+
+
+
+
+
+
+
+
+
+
 // Approach 1 -> Top Down(Recursion + Memoization)
 // TC= O(N*2*N) ->> O(N^2)
+
+/*
 
 class Solution{
 public:
@@ -53,6 +136,9 @@ public:
         return solve(0,aliceTurn,M,piles, dp);
     }
 };
+
+*/
+
 
 
 
