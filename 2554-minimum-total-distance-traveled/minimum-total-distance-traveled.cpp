@@ -1,5 +1,63 @@
+// Approach 3 -> Space Optimized
+// TC= O(N log N) + O(P log P) + O(N* P)
+// SC= O(P)
+
+class Solution{
+public:
+    long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {
+        sort(robot.begin(), robot.end());
+        sort(factory.begin(),factory.end());
+
+        vector<int> position;
+        for(auto it: factory)
+        {
+            int pos= it[0];
+            int cnt= it[1];
+            while(cnt--)
+            {
+                position.push_back(pos);
+            }
+        }
+
+        int p= position.size();
+        int n= robot.size();
+
+        vector<long long> next(p+1,1e18);
+
+        
+        // to handle base case ->> if(i>= robot.size()) return 0
+        for(int j=0; j<=p; j++)
+        {
+            next[j]= 0;
+        }
+
+        for(int i= n-1; i>=0; i--)
+        {
+            vector<long long> curr(p+1,1e18);
+            for(int j= p-1; j>=0; j--)
+            {
+               long long include= abs(robot[i]-position[j]) + next[j+1];
+               long long exclude= curr[j+1];
+               curr[j]= min(include,exclude);    
+            }
+            next= curr;
+        }
+        
+    return next[0];
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 -> Bottom Up (Tabulation)
 // TC= O(N log N) + O(P log P) + O(N* P)
+// SC= O(N* P)
+
+/*
 
 class Solution{
 public:
@@ -44,6 +102,9 @@ public:
        return dp[0][0]; 
     }
 };
+
+*/
+
 
 
 
@@ -111,6 +172,7 @@ public:
 };
 
 */
+
 
 
 
