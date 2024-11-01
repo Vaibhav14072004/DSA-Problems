@@ -1,60 +1,106 @@
-class Solution {
-private:
-    // Function that returns max number of stones that current player
-    // can get if game starts with the current player from pile at 
-    // index idx and the current m, if both players play optimally
-    int playOptimally(int idx, int m, vector<int>& piles, vector<int>& suffixSum, vector<vector<int>>& memo) {
-        int n = piles.size();
+// Approach 1 -> Top Down(Recursion + Memoization)
+// TC= O(N*2*N) ->> O(N^2)
 
-        if (idx >= n) {  // check for edge cases
+class Solution{
+public:
+    int solve(int i, bool aliceTurn, int M, vector<int> &piles, vector<vector<vector<int>>> &dp)
+    {
+        int n= piles.size();
+        if(i >= n)
+        {
             return 0;
         }
 
-        // If sub-problem is already solved, no need to solve it again
-        if(memo[idx][m] != -1) return memo[idx][m];
-
-        //variable to store sum of stones in the first X piles
-        int sum = 0; 
-        //variable to store the maximum stones the current player can get
-        int ans = INT_MIN;
-
-        for (int i = idx; i<idx + 2*m && i < n; i++)
+        if(dp[i][aliceTurn][M] != -1)
         {
-            sum += piles[i];
-            int X = i - idx + 1; // number of piles choosen
-            int tempM = max(m,X);  // update m for next player
-
-            // below variable stores max stones the other player can
-            // get from the remaining piles (if both play optimally)
-            int next = playOptimally(i+1, tempM, piles, suffixSum,memo);   
-
-            // remaining piles store suffixSum[i+1] number of stones
-            // in total, so subtract next from it to get number of 
-            // stones the current player can get from the remaining
-            // piles. Add sum to it, since those stones are also picked
-            // by the current player
-            ans = max(ans, suffixSum[i+1] - next + sum);
+            return dp[i][aliceTurn][M];
         }
-
-        return memo[idx][m] = ans;
+        
+        int ans;
+        
+        // In Alice turn, we have to make max but in bob turn, we expect min for alice
+        if(aliceTurn){
+           ans= INT_MIN;
+        }
+        else{
+          ans= INT_MAX;
+        }
+        
+        int stones= 0;
+        for(int x= 1; x<= min(2*M, n-i); x++)
+        {    
+           stones+= piles[i+x-1];
+           
+           if(aliceTurn)
+           {
+              ans= max(ans, stones+ solve(i+x, !aliceTurn, max(M,x), piles, dp));
+           }
+           else
+           {
+              ans= min(ans, solve(i+x, !aliceTurn, max(M,x), piles, dp));
+           }  
+        }
+    return dp[i][aliceTurn][M]= ans;
     }
-    
-public:
+
+
     int stoneGameII(vector<int>& piles) {
-        int n = piles.size();
-
-        if (n == 1) return piles[0];  // edge case
-
-        vector<int> suffixSum(n+1,0);
-
-        // calculate suffixSums
-        for (int i = n-1; i>=0; i--) {
-            suffixSum[i] = suffixSum[i+1] + piles[i];
-        }
-
-        // Initialize memo table
-        vector<vector<int>> memo(n, vector<int>(n, -1));
-
-        return playOptimally(0, 1, piles, suffixSum, memo);
+        int n= piles.size();
+        int M= 1;
+        bool aliceTurn= true;   
+ 
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>> (2, vector<int> (n+1, -1)));
+        return solve(0,aliceTurn,M,piles, dp);
     }
 };
+
+
+
+
+
+
+
+
+/*  RECURSIVE APPROACH
+    TC= O[N* 2^(N)]  ->> bcoz we have 2 choices either pick by alice or bob
+
+class Solution {
+public:
+    int solve(int i,bool aliceTurn,int M, vector<int> &piles)
+    {
+        int n= piles.size();
+        if(i >= n)
+        {
+            return 0;
+        }
+        
+        // we play optimally ->> in case of alice turn, we expect max but in bob turn, we expect min for alice
+        int result= (aliceTurn== true) ? INT_MIN : INT_MAX;
+
+        int stones= 0;
+        for(int x=1; x<= min(2*M, n-i); x++)
+        {
+            stones+= piles[i+x-1];
+
+            if(aliceTurn)
+            {
+                result= max(result, stones + solve(i+x, !aliceTurn, max(M,x), piles));
+            }
+            else
+            {
+                result= min(result, solve(i+x, !aliceTurn, max(M,x),piles));
+            }
+        }
+    return result;   
+    }
+
+    int stoneGameII(vector<int>& piles) {
+        int n= piles.size();
+        int M= 1;
+        bool aliceTurn= true;
+
+        return solve(0,aliceTurn,M,piles);
+    }
+};
+
+*/
