@@ -1,7 +1,62 @@
-// Approach 1.1 -> Top Down (Recursion+ Memoization)
+// Approach 2 -> Bottom Up (Tabulation)
+// TC= O(N log N) + O(P log P) + O(N* P)
+
+class Solution{
+public:
+    long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {
+        sort(robot.begin(), robot.end());
+        sort(factory.begin(),factory.end());
+        
+        int n= robot.size();
+        vector<int> position;
+
+        for(int i=0; i<factory.size(); i++)
+        {
+            int pos= factory[i][0];
+            int cnt= factory[i][1];
+            while(cnt--)
+            {
+                position.push_back(pos);
+            }
+        }
+
+        int p= position.size();
+
+        // To handle base case -> if(j >= cposition.size()) return 1e18 ->> Showing invalid case
+        vector<vector<long long>> dp(n+1, vector<long long> (p+1, 1e18));
+
+        // To handle base case -> if(i >= robot.size()) return 0;
+        for(int j=0; j<=p; j++)
+        {
+            dp[n][j]= 0;
+        }
+         
+        for(int i=n-1; i>=0; i--)
+        {
+            for(int j=p-1; j>=0; j--)
+            {
+               long long include= abs(robot[i]-position[j])+ dp[i+1][j+1];
+               long long exclude= dp[i][j+1];
+
+               dp[i][j]= min(include,exclude);
+            }
+        }
+       return dp[0][0]; 
+    }
+};
+
+
+
+
+
+
+
+// Approach 1 -> Top Down (Recursion+ Memoization)
 // Using separate vector to stroe all positions
 
 // TC= O(M log M) + O(P log P) + O(M* P) 
+
+/*
 
 class Solution{
 public:
@@ -55,6 +110,7 @@ public:
     }
 };
 
+*/
 
 
 
