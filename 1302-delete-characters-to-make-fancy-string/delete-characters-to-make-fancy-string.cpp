@@ -1,5 +1,46 @@
+// Approach 2 
 // TC= O(N)
 
+class Solution{
+public:
+   string makeFancyString(string s) {
+        int n= s.length();
+        
+        if(n < 3){
+          return s;
+        }
+        
+        int i=0, cnt= 0;
+        string ans= "";
+
+        while(i< n)
+        {
+            cnt++;
+            if(!ans.empty() && ans.back() != s[i])
+            {
+                cnt= 1;
+            }
+
+            if(cnt < 3)
+            {
+                ans+= s[i];
+            }
+        i++;
+        }
+    return ans;
+   }
+};
+
+
+
+
+
+
+
+// Approach 1 
+// TC= O(N)
+
+/*
 class Solution {
 public:
     string makeFancyString(string s) {
@@ -23,3 +64,5 @@ public:
       return ans;  
     }
 };
+
+*/
