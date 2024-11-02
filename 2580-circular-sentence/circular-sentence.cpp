@@ -1,8 +1,42 @@
-// Ques of strigstream
+// Approach -> Without stringstream
+
+class Solution{
+public:
+    bool isCircularSentence(string sentence) {
+         int n= sentence.length();
+        
+         // To handle base case-> when sentence has only 1 word, just check front and back character
+         if(sentence[0] != sentence.back())
+         {
+            return false;
+         }
+
+        for(int i=1; i<n-1; i++)
+        {
+            if(sentence[i]== ' ')
+            {
+                if(sentence[i-1] != sentence[i+1])
+                {
+                    return false;
+                }
+            }
+        }
+       return true;  
+    }
+};
+
+
+
+
+
+
+// Ques of stringstream
 
 // Approach 1.2 -> Directly using vec.back() to access last char
 // TC= O(N)
 // SC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -41,6 +75,12 @@ public:
     return true;
     }
 };
+
+*/
+
+
+
+
 
 
 
