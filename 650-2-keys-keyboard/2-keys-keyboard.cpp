@@ -28,7 +28,7 @@ public:
         //Case 2 -> Paste only
         int case2= 1 + solve(currA+ clip, clip, n, dp);
 
-        return min(case1,case2);
+        return dp[currA][clip]= min(case1,case2);
    }
 
     int minSteps(int n)
