@@ -1,5 +1,64 @@
+// Approach 2 -> Bottom Up + Greedy
+// TC= O(N^2)
+
+class Solution{
+public:  
+    int minSteps(int n)
+    {    
+       if(n == 0 || n== 1){
+          return 0;
+       }
+
+       if(n== 2){
+          return 2;
+       }
+       
+       // dp[i] -> means minimum steps to make i characters in clipboard
+       vector<int> dp(n+1,0);
+
+       // dp[0]= 0; dp[1]= 0;
+       dp[2]= 2;
+
+       for(int i=3; i<=n; i++)
+       {
+           // ex- if we have to make n= 27, start making from 27/2, if not div by 0,then 26/2= 13
+           int factor= i/2;
+           while(factor >= 1)
+           {
+               if(i % factor == 0)
+               {
+                   int steps_to_make_factor= dp[factor];
+                   int copy= 1;
+                   int paste= i/factor - 1;
+                   
+                   // min steps to make i no of A's in clipboard
+                   dp[i]= dp[factor] + copy + paste;
+
+                   break;
+               }  
+
+               // search for a smaller factor
+               else
+               {
+                  factor--;
+               }
+           }
+       }
+
+    // min steps to make up n A's in clipboard   
+    return dp[n];
+    }
+};
+
+
+
+
+
+
 // Approach 1 -> Recursion + Memoization
 // TC= O(N^2)
+
+/*
 
 class Solution{
 public:
@@ -43,6 +102,9 @@ public:
         return 1 + solve(1,1,n,dp);
     }
 };
+
+*/
+
 
 
 
