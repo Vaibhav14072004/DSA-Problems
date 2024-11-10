@@ -2,6 +2,9 @@
 
 // TC= O(32* N)
 
+// Nums can go to 10^9, so No of bits in [1 + upper bound[log 2 (10^9)]] = 30
+// So instead of running loop till 32, we can run only upto 30 
+
 class Solution {
 public:
     int minimumSubarrayLength(vector<int>& nums, int k) {
