@@ -1,18 +1,60 @@
+/*
+     <<<---- NOT A QUES OF SLIDING WINDOW  ---->>>
+     Bcoz we do not know when to increase, decrease i, j so that
+     vowls in curr substring maintains even count...
+*/
+
+
+// Approach 1 -> 
+// TC= O(N)
+
 class Solution {
 public:
-    int findTheLongestSubstring(string s) {
-        unordered_map<int, int> prefix;
-        unordered_map<char, int> shift{{'a', 0}, {'e', 1}, {'i', 2}, {'o', 3}, {'u', 4}};
-        prefix[0] = -1;
-        int n = s.length(), result = 0, mask = 0;
-        for (int i = 0; i < n; i++) {
-            if (shift.count(s[i]))
-                mask ^= (1 << shift[s[i]]);
-            if (prefix.count(mask))
-                result = max(result, i - prefix[mask]);
-            else
-                prefix[mask] = i;
+    int findTheLongestSubstring(string str) {
+        int n= str.size();
+
+        unordered_map<string,int> mp;
+        string initial= "00000";
+        mp[initial]= -1;
+        
+        // a e i o u
+        vector<int> vowelCnt(5,0);
+        
+        int ans= 0;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'a'){
+               vowelCnt[0]= (vowelCnt[0]+1) % 2;
+            }
+            else if(str[i]== 'e'){
+                vowelCnt[1]= (vowelCnt[1]+1) % 2;
+            }
+            else if(str[i]== 'i'){
+                vowelCnt[2]= (vowelCnt[2]+1) % 2;
+            }
+            else if(str[i]== 'o'){
+                vowelCnt[3]= (vowelCnt[3]+1) % 2;
+            }
+            else if(str[i]== 'u'){
+                vowelCnt[4]= (vowelCnt[4]+1) % 2;
+            }
+
+        string curr= "";
+        for(int j=0; j<5; j++)
+        {
+            curr+= to_string(vowelCnt[j]);
         }
-        return result;
+        
+        // if curr state is already found in map.. means this substring from that index again has even vowel cnt..
+        if(mp.find(curr) != mp.end())
+        {
+            ans= max(ans, i- mp[curr]);
+        } 
+        else
+        {
+            mp[curr]= i;
+        }
+      }
+    return ans;
     }
 };
