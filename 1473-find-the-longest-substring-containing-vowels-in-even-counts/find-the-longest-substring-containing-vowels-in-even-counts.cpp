@@ -5,8 +5,68 @@
 */
 
 
+// Approach 2 ->> Using XOR instead of maintaing strings for each state
+// TC= O(N)
+// SC= O(1)
+
+
+class Solution {
+public:
+    int findTheLongestSubstring(string str) {
+        int n= str.length();
+
+        int ans= 0;
+        int curr= 0;
+
+        unordered_map<int,int> mp;
+        mp[curr]= -1;
+
+        // XOR -->> of same elements= 0, different elements= 1
+        // Taking xor of curr with (1 left shift by i) 
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'a'){
+               curr= curr ^ (1<< 0);
+            }
+            else if(str[i]== 'e'){
+               curr= curr ^ (1<< 1);
+            }
+            else if(str[i]== 'i'){
+               curr= curr ^ (1<< 2);
+            }
+            else if(str[i]== 'o'){
+                curr= curr ^ (1<< 3);
+            }
+            else if(str[i]== 'u'){
+                curr= curr ^ (1<<4);
+            }
+
+            if(mp.find(curr) != mp.end())
+            {
+                ans= max(ans, i-mp[curr]);
+            }
+            else
+            {
+                mp[curr]= i;
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
 // Approach 1 -> 
 // TC= O(N)
+// SC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -58,3 +118,7 @@ public:
     return ans;
     }
 };
+
+*/
+
+
