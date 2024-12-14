@@ -1,30 +1,59 @@
+// Approach ->> Binary Search
+// TC= O(N* log N)
+
+/*
+Breaking into equal components will NOT give correct ans always...
+Ex- {7,17} ->> Breaking it in equal components at every step would give WRONG ans ...
+
+(Suppose if we have to break in equal components, we would use {max heap} to get max 
+element at top after every iteration)
+*/
+
+
 class Solution {
 public:
-    int minimumSize(vector<int>& nums, long maxOperations) {
-        long sum = 0;
-        long sz = nums.size();
-        for(int num: nums) {
-            sum += num;
-        }
-        int low = max(1l, (sum - sz)/(maxOperations + sz));
-        int high = min(1000000000l, (sum - sz)/maxOperations);
-        while(low <= high) {
-            int mid = (low + high)/2;
-            // find the smallest valid option
-            if(canSplit(nums, maxOperations, mid)) {
-                high = mid -1;
-            } else {
-                low = mid + 1;
+// func to check how many operations needed to break all elements in max component of mid
+   bool isPossible(int mid, vector<int> &nums, int maxOperations)
+   {
+       int operations= 0;
+       for(int i=0; i<nums.size(); i++)
+       {
+           if(nums[i] > mid)
+           {
+               // for 24, mid= 4, operations= 24/4 -1
+               // for 23  mid= 4, operations= 23/4 
+              operations+= nums[i]/mid;
+               if(nums[i] % mid == 0)
+               {
+                   operations--;
+               }
+           }
+       }
+       return operations <= maxOperations;
+   }
+
+
+    int minimumSize(vector<int>& nums, int maxOperations) {
+        int n= nums.size();
+        int ans= -1;
+        
+        // search space for binarySearch is 1 to maxElement
+        int start= 1;
+        int end= *max_element(nums.begin(),nums.end());
+
+        while(start <= end)
+        {
+            int mid= start+ (end-start)/2;
+            if(isPossible(mid,nums,maxOperations))
+            {
+                ans= mid;
+                end= mid-1;
+            }
+            else
+            {
+                start= mid+1;
             }
         }
-        return low;
-    }
-    
-    // is it possible to split each bag so that each bag has less than or equal to k balls?
-    bool canSplit(const vector<int>& nums, int maxOperations, int k) {
-        for(int num: nums) {
-            maxOperations -= (num - 1)/k;
-        }
-        return maxOperations >= 0;
+        return ans;
     }
 };
