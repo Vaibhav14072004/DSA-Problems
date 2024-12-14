@@ -1,3 +1,48 @@
+// Approach 1 -> Using stringstream
+// TC= O(N)
+// SC= O(N)
+
+/*
+
+temp.find(searchWord) == 0 ->> returns the starting position of the substring searchWord in word.
+If searchWord is a prefix of word, it will start at position 0
+
+temp.find(searchWord)!= string:: npos is NOT used bcoz it is used when we would check whether searchWord 
+exists anywhere in word, not just as a prefix.
+*/
+
+class Solution {
+public:
+    int isPrefixOfWord(string sentence, string searchWord) {
+        int n= sentence.length();
+        int w= searchWord.length();
+        
+        stringstream ss(sentence);
+        string temp;
+        
+        int no= 1;
+        while(ss >> temp)
+        {
+            // temp.find(searchWord)!= string:: npos CANNOT be used here
+            if(temp.find(searchWord)== 0)
+            {
+                return no;
+            }
+            no++;
+        }
+
+        return -1;
+    }
+};
+
+
+
+
+
+
+
+
+/*
 class Solution {
 public:
     int isPrefixOfWord(string sentence, string searchWord) {
@@ -38,3 +83,4 @@ public:
         return -1;
     }
 };
+*/
