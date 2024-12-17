@@ -12,8 +12,11 @@ public:
         int i= 0, j= 0;
         while(i<n1 && j< n2)
         {
-            if(str1[i]== str2[j] || str1[i]+1 == str2[j] || str1[i]-25 == str2[j]){
-                j++; 
+            // if(str1[i]== str2[j] || str1[i]+1 == str2[j] || str1[i]-25 == str2[j])
+
+            if(str1[i]== str2[j] || str1[i]+1== str2[j] || ((str1[i]-'a'+1) % 26) + 'a' == str2[j])
+            {
+                j++;
             }
           i++;
         }
