@@ -1,16 +1,43 @@
+// Approach 1 -> Using min heap + visited vector
+
+// TC= O(N) + O(N log N) =-> O(N log N)
+// SC= O(N+N) ->> O(N)
+
 class Solution {
 public:
     long long findScore(vector<int>& nums) {
-        long long res = 0;
-        for (int i = 0; i < nums.size(); i += 2) {
-            int start = i;
-            while (i + 1 < nums.size() && nums[i + 1] < nums[i]) {
-                i++;
-            }
-            for (int j = i; j >= start; j -= 2) {
-                res += nums[j];
-            }
+        int n = nums.size();
+        long long score = 0;
+        vector<int> visited(n, 0);
+
+        // min heap...
+        priority_queue<pair<int, int>, vector<pair<int, int>>,greater<pair<int,int>>>pq;
+
+        for (int i = 0; i < n; i++){
+            pq.push({nums[i], i});
         }
-        return res;
+
+        while (!pq.empty()){
+            int top = pq.top().first;
+            int index = pq.top().second;
+            pq.pop();
+
+            if(visited[index])
+            {
+                continue;
+            }
+                score += top;
+                visited[index] = 1;
+
+                if(index-1 >= 0){
+                    visited[index-1]= 1;
+                }
+
+                if(index+1 < n){
+                    visited[index+1]= 1;
+                }       
+        }
+
+        return score;
     }
 };
