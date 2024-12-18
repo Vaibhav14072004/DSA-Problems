@@ -1,26 +1,41 @@
+// Approach 1 -> Using Prefix sum for how many invalid idx are there till now..
+// TC= O(N+Q)
+
 class Solution {
-    bool isSamePar(int &a, int &b) {
-        return (a % 2 == b % 2);
-    }
 public:
     vector<bool> isArraySpecial(vector<int>& nums, vector<vector<int>>& queries) {
-        vector<int> res;
-        for (int i = 0; i < nums.size(); i++) {
-            if (i == 0 || isSamePar(nums[i], nums[i-1])) {
-                res.push_back(i); 
-            } else {
-                res.push_back(res.back());            }
+        int n= nums.size();
+        
+        // to store how many invalid idx found till now...
+        vector<int> prefix(n);
+        prefix[0]= 0;
+        
+        for(int i=1; i<n; i++)
+        {
+            if(nums[i-1] % 2== nums[i] % 2)
+            {
+                prefix[i]= 1+ prefix[i-1];
+            }
+            else
+            {
+                prefix[i]= prefix[i-1];
+            }
         }
+        
+        int q= queries.size();
+        vector<bool> ans(q,false);
 
-        vector<bool> ans;
-
-        for (auto q : queries) {
-            int ind = q[1];
-            int req = q[0];
-
-            ans.push_back(res[ind] <= req);
+        for(int i=0; i<q; i++)
+        {
+            int start= queries[i][0];
+            int end= queries[i][1];
+            
+            // means no invalid index found in above range..
+            if(prefix[end]-prefix[start]== 0)
+            {
+                ans[i]= true;
+            }
         }
-
         return ans;
     }
 };
