@@ -1,16 +1,20 @@
+// Approach 1 -> Using unordered_set
+// TC= O(N)
+
 class Solution {
 public:
     int maxCount(vector<int>& banned, int n, int maxSum) {
-        set<int>b(banned.begin(),banned.end());
-        int mc=0;
-        int sum=0;
-        for(int i=1;i<=n;i++){
-            if(b.count(i)==0){
-                sum +=i;
-                if(sum>maxSum) break;
-                mc++;
-            }
-        }
-        return mc;
+         int ans= 0;
+         unordered_set<int> st(banned.begin(),banned.end());
+         
+         int currSum= 0;
+         for(int i=1; i<=n; i++)
+         {
+             if(st.find(i) == st.end() && currSum+i <= maxSum){
+                 currSum+= i;
+                 ans++;
+             }
+         }
+      return ans;
     }
 };
