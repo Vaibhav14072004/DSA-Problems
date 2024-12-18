@@ -1,52 +1,86 @@
+// TC= O(N*M) + O[G* (M+N)] 
+ 
 class Solution {
 public:
-    void dfs(int r, int c, string dir, vector<vector<int>>& vis, map<pair<int, int>, int>& mp){
-        int n = vis.size();
-        int m = vis[0].size();
-        if(r<0 || c<0 || r>=n || c>=m) return;
-        if(mp.find({r, c})!=mp.end()) return;
-        else vis[r][c] = 1;
 
-        if(dir == "r"){
-            dfs(r, c+1, "r", vis, mp);
+// TC= O(M+N)
+    void DFS(int i, int j, vector<vector<int>> &grid, int m, int n)
+    {
+        // mark entire row as guarded...
+        // left row
+        for(int col= j-1; col>=0; col--)
+        { 
+            if(grid[i][col]== 2 || grid[i][col]== 3){
+                break;
+            }
+           grid[i][col]= 0;
         }
-        if(dir == "l"){
-            dfs(r, c-1, "l", vis, mp);
+
+        // right row
+        for(int col= j+1; col<n; col++)
+        {
+            if(grid[i][col]== 2 || grid[i][col]== 3){
+                break;
+            }
+            grid[i][col]= 0;
         }
-        if(dir == "u"){
-            dfs(r-1, c, "u", vis, mp);
+
+        // mark entire col as guarded...
+        // up column
+        for(int row= i-1; row>=0; row--)
+        {
+            if(grid[row][j]== 2 || grid[row][j]== 3){
+                break;
+            }
+            grid[row][j]= 0;
         }
-        if(dir == "d"){
-            dfs(r+1, c, "d", vis, mp);
+
+        // down column
+        for(int row= i+1; row<m; row++)
+        {
+            if(grid[row][j]== 2 || grid[row][j]== 3){
+                break;
+            }
+            grid[row][j]= 0;
         }
     }
-    int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls) {
-        vector<vector<int>> vis(m, vector<int> (n));
-        queue<pair<int, int>> q;
-        map<pair<int, int>, int> mp;
-        for(auto it: guards){
-            q.push({it[0], it[1]});
-            mp[{it[0], it[1]}]++;
-            vis[it[0]][it[1]] = 1;
+
+
+    int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls){
+        vector<vector<int>> grid(m, vector<int> (n, 1));
+
+        // mark all cells with walls as 2
+        for(vector<int> it: walls){
+            int row= it[0];
+            int col= it[1]; 
+            grid[row][col]= 2;
         }
-        for(auto it: walls) {
-            mp[{it[0], it[1]}]++;
-            vis[it[0]][it[1]] = 1;
+
+        // mark all cells with guard as 3
+        for(vector<int> &itr: guards){
+            int row= itr[0];
+            int col= itr[1];
+            grid[row][col]= 3;
         }
-        for(auto it: guards){
-            int r = it[0];
-            int c = it[1];
-            dfs(r, c+1, "r", vis, mp);
-            dfs(r, c-1, "l", vis, mp);
-            dfs(r+1, c, "d", vis, mp);
-            dfs(r-1, c, "u", vis, mp);
+
+        // mark the whole row and col as guarded
+        for(vector<int> &it: guards)
+        {
+            int row= it[0];
+            int col= it[1];
+            DFS(row,col,grid,m,n);
         }
-        int cnt=0;
-        for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
-                if(vis[i][j] == 0) cnt++;
+
+        int cnt= 0;
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+               if(grid[i][j]== 1){
+                 cnt++;
+               }
             }
         }
-        return cnt;
+       return cnt; 
     }
 };
