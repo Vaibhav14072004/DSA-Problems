@@ -1,8 +1,61 @@
-// Approach 2 -> Sliding Window
-// TC= O(N* log N)
-
 //   To become   {x, y} overlapping 
 //   x+k >= y-k  ->>>> (y <= x + 2*k)
+
+// Approach 3 -> Sorting + BinarySearch
+// TC= O(N log N)
+
+class Solution {
+public:
+    int binarySearch(int y,vector<int> &nums)
+    {
+        int start= 0;
+        int end= nums.size()-1;
+        int idx;
+        while(start <= end)
+        {
+            int mid= start+ (end-start)/2;
+            if(nums[mid] <= y)
+            {
+                idx= mid;
+                start= mid+1;
+            }
+            else 
+            {
+                end= mid-1;
+            }
+        }
+        return idx;
+    }
+
+
+    int maximumBeauty(vector<int>& nums, int k) {
+        int n= nums.size();
+        sort(nums.begin(), nums.end());
+        
+        int maxLen= 0;
+        for(int i=0; i<n; i++)
+        {
+            int y= nums[i] + 2*k;
+            int j= binarySearch(y,nums);
+            maxLen= max(maxLen, j-i+1);
+        }
+        return maxLen;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+// Approach 2 -> Sorting + Sliding Window
+// TC= O(N* log N)
+
+/*
 
 class Solution {
 public:
@@ -26,6 +79,7 @@ public:
     }
 };
 
+*/
 
 
 
