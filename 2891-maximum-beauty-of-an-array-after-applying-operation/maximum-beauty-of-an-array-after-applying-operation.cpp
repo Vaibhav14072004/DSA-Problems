@@ -1,9 +1,50 @@
+// Approach 2 -> Sliding Window
+// TC= O(N* log N)
+
+//   To become   {x, y} overlapping 
+//   x+k >= y-k  ->>>> (y <= x + 2*k)
+
+class Solution {
+public:
+    int maximumBeauty(vector<int>& nums, int k) {
+        int n= nums.size();
+         
+         sort(nums.begin(),nums.end());
+         
+         int i= 0, j= 0;
+         int maxLen= 0;
+         while(i < n)
+         {
+            while(j < n && (nums[j] <= nums[i]+ 2*k))
+            {
+                j++;
+            }
+            maxLen= max(maxLen, j-i);
+            i++;
+         }
+         return maxLen;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 // Approach 1 -> Find max no of overlapping intervals for each element(nums[i]-k, nums[i]+k)
 
 // Approach 1.2 ->> Using queue
 // NO need to take deque, no need to push start time in queue as we need only end time
 
 // TC= O(N* log N)+ O(2*N)
+
+/*
 
 class Solution {
 public:
@@ -37,6 +78,7 @@ public:
     }
 };
 
+*/
  
 
 
