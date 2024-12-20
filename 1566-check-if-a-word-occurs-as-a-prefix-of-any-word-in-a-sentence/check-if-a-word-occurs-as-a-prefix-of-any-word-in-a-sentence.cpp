@@ -1,3 +1,47 @@
+// Approach 2 ->> 2 Pointers (Without using stringstream)
+// TC= O(N+W)
+
+class Solution {
+public:
+    int isPrefixOfWord(string sentence, string searchWord) {
+        int n= sentence.length();
+        int w= searchWord.length();
+
+        int i=0, cnt= 1;
+        while(i< n)
+        {
+            // skip spaces
+            if(i< n && sentence[i]== ' '){
+                cnt++;
+                i++;
+            }
+            
+            int j=0;
+            while(i< n && j< n && sentence[i]== searchWord[j]){
+                i++;
+                j++;
+            }
+
+            if(j== w){
+                return cnt;
+            }
+
+            while(i< n && sentence[i] != ' '){
+              i++;
+            }
+        }
+
+    return -1;
+    }
+};
+
+
+
+
+
+
+
+
 // Approach 1 -> Using stringstream
 // TC= O(N)
 // SC= O(N)
@@ -10,6 +54,8 @@ If searchWord is a prefix of word, it will start at position 0
 temp.find(searchWord)!= string:: npos is NOT used bcoz it is used when we would check whether searchWord 
 exists anywhere in word, not just as a prefix.
 */
+
+/*
 
 class Solution {
 public:
@@ -34,6 +80,8 @@ public:
         return -1;
     }
 };
+
+*/
 
 
 
