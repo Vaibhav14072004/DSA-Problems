@@ -10,10 +10,60 @@
  * };
  */
 
+// Approach 2 -> BFS 
+// TC= O(N)
+// SC= O(N)
+
+class Solution{
+ public:
+    bool isSymmetric(TreeNode* root) {
+        if(root== NULL)
+          return true;
+        
+        if(root->left== NULL && root->right== NULL){
+            return true;
+        }
+        
+        queue<pair<TreeNode*,TreeNode*>> q;
+        q.push({root->left,root->right});
+
+        while(!q.empty())
+        {
+            TreeNode* leftNode= q.front().first;
+            TreeNode* rightNode= q.front().second;
+            q.pop();
+
+            if(leftNode== NULL && rightNode== NULL){
+                continue;
+            }
+            
+            // if any one node is NULL but other is NOT, return false
+            if(leftNode== NULL || rightNode== NULL){
+               return false;
+            }
+            
+            if(leftNode->val != rightNode->val){
+                return false;
+            }
+
+            // we have to match (leftNode->left) to (rightNode->right) and vice versa for mirror symmetry
+            q.push({leftNode->left, rightNode->right});
+
+            q.push({leftNode->right, rightNode->left});
+        }
+       return true; 
+    }
+};
+
+
+
+
 
  // Approach 1 -> Using DFS
  // TC= O(N)
  // SC= O[log 2 (N)] ->> Recursive stack space
+
+/*
 
 class Solution {
 public:
@@ -48,3 +98,5 @@ public:
         return solve(root->left,root->right);
     }
 };
+
+*/
