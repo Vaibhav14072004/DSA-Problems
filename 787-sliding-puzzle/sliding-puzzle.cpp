@@ -1,59 +1,80 @@
+// TC= O(6!)= O(720)
+// SC= O(6!)= O(720)
+
 class Solution {
 public:
-    int slidingPuzzle(vector<vector<int>>& board) {
-        string finalStr = "123450";
-        string currStr = getFlatString(board);
-        using pis = pair<int, string>;
-        queue<pis> q;
-        set<string> st;
-        for(int i = 0; i < currStr.size(); i++) {
-            if (currStr[i] == '0') {
-                q.push({i, currStr});
-                st.insert(currStr);
-                break;
+    int slidingPuzzle(vector<vector<int>>& board)
+    {
+        // if the index of 0 is this, we can swap it with these indexes..
+        unordered_map<int, vector<int>> mp;
+        mp[0] = {1, 3};
+        mp[1] = {0, 2, 4};
+        mp[2] = {1, 5};
+        mp[3] = {0, 4};
+        mp[4] = {1, 3, 5};
+        mp[5] = {2, 4};
+
+        string start = "";
+
+        for (int i = 0; i < 2; i++){
+            for (int j = 0; j < 3; j++) {
+                start += to_string(board[i][j]);
             }
         }
-        map<int, vector<int>> swpIdx;
-        swpIdx[0] = {1, 3};
-        swpIdx[1] = {0, 2, 4};
-        swpIdx[2] = {1, 5};
-        swpIdx[3] = {0, 4};
-        swpIdx[4] = {1, 3, 5};
-        swpIdx[5] = {2, 4};
-        int res = 0;
-        while(q.size() > 0) {
+
+        unordered_set<string> visited;
+        visited.insert(start);
+
+        string target = "123450";
+        int cnt = 0;
+
+        if (start == target){
+            return 0;
+        }
+
+        queue<string> q;
+        q.push(start);
+
+        while (!q.empty())
+        {
             int n = q.size();
-            while(n--) {
-                auto p = q.front();
-                string curr = p.second;
-                int idx = p.first;
-                // cout<<"Checking "<<curr<<endl;
+            cnt++;
+            while (n--)
+            {
+                string curr = q.front();
                 q.pop();
-                if (curr == finalStr) {
-                    return res;
+
+                if (curr == target){
+                    return cnt;
                 }
-                for(int v: swpIdx[idx]) {
-                    string nxt = curr;
-                    swap(nxt[idx], nxt[v]);
-                    if (st.find(nxt) == st.end()) {
-                        q.push({v, nxt});
-                        st.insert(nxt);
+
+                // find index of 0 ->> curr.find('0')
+                int idx;
+                for (int i = 0; i < 6; i++) {
+                    if (curr[i] == '0') {
+                        idx = i;
+                    }
+                }
+
+                // now we can replace the 0 with all diff combinations from map
+                for (int it : mp[idx])
+                {
+                    string newStr = curr;
+                    swap(newStr[idx], newStr[it]);
+                
+                    if(newStr== target)
+                    {
+                        return cnt;
+                    }
+
+                    if(!visited.count(newStr))
+                    {
+                        visited.insert(newStr);
+                        q.push(newStr);
                     }
                 }
             }
-            res++;
         }
         return -1;
-    }
-
-private: 
-    string getFlatString(vector<vector<int>>& board) {
-        string res = "";
-        for(int i = 0; i < board.size(); i++) {
-            for(int j = 0; j < board[0].size(); j++) {
-                res.push_back('0' + board[i][j]);
-            }
-        }
-        return res;
     }
 };
