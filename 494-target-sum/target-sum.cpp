@@ -1,5 +1,60 @@
+// Approach 2.2 -> DP + Using map instead of 2D vector
+// TC= O(N* totalSum)
+
+class Solution {
+public:
+   int solve(int index, vector<int> &nums, int currSum, int &target, unordered_map<string,int> &mp)
+   {
+       // base case
+       if(index== nums.size()){
+           if(currSum== target)
+           {
+             return 1;
+           }
+           else
+           {
+            return 0;
+           }
+       }
+       
+       string currString= to_string(index)+ '_' + to_string(currSum);
+
+       // if this state is already seen, directly return .
+       if(mp.count(currString))
+       {
+          return mp[currString];
+       }
+
+       int plus= solve(index+1,nums, currSum+nums[index], target, mp);
+       int minus= solve(index+1,nums, currSum-nums[index], target, mp);
+
+       string temp= to_string(index) + '_' + to_string(currSum);
+       return mp[temp]= plus+ minus;
+   }
+
+
+   int findTargetSumWays(vector<int>& nums, int target) {
+        int n= nums.size();
+        int currSum= 0;
+
+        unordered_map<string,int> mp;
+        return solve(0,nums,currSum, target, mp);
+    }
+};
+
+
+
+
+
+
+
+
+
+
 // Approach 2.1 -> Top Down DP (Memoization)
 // TC= O[N* (2* TotalSum + 1)] ->> O(N* totalSum)
+
+/*
 
 class Solution{
  public: 
@@ -39,6 +94,7 @@ class Solution{
      }
 };
 
+*/
 
 
 
