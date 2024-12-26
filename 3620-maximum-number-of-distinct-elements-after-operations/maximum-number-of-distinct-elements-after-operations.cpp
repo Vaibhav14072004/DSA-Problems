@@ -1,4 +1,4 @@
-// TC= O(N)
+// TC= O(N* log N)
 
 class Solution {
 public:
@@ -14,12 +14,14 @@ public:
 
         for(int i=1; i<n; i++)
         {
-            // to make prev= prev+1, if possible..
+            // to make prev= prev+1, if possible ad is in range
             if(prev+1 >= nums[i]-k && prev+1 <= nums[i]+k)
             {
                 prev= prev+1;
                 cnt++;
             }
+
+            // to handle the case when prev < the range... ex- [6,8] k= 2, 
             else if(prev < nums[i]-k)
             {
                 prev= nums[i]-k;
