@@ -1,6 +1,32 @@
-// Approach 2 -> Prefix Maximum
+// Approach 2.2 ->> Using prefixMax variable instead of prefixMax variable
+// TC= O(N)
+// SC= O(1)
+
+class Solution{
+public: 
+    int maxScoreSightseeingPair(vector<int>& values) {
+        int n= values.size();
+        int maxi= INT_MIN;
+
+        int prefixMax= values[0];
+        for(int i=1; i<n; i++)
+        {
+           maxi= max(maxi, prefixMax + values[i]-i);
+           prefixMax= max(prefixMax, values[i]+i);
+        }
+        return maxi;
+    }
+};
+
+
+
+
+
+// Approach 2.1 -> Prefix Maximum
 // TC= O(N)
 // SC= O(N)
+
+/*
 
 class Solution{
 public:  
@@ -24,7 +50,7 @@ public:
     }
 };
 
-
+*/
 
 
 
