@@ -1,6 +1,35 @@
+// Approach 3 ->> Max heap instead of prefixMax variable or vector
+// TC= O(N log N)
+
+class Solution{
+ public: 
+    int maxScoreSightseeingPair(vector<int>& values) {
+        int n= values.size();
+
+        priority_queue<int> pq;
+        pq.push(values[0]);
+        
+        int maxi= INT_MIN;
+        for(int i=1; i<n; i++)
+        {
+            int prefixMax= pq.top();
+            maxi= max(maxi, prefixMax + values[i]-i);
+            pq.push(values[i] + i);
+        }
+    return maxi;
+    }
+};
+
+
+
+
+
+
 // Approach 2.2 ->> Using prefixMax variable instead of prefixMax variable
 // TC= O(N)
 // SC= O(1)
+
+/*
 
 class Solution{
 public: 
@@ -17,6 +46,10 @@ public:
         return maxi;
     }
 };
+
+*/
+
+
 
 
 
