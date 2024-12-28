@@ -9,7 +9,7 @@ public:
    
    // -------- TC= O(N*M) -> O(4*N)  ---------
 
-   long long findSum(int index, vector<int> &nums, vector<long long> &subarraySum, int cnt, int k)
+   long long findSum(int index,vector<long long> &subarraySum, int cnt, int k)
    {
        if(cnt== 0)
        {
@@ -27,8 +27,8 @@ public:
           return dp[index][cnt];
        }
 
-       long long takeSum= subarraySum[index]+ findSum(index+k, nums, subarraySum, cnt-1, k);
-       long long NOTakeSum= 0 + findSum(index+1, nums, subarraySum, cnt, k);
+       long long takeSum= subarraySum[index]+ findSum(index+k, subarraySum, cnt-1, k);
+       long long NOTakeSum= 0 + findSum(index+1, subarraySum, cnt, k);
 
      return dp[index][cnt]= max(takeSum, NOTakeSum);
    }
@@ -37,7 +37,7 @@ public:
    // ----------  TC= O(4*N*M)   ----------
    // Bcoz there are 4 possible value of cnt, sumTaken Nottaken has TC= O(1) due to memoization
 
-   void solve(int index, vector<int> &nums, vector<long long> &subarraySum, vector<int> &ans,int cnt, int k)
+   void solve(int index,vector<long long> &subarraySum, vector<int> &ans,int cnt, int k)
    {
        if(index >= subarraySum.size() || cnt== 0)
        {
@@ -46,20 +46,20 @@ public:
        
        // **** TC= O(1) due to memoization ****
 
-       long long sum_taken= subarraySum[index]+ findSum(index+k, nums,subarraySum, cnt-1,k);
-       long long sum_NotTaken= 0 + findSum(index+1, nums, subarraySum, cnt,k);
+       long long sum_taken= subarraySum[index]+ findSum(index+k,subarraySum, cnt-1,k);
+       long long sum_NotTaken= 0 + findSum(index+1,subarraySum, cnt,k);
 
        // choose that path, from which sum is maximum, also push its index in ans vector
        // here = included bcoz, in case 2 subarrays have same sum, we would take that haiving lower index
        if(sum_taken >= sum_NotTaken)
        {
            ans.push_back(index);
-           solve(index+k, nums, subarraySum, ans, cnt-1, k);
+           solve(index+k,subarraySum, ans, cnt-1, k);
        }
 
        else
        {
-          solve(index+1, nums, subarraySum, ans, cnt, k);
+          solve(index+1,subarraySum, ans, cnt, k);
        }
    }
 
@@ -91,7 +91,7 @@ public:
         int cnt= 3;
         vector<int> ans;
         
-        solve(0,nums,subarraySum,ans,cnt,k);
+        solve(0,subarraySum,ans,cnt,k);
        return ans; 
     }
 };
