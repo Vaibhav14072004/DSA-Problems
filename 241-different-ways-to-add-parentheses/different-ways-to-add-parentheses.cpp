@@ -1,39 +1,58 @@
+// Approach 1 -> Every operator has 2 possibilities, either continue moving or do the operation
+// TC= O(N* 2^N)
+
 class Solution {
 public:
-    vector<int> solve(string &s, int i, int j){
+    vector<int> solve(string str)
+    {
+        int n= str.length();
+        vector<int> ans;
 
-        vector<int> res;
-        for(int k=i; k<=j; k++){
-            if(s[k] == '+' || s[k] == '-' || s[k] == '*'){
-                vector<int> left_res = solve(s, i, k - 1);
-                vector<int> right_res = solve(s, k + 1, j);
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== '+' || str[i]== '-' || str[i]== '*')
+            {
+                vector<int> leftResult= solve(str.substr(0,i));
+                vector<int> rightResult= solve(str.substr(i+1));
 
-                for(auto &x : left_res){
-                    for(auto &y : right_res){
-                        if(s[k] == '+'){
-                            res.push_back(x + y);
+                // add all possible combinations that can be formed by leftResult and righResult in vector
+                for(int &x: leftResult)
+                {
+                    for(int &y: rightResult)
+                    {
+                        if(str[i]== '+')
+                        {
+                            ans.push_back(x+y);
                         }
-                        else if(s[k] == '-'){
-                            res.push_back(x - y);
+                        else if(str[i]== '*')
+                        {
+                            ans.push_back(x*y);
                         }
-                        else{
-                            res.push_back(x * y);
+
+                        // if str[i]== '-'
+                        else
+                        {
+                            ans.push_back(x-y);
                         }
                     }
                 }
-
             }
         }
-
-        if(res.empty()){
-            res.push_back(stoi(s.substr(i, j - i + 1)));
+        
+        // if there was no operator, ex- 12, directly push it in ans..
+        if(ans.empty())
+        {
+            ans.push_back(stoi(str));
         }
-
-        return res;
-
+     return ans;
     }
+    
 
-    vector<int> diffWaysToCompute(string s) {
-        return solve(s, 0, s.size() - 1);
+    vector<int> diffWaysToCompute(string str) {
+        return solve(str);
     }
 };
+
+
+
+
