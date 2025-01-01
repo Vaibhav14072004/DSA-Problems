@@ -1,5 +1,42 @@
+// Approach 2 ->> 2 Iterations...
+// TC= O(2*N)
+
+class Solution{
+public: 
+   int maxScore(string str) {
+      int n= str.length();
+
+      vector<int> rightOne(n,0);
+      rightOne[n-1]= (str[n-1]- '0');
+
+      for(int i=n-2;i>=0; i--)
+      {
+          rightOne[i]= rightOne[i+1] + (str[i]- '0');
+      }
+      
+      int maxi= 0, cnt= 0;
+      if(str[0]== '0') cnt= 1;
+
+      for(int i=1; i<n; i++)
+      {
+          maxi= max(maxi, cnt+ rightOne[i]);
+          if(str[i]== '0'){
+            cnt++;
+          }
+      }
+      return maxi;
+   }
+};
+
+
+
+
+
+
 // Approach 1 -> Using seperate vec for cnt of zeroes on left side and ones on right side
 // TC= O(3*N)
+
+/*
 
 class Solution {
 public:
@@ -43,3 +80,5 @@ public:
       return maxi;  
     }
 };
+
+*/
