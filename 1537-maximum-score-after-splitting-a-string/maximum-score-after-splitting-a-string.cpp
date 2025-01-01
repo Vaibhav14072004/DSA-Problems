@@ -1,5 +1,45 @@
+// Approach 3 ->> 1 Iteration -> only2 varibales 
+// TC= O(N)
+
+class Solution{
+public:
+    int maxScore(string str) {
+      int n= str.length();
+
+      int total1= 0;
+      for(int i=0; i<n; i++)
+      {
+          if(str[i]== '1')
+          {
+             total1++;
+          }
+      }
+      
+      int cnt0= 0, maxi= 0;
+      for(int i=0; i<n-1; i++)
+      {
+          if(str[i]== '1')
+          {
+             total1--; 
+          }
+          else
+          {
+             cnt0++;
+          }
+          maxi= max(maxi, cnt0 + total1);
+      }
+    return maxi; 
+   }
+};
+
+
+
+
+
 // Approach 2 ->> 2 Iterations...
 // TC= O(2*N)
+
+/*
 
 class Solution{
 public: 
@@ -27,6 +67,10 @@ public:
       return maxi;
    }
 };
+
+*/
+
+
 
 
 
