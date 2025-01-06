@@ -1,6 +1,45 @@
+ // Approach 2.2 ->> Calculation sum of prefixSum till i-1 and suffixSum upto till i+1 
+ // TC= O(2*N)
+ // SC= O(1)
+
+ 
+class Solution{
+public: 
+     vector<int> minOperations(string boxes) {
+        int n= boxes.length();
+        vector<int> ans(n,0);
+        
+        int prefixSum=0;
+        int sumPrefixSum= 0;
+
+        for(int i=0; i<n; i++)
+        {
+           ans[i]= sumPrefixSum;
+           prefixSum+= (boxes[i]-'0');
+           sumPrefixSum+= prefixSum; 
+        }
+        
+        int suffixSum= 0, sumSuffixSum= 0;
+        for(int i=n-1; i>=0; i--)
+        {
+            ans[i]+= sumSuffixSum;
+            suffixSum+= (boxes[i]-'0');
+            sumSuffixSum+= suffixSum;
+        }
+        return ans;
+     }
+};
+
+
+
+
+
+
 // Approach 2.1 ->> Calculation sum of prefixSum till i-1 and suffixSum upto till i+1 
-// TC= O(N)
-// Sc= O(N)
+// TC= O(4*N)
+// Sc= O(2*N)
+
+/*
 
 class Solution{
 public: 
@@ -58,6 +97,10 @@ public:
     return ans;  
     }
 };
+
+*/
+
+
 
 
 
