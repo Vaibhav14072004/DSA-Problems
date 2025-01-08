@@ -1,4 +1,4 @@
-// Approach 1.2 ->> Brute Force Approach => Using str.find() function
+// Approach 1.3 ->> Brute Force Approach => Using substr() function
 // TC= O(N^3)
 
 class Solution{
@@ -7,6 +7,56 @@ bool isPrefixSuffix(string strA,string strB)
 {
     int lenA= strA.length();
     int lenB= strB.length();
+
+    if(lenA > lenB) return false;
+    
+    // substr(index, length)
+    if(strB.substr(0,lenA)== strA && strB.substr(lenB-lenA, lenA)== strA)
+    {
+        return true;
+    }
+    return false;
+}
+
+ int countPrefixSuffixPairs(vector<string>& words) {
+        int n= words.size();
+        int cnt= 0;
+
+        for(int i=0; i<n; i++)
+        {
+            for(int j= i+1; j<n; j++)
+            {
+                if(isPrefixSuffix(words[i],words[j]))
+                {
+                    cnt++;
+                }
+            }
+        }
+      return cnt;  
+    }
+};
+
+
+
+
+
+
+
+// Approach 1.2 ->> Brute Force Approach => Using str.find() function
+// TC= O(N^3)
+
+/*
+
+class Solution{
+public:
+bool isPrefixSuffix(string strA,string strB)
+{
+    int lenA= strA.length();
+    int lenB= strB.length();
+
+    if(lenA > lenB) return false;
+    
+    // if strA is present in strB, .find() function will return starting index
     if(strB.find(strA)== 0 && strB.rfind(strA)== (lenB-lenA))
     {
         return true;
@@ -31,6 +81,8 @@ bool isPrefixSuffix(string strA,string strB)
       return cnt;  
     }
 };
+
+*/
 
 
 
