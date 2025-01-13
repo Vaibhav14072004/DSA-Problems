@@ -1,4 +1,47 @@
+// Approach 2
+
+class Solution{
+public: 
+   int minimumLength(string str){
+        int n= str.length();
+        
+        vector<int> freq(26,0);
+        for(int i=0; i<n; i++)
+        {
+            freq[str[i]-'a']++;
+        }
+        
+        int ans= 0;
+        for(int i=0; i<26; i++)
+        {
+            if(freq[i]== 0)
+            {
+                continue;
+            }
+
+            // if freq is odd, add 1 
+            else if(freq[i] % 2 == 1)
+            {
+               ans+= 1;
+            }
+
+            // if freq is even, add 2 
+            else
+            {
+                ans+= 2;
+            }
+        }
+    return ans;
+   }
+};
+
+
+
+
+
 // Approach 1 
+
+/*
 
 class Solution{
 public: 
@@ -21,6 +64,7 @@ public:
    }
 };
 
+*/
 
 
 
