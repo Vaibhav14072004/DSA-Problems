@@ -1,5 +1,45 @@
+// Approach 4 -> Using unordered_set
+// TC= O(N)
+
+class Solution {
+public:
+    vector<int> findThePrefixCommonArray(vector<int>& A, vector<int>& B) {
+        int n= A.size();
+        vector<int> ans(n,0);
+
+        unordered_set<int> st;
+        int cnt= 0;
+
+        for(int i=0; i<n; i++)
+        {
+            if(st.count(A[i]))
+            {
+                cnt++;
+            }
+            st.insert(A[i]);
+
+            if(st.count(B[i]))
+            {
+                cnt++;
+            }
+            st.insert(B[i]);
+
+            ans[i]= cnt;
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
 // Approach 3 -> Optimized
 // TC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -18,12 +58,14 @@ public:
 
             mp[B[i]]++;
             if(mp[B[i]]== 2) cnt++;
-            
+
             ans[i]= cnt;
         }
     return ans;
     }
 };
+
+*/
 
 
 
@@ -64,6 +106,7 @@ public:
 };
 
 */
+
 
 
 
