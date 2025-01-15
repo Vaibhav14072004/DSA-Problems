@@ -1,5 +1,58 @@
-// TC= O{ceil(log 2 (N)) + 1} ->> log2 (N)
+// Approach 2 ->> Set bits starting from MSB if currBit in nums1 is set, else set remaining bits from LSB
+
+// TC= O(32)
+// SC= O(1)
+
+class Solution {
+public:
+    int minimizeXor(int num1, int num2)
+    {
+        // find no of set bits in num1
+        // int reqBits=  __builtin_popcount(num1);
+    
+        int reqBits= 0;
+        for(int i=0; i<32; i++)
+        {
+            if((num2 & (1<<i)) != 0)
+            {
+                reqBits++;
+            }
+        }
+        
+        int ans= 0;
+
+        // Start from MSB, if the curr bit in nums1 is set, set it in ans also
+        for(int i=31; i>=0 && reqBits > 0; i--)
+        {
+            if((num1 & (1<<i)) != 0)
+            {
+                ans= ans | (1<<i);
+                reqBits--;
+            }
+        }
+
+        // now set remaining bits of ans from LSB
+        for(int i=0; i<= 31 && reqBits > 0; i++)
+        {
+            // if the curr bit is unset,then set the curr bit
+            if((num1 & (1<<i)) == 0)
+            {
+                ans= ans | (1<<i);
+                reqBits--;
+            }
+        }
+    return ans;
+    }
+};
+
+
+
+// Approach 1 ->> Set/Unset bits from LSB dependig upon currBits and reqBits
+
+// TC= O{ceil(log 2 (N)) + 1} ->> log2 (N) -> O(32)
 //  SC= O(1)
+
+/*
 
 class Solution {
 public:
@@ -62,3 +115,5 @@ public:
     return ans;
     }
 };
+
+*/
