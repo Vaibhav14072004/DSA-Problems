@@ -1,3 +1,27 @@
+/*
+**** ---- Bit Manipulations Operations  --- *****
+
+1) To Check if the currBit is SET or NOT 
+    
+    if((num1 & (1<< currBit)) != 0) ->> curr bit is SET
+    if((num1 & (1<< currBit)) == 0) ->> curr bit is UNSET (not set)
+
+2) To SET the curr bit
+   
+   ans= ans | (1<<currBit)
+
+3) To UNSET the curr bit
+   
+   ans= ans & ~(1<< currBit)
+
+4) Count no of set bits
+   
+   __builtin_popcount(num)
+   
+*/
+
+
+
 // Approach 2 ->> Set bits starting from MSB if currBit in nums1 is set, else set remaining bits from LSB
 
 // TC= O(32)
