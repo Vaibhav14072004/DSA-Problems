@@ -1,3 +1,27 @@
+// Approach 2 ->> If there are 3 elements, [a,b,c] then (a^b) ^ (b^c) ^ (c^a) => 0
+//  If XOR of all elements will be 0, return true
+
+// TC= O(N)
+// SC= O(1)
+
+class Solution{
+public:
+   bool doesValidArrayExist(vector<int>& derived) {
+        int n= derived.size();
+        int XOR= 0;
+
+        for(int i=0; i<n; i++)
+        {
+            XOR^= derived[i];
+        }
+        return (XOR== 0);
+   }
+};
+
+
+
+
+
 // Approach 1 ->> XOR is Commutative in nature
 // TC= O(2*N)
 // SC= O(N)
@@ -13,6 +37,8 @@ There will be 2 Cases...
 
 AND ALSO Check the XOR of last and first element of original, it should be equal to derived
 */
+
+/*
 
 class Solution {
 public:
@@ -49,3 +75,5 @@ public:
     return false;
     }
 };
+
+*/
