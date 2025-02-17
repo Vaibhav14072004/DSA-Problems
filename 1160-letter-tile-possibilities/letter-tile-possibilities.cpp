@@ -1,9 +1,51 @@
 // Ques of BackTracking
 
+// Approach 2 ->> Using 26 sized vector instead using set
+// TC= O(N!)
+// SC= O(26)
+
+class Solution{
+public:
+    void solve(vector<int> &freq,int &cnt)
+    {
+        cnt++;
+        for(int i=0; i<26; i++)
+        {
+            if(freq[i]== 0){
+              continue;
+            }
+
+            freq[i]--;
+            solve(freq,cnt);
+            
+            // backtracking...
+            freq[i]++;
+        }
+    }
+
+    int numTilePossibilities(string tiles) {
+        int n= tiles.size();
+        vector<int> freq(26,0);
+
+        for(int i=0; i<n; i++){
+            freq[tiles[i]-'A']++;
+        }
+        
+        int cnt= 0;
+        solve(freq,cnt);
+        return cnt-1;
+    }
+};
+
+
+
+
 // Approach 1 ->> Using Unordered_set
 
 // TC= O(N!)  as we have N*(N-1)*(N-2)..  possiblity for each place
-// SC= O(N* N!) + O(N) is recursive stack space
+// SC= O(N!) + O(N) is recursive stack space
+
+/*
 
 class Solution {
 public:
@@ -40,3 +82,5 @@ public:
         return st.size()-1; 
     }
 };
+
+*/
