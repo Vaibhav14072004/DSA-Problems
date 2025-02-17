@@ -1,39 +1,31 @@
+// Approach 1 
+// TC= O(N)
+
 class Solution {
 public:
-    bool areAlmostEqual(string s1, string s2) {
-        int n= s1.length();
-        int m= s2.length();
-
+    bool areAlmostEqual(string s1, string s2){
         // base case
-        if(n != m) return false;
-
-        vector<int> diff;
-        int i=0;
-        while(i< n)
-        {
-            if(s1[i] != s2[i])
-            {
-                diff.push_back(i);
-            }
-            i++;
-        }
-    
-    // max allowed operations are 0 or 1 only..
-        if(diff.size()== 0)
-        {
-            return true;
+        if(s1.length() != s2.length()){
+            return false;
         }
 
-        if(diff.size()== 2)
+        if(s1== s2) return true;
+ 
+        int n= s1.length();
+        int diffCnt= 0;
+
+        vector<int> diffIdx;
+        for(int i=0; i<n; i++)
         {
-            int i= diff[0], j= diff[1];
-            if(s1[i]== s2[j] && s1[j]== s2[i])
-            {
-                return true;
-            }
+           if(s1[i] != s2[i]){
+               diffCnt++;
+               diffIdx.push_back(i);
+           }
+           if(diffCnt > 2) {
+              return false;
+           }
         }
 
-      // else return false;
-        return false;
+      return diffCnt== 2 && (s1[diffIdx[0]]== s2[diffIdx[1]]) && (s1[diffIdx[1]]== s2[diffIdx[0]]);  
     }
 };
