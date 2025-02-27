@@ -1,7 +1,54 @@
+// Approach 2 ->> Bottom Up (Tabulation)
+// TC= O(N^2)
+// SC= O(N^2)
+
+class Solution{
+ public:
+    int lenLongestFibSubseq(vector<int>& arr) {
+        int n= arr.size();
+        vector<vector<int>> dp(n,vector<int> (n,2));
+        int maxLen= 0;
+
+        unordered_map<int,int> mp;
+        for(int i=0; i<n; i++)
+        {
+            mp[arr[i]]= i;
+        }
+
+        for(int j=1; j<n; j++)
+        {
+            for(int k=j+1; k<n; k++)
+            {
+                 int target= arr[k]-arr[j];
+                 if(mp.count(target) && mp[target] < j)
+                 {
+                     int i= mp[target];
+                     dp[j][k]= 1+ dp[i][j];  
+                 }
+               maxLen= max(maxLen, dp[j][k]);
+            }
+        }
+    
+      if(maxLen < 3){
+         return 0;
+      }
+
+     return maxLen;
+    }
+};
+
+
+
+
+
+
+
+
 // Approach 1 -> Top Down (Memoization)
 // Tc= O(N^3)
-// SC= O(N)
+// SC= O(N^2)
 
+/*
 class Solution {
 public:
     int solve(int j, int k, vector<int> &arr, vector<vector<int>> &dp, unordered_map<int,int> &mp)
@@ -21,6 +68,7 @@ public:
         // at end of recurence call, we have to include i, j also 
       return 2;   
     }
+
 
     int lenLongestFibSubseq(vector<int>& arr) {
         int n= arr.size();
@@ -48,3 +96,5 @@ public:
     return maxLen;  
     }
 };
+
+*/
