@@ -1,63 +1,47 @@
+// Approach 1 ->> Create adj list and using DFS find whether path from src to dest exists or NOT
+// TC= O[q* (V+E)] + O(E)
+// SC= O(V+E)
+
 class Solution {
-private:
-    vector<vector<int>> graph;
-    vector<bool> visited;
-    vector<unordered_set<int>> dependentCourses;
-    
-    unordered_set<int> dfs(int from) {
-        visited[from] = true;
-        unordered_set<int> current{from};
-        
-        for (int to : graph[from]) {
-            if (!visited[to]) {
-                auto toSet = dfs(to);
-                current.insert(toSet.begin(), toSet.end());
-            } else {
-                current.insert(to);
-                current.insert(dependentCourses[to].begin(), dependentCourses[to].end());
-            }
-            dependentCourses[from].insert(current.begin(), current.end());
-        }
-        
-        return current;
-    }
-    
-    unordered_set<int> getRoots(int numCourses, vector<vector<int>>& prerequisites) {
-        unordered_set<int> result;
-        for (int i = 0; i < numCourses; i++) {
-            result.insert(i);
-        }
-        
-        for (const auto& prereq : prerequisites) {
-            result.erase(prereq[1]);
-        }
-        
-        return result;
-    }
-    
 public:
-    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
-        graph.resize(numCourses);
-        for (const auto& prereq : prerequisites) {
-            graph[prereq[0]].push_back(prereq[1]);
+    bool DFS(int src, int dest,vector<bool> &visited,vector<vector<int>> &adj)
+    {
+        visited[src]= true;
+        if(src== dest){
+            return true;
         }
-        
-        visited.resize(numCourses, false);
-        dependentCourses.resize(numCourses);
-        
-        auto roots = getRoots(numCourses, prerequisites);
-        for (int from : roots) {
-            if (!visited[from]) {
-                dfs(from);
+
+        for(auto it: adj[src])
+        {
+            if(!visited[it])
+            {
+                if(DFS(it,dest,visited,adj))
+                {
+                    return true;
+                }
             }
         }
-        
-        vector<bool> result;
-        result.reserve(queries.size());
-        for (const auto& query : queries) {
-            result.push_back(dependentCourses[query[0]].count(query[1]) > 0);
+     return false;   
+    }
+
+    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
+        int q= queries.size();
+
+        // create adj list..  (a,b) => a-> b
+        vector<vector<int>> adj(numCourses);
+        for(auto it: prerequisites)
+        {
+            adj[it[0]].push_back(it[1]);
         }
         
-        return result;
+        vector<bool> ans(q,false);
+        for(int i=0; i<q; i++)
+        {
+            int src= queries[i][0];
+            int dest= queries[i][1];
+            vector<bool> visited(numCourses,false);
+            ans[i]= DFS(src,dest,visited,adj);
+        }
+      return ans;  
     }
 };
