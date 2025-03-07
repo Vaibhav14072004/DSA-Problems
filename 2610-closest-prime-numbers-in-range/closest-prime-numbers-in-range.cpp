@@ -1,5 +1,81 @@
+/*
+    There is 2 way of Sieve of Eratosthenes->>
+
+1.      for(int i=2; i*i<= n; i++)
+        {
+            if(isPrime[i]){
+                for(int j=2; j*i <= n; j++){
+                    isPrime[i*j]= false;
+                }
+            }
+        }
+
+2.      for(int i=2; i*i<= n; i++)
+        {
+            if(isPrime[i]){
+                for(int j=i*i; j<= n; j+= i)
+                {
+                    isPrime[j]= false;
+                }
+            } 
+        }  
+ 
+*/
+
+
+
+// Approach 2 ->> Without using Sieve of Eratosthenes (Without storing all primes)
+// TC= O[n* (right-left)]
+
+class Solution{
+public:
+    bool isPrime(int num)
+    {
+        if(num== 0 || num== 1){
+            return false;
+        }
+
+        for(int i=2; i*i <= num; i++){
+            if(num % i== 0)
+            {
+                return false;
+            }
+        }
+      return true;  
+    }
+
+    vector<int> closestPrimes(int left, int right)
+    {
+        vector<int> prime;
+        int a= -1, b= -1;
+        int minDiff= INT_MAX;
+
+        for(int i=left; i<= right; i++)
+        {
+            if(isPrime(i))
+            {
+               if(!prime.empty() && minDiff > i-prime.back())
+               {
+                   minDiff= i-prime.back();
+                   a= prime.back();
+                   b= i;
+               }
+               prime.push_back(i);
+            }
+        }
+    return {a,b};
+    }
+};
+
+
+
+
+
+
 // Approach 1 -> Sieve of Eratosthenes
 // TC= O(N log log N) + O(right-left) + O(N)
+
+/*
 
 class Solution {
 public:
@@ -56,3 +132,5 @@ public:
     return {a,b};
     }
 };
+
+*/
