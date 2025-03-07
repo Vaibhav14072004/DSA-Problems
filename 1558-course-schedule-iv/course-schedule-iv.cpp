@@ -1,7 +1,78 @@
+// NOT Optimized
+// Approach 3 -> Creating a matrix of n*n size of type bool whether every node to other is prerequisite or NOT
+
+// TC= O[N^2* (V+E)]
+
+class Solution{
+public:
+    bool DFS(int src, int dest, vector<vector<int>> &adj, vector<bool> &visited)
+    {
+        if(visited[src]){
+            return false;
+        }
+
+        visited[src]= true;
+        if(src== dest){
+            return true;
+        }
+
+        for(auto it: adj[src])
+        {
+            if(!visited[it])
+            {
+                if(DFS(it,dest,adj,visited))
+                {
+                    return true;
+                }
+            }
+        }
+    return false;
+    }
+
+
+    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) 
+    {
+        // create adj list..
+        vector<vector<int>> adj(numCourses);
+        for(auto it: prerequisites)
+        {
+            adj[it[0]].push_back(it[1]);
+        }
+
+        vector<vector<bool>> matrix(numCourses, vector<bool> (numCourses,false));
+        for(int i=0; i<numCourses; i++)
+        {
+            for(int j=0; j<numCourses; j++)
+            {
+                if(i== j) continue;
+                vector<bool> visited(numCourses,false);
+                matrix[i][j]= DFS(i,j,adj,visited);
+            }
+        }
+        
+        vector<bool> ans(queries.size(), false);
+        for(int i=0; i<queries.size(); i++)
+        {
+            int src= queries[i][0];
+            int dest= queries[i][1];
+            ans[i]= matrix[src][dest];
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 ->> Modified Topological Sort using BFS + Map
 // (Queue , Indegree vector for topo sort and unordered_map for maintaing the transitive property)
 
 // TC= O[V* (V+E)] bcoz we are iterating on map again to fill transitive dependency so we multiply V
+
+/*
 
 class Solution{
 public:
@@ -65,6 +136,9 @@ public:
     return ans;
     }
 };
+
+*/
+
 
 
 
