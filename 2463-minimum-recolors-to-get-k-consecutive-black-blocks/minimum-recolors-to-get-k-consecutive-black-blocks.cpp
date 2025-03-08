@@ -1,8 +1,6 @@
 // Approach 2 -> Sliding Window Approach
 // TC= O(2*N)
 
-/*
-
 class Solution {
 public:
     int minimumRecolors(string blocks, int k) {
@@ -31,13 +29,15 @@ public:
     }
 };
 
-*/
+
 
 
 
 
 // Brute Force Approach 
 // TC= O(N*K)
+
+/*
 
 class Solution{
  public:
@@ -60,3 +60,5 @@ class Solution{
     return ans;  
     }
 };
+
+*/
