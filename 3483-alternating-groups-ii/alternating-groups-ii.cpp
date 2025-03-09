@@ -1,5 +1,45 @@
+// Approach 3 -> Sliding Window Other Approach
+// TC= O(N)
+
+class Solution{
+ public: 
+    int numberOfAlternatingGroups(vector<int>& arr, int k) {
+        int n= arr.size();
+        int ans= 0, cnt= 1, j=1;
+        
+        // first append first k-1 elements of arr at the end to maintain to circular order
+        arr.insert(arr.end(),arr.begin(),arr.begin()+k-1);
+        
+        int N= n+k-1;
+        while(j < N)
+        {
+            if(arr[j-1]== arr[j])
+            {
+                cnt= 1;
+            }
+            else
+            {
+                cnt++;
+            }
+
+            if(cnt >= k)
+            {
+                ans++;
+            }
+          j++;
+        }
+    return ans;
+    }
+};
+
+
+
+
+
 // Approach 2 -> Sliding Window Approach
 // TC= O(N)
+
+/*
 
 class Solution{
  public: 
@@ -31,6 +71,8 @@ class Solution{
     return ans;
     }
 };
+
+*/
 
 
 
