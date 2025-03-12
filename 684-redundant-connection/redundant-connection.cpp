@@ -1,38 +1,47 @@
+// Approach 1 -> DFS (Constructing the graph and immediatley checking whether we can reach u to v)
+// TC= O(N* (V+E))
 class Solution {
-private:
-    vector<int> parent, size;
-    
-    int findParent(int node){
-        if(node == parent[node]) return node;
-        return parent[node] = findParent(parent[node]);
-    }
-    void  merge(int u, int v){
-        int par_u = findParent(u);
-        int par_v = findParent(v);
-
-        if(par_u == par_v) return;
-        if(size[par_u] < size[par_v]){
-            parent[par_u] = par_v;
-            size[par_v] += size[par_u];
-        } else {
-            parent[par_v] = par_u;
-            size[par_u] += size[par_v];
-        }
-    }
 public:
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int V = edges.size();
-        parent.resize(V+1);
-        size.resize(V+1);
+    bool DFS(int u, int v, vector<bool> &visited,unordered_map<int,vector<int>> &adj)
+    {
+         visited[u]= true;
 
-        for(int i = 1; i <= V; i++){
-            parent[i] = i;
-        }
+         if(u== v) return true;
+
+         for(auto it: adj[u])
+         {
+            if(!visited[it])
+            {
+               if(DFS(it,v,visited,adj))
+               {
+                  return true;
+               }
+            }
+         }
+       return false;  
+    }
+
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        int n= edges.size();
         
-        for(auto it: edges){
-            if(findParent(it[0]) == findParent(it[1])) return {it[0], it[1]};
-            else merge(it[0], it[1]);
+        // first create adj list
+        unordered_map<int,vector<int>> adj;
+        for(auto it: edges)
+        {
+            int u= it[0];
+            int v= it[1];
+
+            vector<bool> visited(n+1,false);
+            
+            // if both u and v is already present in graph and we can reach u to v
+            if(adj.count(u) && adj.count(v) && DFS(u,v,visited,adj))
+            {
+                return it;
+            }
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
         }
-        return {-1, -1};
+    return {};
     }
 };
