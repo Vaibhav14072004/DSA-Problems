@@ -1,7 +1,89 @@
 // Same ques as Find no of islands (No of disconnected components)
 
+// Approach 3 ->> Using Disjoint Set Union (DSU)
+// TC of DSU is O(alhpa(N))
+
+// Overall TC= O[N* alpha(N)]
+
+class Solution{
+public:
+   int findP(int node,vector<int> &parent)
+   {
+       // base case
+       if(node== parent[node]){
+          return node;
+       }
+       return parent[node]= findP(parent[node],parent);
+   }
+
+   void Union(int u, int v,vector<int> &rank, vector<int> &parent)
+   {
+      int pu= findP(u,parent);
+      int pv= findP(v,parent);
+      if(pu== pv){
+         return;
+      }
+
+      if(rank[pu] > rank[pv])
+      {
+          parent[pv]= parent[pu];
+      }
+      else if(rank[pu] < rank[pv])
+      {
+          parent[pu]= parent[pv];
+      }
+      else
+      {
+         parent[pu]= parent[pv];
+         rank[pv]++;
+      }
+   }
+
+   int makeConnected(int n, vector<vector<int>>& connections) 
+    { 
+        // base case ->> To connect n nodes, we must need n-1 edges
+        if(connections.size() < n-1){
+            return -1;
+        }
+
+        vector<int> parent(n);
+        vector<int> rank(n,0);
+        for(int i=0; i<n; i++){
+            parent[i]= i;
+        }
+
+        for(auto it: connections)
+        {
+            int u= it[0];
+            int v= it[1];
+            if(findP(u,parent) != findP(v,parent))
+            {
+                Union(u,v,rank,parent);
+            }
+        }
+        
+        int cnt= 0;
+        for(int i=0; i<n; i++)
+        {
+            if(parent[i]== i)
+             cnt++;
+        }
+
+    // 1 is subtracted bcoz there will be one united group also where all other nodes will be connected    
+    return cnt-1;
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 -> BFS
 // TC= O(V+E)
+
+/*
 
 class Solution{
   public:
@@ -55,6 +137,8 @@ class Solution{
       return cnt-1;  
     }
 };
+
+*/
 
 
 
