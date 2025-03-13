@@ -1,7 +1,69 @@
 // Same ques as Find no of islands (No of disconnected components)
 
+// Approach 2 -> BFS
+// TC= O(V+E)
+
+class Solution{
+  public:
+    int makeConnected(int n, vector<vector<int>>& connections) 
+    { 
+        // base case ->> To connect n nodes, we must need n-1 edges
+        if(connections.size() < n-1){
+            return -1;
+        }
+        
+        vector<bool> visited(n,false);
+        vector<vector<int>> adj(n);
+            
+        // create adj list
+        for(auto it: connections){
+            int u= it[0];
+            int v= it[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        queue<int> q;
+        int cnt= 0;
+
+        for(int i=0; i<n; i++)
+        {
+            if(!visited[i])
+            {
+                cnt++;
+                q.push(i);
+                visited[i]= true;
+                while(!q.empty())
+                {
+                    int node= q.front();
+                    q.pop();
+
+                    for(auto it: adj[node])
+                    {
+                        if(!visited[it])
+                        {
+                            visited[it]= true;
+                            q.push(it);
+                        }
+                    }
+                }
+            }
+        }      
+ 
+
+      // to connect n disconnected components, we need n-1 edges  
+      return cnt-1;  
+    }
+};
+
+
+
+
+
 // Approach 1 -> DFS
 // TC= O(V+E)
+
+/*
 
 class Solution{
 public:
@@ -52,6 +114,8 @@ public:
       return cnt-1;  
     }
 };
+
+*/
 
 
 
