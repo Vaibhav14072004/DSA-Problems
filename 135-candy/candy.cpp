@@ -1,5 +1,54 @@
-// Approach 1 -> Using 2 extra arrays
+// Approach 2 -> Using only 1 extra vector
+// TC= O(2*N)
+
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        int n= ratings.size();
+        vector<int> left(n,0);
+        left[0]= 1;
+
+        for(int i=1; i<n; i++)
+        {
+            if(ratings[i] > ratings[i-1])
+            {
+                left[i]= 1 + left[i-1];
+            }
+            else
+            {
+                left[i]= 1;
+            }
+        }
+        
+        int sum= 0;
+        int right= max(1, left[n-1]);
+        sum+= right;
+
+        for(int i= n-2; i>= 0; i--)
+        {
+            if(ratings[i] > ratings[i+1])
+            {
+                right++;
+            }
+            else
+            {
+                right= 1;
+            }
+            sum+= max(left[i], right);
+        }
+    return sum;
+    }
+};
+
+
+
+
+
+
+// Approach 1 -> Using 2 extra vectors
 // TC= O(3*N)
+
+/*
 
 class Solution {
 public:
@@ -43,3 +92,5 @@ public:
       return sum;  
     }
 };
+
+*/
