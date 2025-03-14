@@ -1,5 +1,52 @@
+// Approach 3 -> Using Peak Technique
+// TC= O(N)
+
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        int n= ratings.size();
+        int i=1;
+        int ans= n; // each student must get 1 candy
+
+        while(i< n)
+        {
+            if(ratings[i]== ratings[i-1])
+            {
+                i++;
+                continue;
+            }
+
+            int peak= 0;
+            while(i< n && ratings[i] > ratings[i-1])
+            {
+                peak++;
+                ans+= peak;
+                i++;
+            }
+
+            int dip= 0;
+            while(i< n && ratings[i] < ratings[i-1])
+            {
+                dip++;
+                ans+= dip;
+                i++;
+            }
+          ans-= min(peak,dip);
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+
 // Approach 2 -> Using only 1 extra vector
 // TC= O(2*N)
+
+/*
 
 class Solution {
 public:
@@ -39,6 +86,10 @@ public:
     return sum;
     }
 };
+
+*/
+
+
 
 
 
