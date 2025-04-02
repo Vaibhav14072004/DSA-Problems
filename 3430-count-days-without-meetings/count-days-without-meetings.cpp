@@ -1,23 +1,31 @@
+// Approach ->> Using Sorting
+// TC= O(N log N)
+
 class Solution {
 public:
     int countDays(int days, vector<vector<int>>& meetings) {
+        int n= meetings.size();
+        int cnt= 0;
+
+        // base case
+        if(meetings.empty()) return days;
+        
+        // sort meetings in ascending order...
         sort(meetings.begin(),meetings.end());
-        int res=0;
-        if(meetings[0][0]!=1){
-            res+=(meetings[0][0]-1);
-        }
-        int mx = meetings[0][1];
-        for(int i=1;i<meetings.size();i++){
-            if(mx>days){
-                break;
+        
+        int prevEnd= 0;
+        for(int i=0; i<n; i++)
+        {
+            int nextStart= meetings[i][0];
+            if(prevEnd < nextStart){
+                cnt+= (nextStart-prevEnd-1);
             }
-            int d = meetings[i][0]-mx-1;
-            mx = max(mx,meetings[i][1]);
-            if(d>0){
-                res+=d;
-            }
+           prevEnd= max(prevEnd, meetings[i][1]);
         }
-        res+=(days-mx);
-        return res;
+
+        // ex- [2,6] [3,4]  days= 10, then we must add (days-maxEnd) in answer
+        cnt+= days-prevEnd;
+      return cnt;  
     }
 };
+
