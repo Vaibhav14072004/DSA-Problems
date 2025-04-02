@@ -1,5 +1,46 @@
+// Approach 2 -> Using leftMax array and rightMax array 
+// Tc= O(3*N)
+// SC= O(2*N)
+
+class Solution{
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n= nums.size();
+        long long maxi= 0;
+        
+        // i ..... j..... k  ->> (nums[i]-nums[j])* nums[k]
+        // so we need to maximize nums[i] as well as nums[k]
+
+        vector<int> leftMax(n,0);
+        for(int i=1; i<n; i++)
+        {
+           leftMax[i]= max(leftMax[i-1],nums[i-1]);
+        }
+        
+        vector<int> rightMaxK(n,0);
+        for(int i=n-2; i>=0; i--)
+        {
+           rightMaxK[i]= max(rightMaxK[i+1],nums[i+1]);
+        }
+        
+        for(int i=0; i<n; i++)
+        {
+            maxi= max(maxi, (long long) (leftMax[i]-nums[i])* rightMaxK[i]);
+        }
+      return maxi;  
+    }
+};
+
+
+
+
+
+
 // Approach 1 -> Brute Force Approach
 // TC= O(N^3)
+// SC= O(1)
+
+/*
 
 class Solution {
 public:
@@ -20,3 +61,5 @@ public:
       return maxi;  
     }
 };
+
+*/
