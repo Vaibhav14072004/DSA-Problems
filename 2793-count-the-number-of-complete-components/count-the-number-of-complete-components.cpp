@@ -1,62 +1,54 @@
+/*
+Connected Component should have, Edges= (V)*(V-1)/2
+*/
+
+
+// Approach 1 -> Using DFS
+// TC= O(V+E)
+
+
 class Solution {
-    void dfs_size(int node,unordered_map<int,vector<int>> &adj,vector<bool>&vis, int &size){
-         vis[node] = 1;
-        
-        size++; 
-        for(auto nbr : adj[node]){
-            if(!vis[nbr]){
-                
-                dfs_size(nbr,adj,vis,size);
-                
-            }
-        }
-         
-    }
-    bool dfs(int node,unordered_map<int,vector<int>> &adj,vector<bool>&vis, int &size){
-
-        vis[node] = 1;
-        
-        if(adj[node].size() != size) return 0;
-        for(auto nbr : adj[node]){
-            if(!vis[nbr]){
-                
-                bool ch = dfs(nbr,adj,vis,size);
-                if(!ch)  return 0;
-            }
-        }
-        return 1;
-    }
 public:
-    int countCompleteComponents(int n, vector<vector<int>>& edges) {
-        
-        unordered_map<int,vector<int>> adj;
+    void DFS(int node, vector<bool> &visited, unordered_map<int,vector<int>> &adj, int &vertices, int &edges)
+    {
+        visited[node]= true;
+        vertices++;
+        edges+= adj[node].size();  // each edges will be counted twice here
 
-        for( auto i : edges){
-            
-            int u = i[0];
-            int v = i[1];
-            
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+        for(auto it: adj[node])
+        {
+            if(!visited[it]){
+              DFS(it,visited,adj,vertices,edges);
+            }
         }
-        vector<bool> vis(n,0);
-        vector<bool> vis_size(n,0);
-        vector<bool> dfs_vis(n,0);
-        int ans = 0;
-        for(int i = 0 ; i < n ; i++){
-            if(!vis[i]){
-                int size = 0 ;
-                dfs_size(i,adj,vis_size,size);
-                // cout<<size<<" ";
-                size--;
-                if(dfs(i,adj,vis,size)){
-                //    / cout<<i<<" ";
-                    ans++;
-                } else {
-                    dfs_size(i,adj,vis,size);
+    }
+
+    int countCompleteComponents(int n, vector<vector<int>>& edges) 
+    {
+        int cnt= 0;
+        unordered_map<int,vector<int>> adj;
+        for(auto it: edges)
+        {
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
+        }
+
+        vector<bool> visited(n,false);
+        for(int i=0; i<n; i++)
+        {
+            if(!visited[i])
+            {
+                int vertices= 0, edges= 0;
+                DFS(i,visited,adj,vertices,edges);
+                
+                // if it is connected component, then no of edges must be (v)(v-1)/2
+                // bcoz edges are counted twice, so we divided by edges/2== (v)(v-1)/2
+                if(edges== vertices*(vertices-1))
+                {
+                    cnt++;
                 }
             }
         }
-        return ans;
+    return cnt;
     }
 };
