@@ -2,8 +2,99 @@
 Connected Component should have, Edges= (V)*(V-1)/2
 */
 
+// Approach 3 -> DSU (Disjoint Set Union)
+// TC of DSU is O(alpha(V))
+// Overall TC= O(E* alpha(V))
+
+class DSU{
+public:
+   vector<int> parent;
+   vector<int> size;
+   DSU(int n)
+   {
+      parent.resize(n);
+      size.resize(n); // vertices in a component   
+      for(int i=0; i<n; i++)
+      {
+        parent[i]= i;
+        size[i]= 1;
+      }
+   }
+   
+   int findParent(int node)
+   {
+       if(parent[node]== node){
+          return node;
+       }
+      return parent[node]= findParent(parent[node]); 
+   }
+
+   void unionBySize(int u, int v)
+   {
+       int parentU= findParent(u);
+       int parentV= findParent(v);
+       
+       if(parentU== parentV) return;
+
+       if(size[parentU] < size[parentV])
+       {
+          parent[parentU]= parentV;
+          size[parentV]+= size[parentU]; 
+       }
+       else
+       {
+          parent[parentV]= parentU;
+          size[parentU]+= size[parentV];
+       }   
+   }
+};
+
+
+class Solution{
+public:
+   int countCompleteComponents(int n, vector<vector<int>>& edges) 
+    {
+       DSU dsu(n);
+       for(auto it: edges)
+       {
+          int u= it[0];
+          int v= it[1];
+          dsu.unionBySize(u,v);
+       }
+       
+       // count no of edges...
+       vector<int> totalEdges(n,0);
+       for(auto it: edges)
+       {
+           int root= dsu.findParent(it[0]);
+           totalEdges[root]++;
+       }
+       
+       int cnt= 0;
+       for(int i=0; i<n; i++)
+       {
+          if(i== dsu.findParent(i))
+          {
+             int vertices= dsu.size[i];
+             int edges= totalEdges[i];
+             
+             // for a complete component, edges= v*(v-1)/2
+             if(edges== (vertices)*(vertices-1)/2)
+                cnt++;
+          }
+       }
+     return cnt;  
+    }
+};
+
+
+
+
+
 // Aproach 2 -> Using BFS
 // TC= O(V+E)
+
+/*
 
 class Solution{
 public:
@@ -58,6 +149,10 @@ public:
     return cnt;
     }
 };
+
+*/
+
+
 
 
 
