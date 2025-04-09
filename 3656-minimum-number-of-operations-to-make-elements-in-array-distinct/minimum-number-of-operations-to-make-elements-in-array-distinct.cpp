@@ -1,5 +1,32 @@
+// Approach 2 -> Optimized
+// TC= O(N)
+
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        int n = nums.size();
+        unordered_set<int> st;
+
+        for(int i=n-1; i>=0; i--)
+        {
+           if(st.count(nums[i]))
+           {
+              return ceil((i+1)/3.0);
+           }
+           st.insert(nums[i]);
+        }
+      return 0;  
+    }
+};
+
+
+
+
+
 // Approach 1 -> Brute Force Approach
 // TC= O(N^2)
+
+/*
 
 class Solution {
 public:
@@ -35,6 +62,9 @@ public:
     return cnt;
     }
 };
+
+*/
+
 
 
 
