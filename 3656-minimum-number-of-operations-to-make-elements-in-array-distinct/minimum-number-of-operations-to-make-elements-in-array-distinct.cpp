@@ -1,3 +1,49 @@
+// Approach 1 -> Brute Force Approach
+// TC= O(N^2)
+
+class Solution {
+public:
+    bool checkDuplicate(int i,vector<int> &nums)
+    {
+        unordered_set<int> st;
+        for(int j=i; j<nums.size(); j++)
+        {
+            if(st.count(nums[j]))
+            {
+                return true;
+            }
+            st.insert(nums[j]);
+        }
+        return false;
+    }
+
+    int minimumOperations(vector<int>& nums) {
+        int n = nums.size();
+        int cnt= 0;
+
+        for(int i=0; i<n; i+=3)
+        {
+           if(checkDuplicate(i,nums))
+           {
+              cnt++;
+           } 
+           else
+           {
+              return cnt;
+           }
+        }
+    return cnt;
+    }
+};
+
+
+
+
+
+
+
+/*
+
 class Solution {
 public:
     int minimumOperations(vector<int>& nums) {
@@ -49,3 +95,5 @@ public:
        return ans; 
     }
 };
+
+*/
