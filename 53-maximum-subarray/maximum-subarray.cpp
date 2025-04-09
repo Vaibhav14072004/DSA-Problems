@@ -1,31 +1,30 @@
-// Approach 2 (Kadane Algorithm ) 
+// Approach 2 -> Kadane Algorithm
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& arr) {
-        int n= arr.size();
-       
-       int sum= 0;
-       int maxi= INT_MIN;
+    int maxSubArray(vector<int>& nums) {
+        int n= nums.size();
+        int maxi= INT_MIN;
+        int sum= 0;
 
-       for(int i=0; i<n; i++)
-       {
-           sum+= arr[i];
-         
-        if(sum > maxi)
+        // int start= 0, ansStart= -1, ansEnd= -1;
+        for(int i=0; i<n; i++)
         {
-            maxi= sum;
+           // if(sum== 0) start= i;
+
+            sum+= nums[i];
+            maxi= max(maxi,sum);
+
+            if(sum < 0)
+            {
+                sum= 0;
+                // ansStart= start;  ansEnd= i;
+            }
         }
-        
-        // if sum is < 0 again initialize sum with 0 in that case...
-           if(sum <0)
-           {
-               sum= 0;
-           }
-       }
-    return maxi;
+       return maxi; 
     }
-    };
+};
+
 
 
 
