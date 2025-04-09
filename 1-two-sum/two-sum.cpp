@@ -1,10 +1,55 @@
+// Approach 3 -> Sorting
+// TC= O(N log N) + O(N)
+
+class Solution{
+ public: 
+   vector<int> twoSum(vector<int> &nums,int target){
+      int n= nums.size();
+      
+      // store original indexes of nums, bcoz sorting will distort the indexes.
+      vector<pair<int,int>> vec;
+      for(int i=0; i<n; i++)
+      {
+         vec.push_back({nums[i],i});
+      }
+
+      sort(vec.begin(),vec.end());
+      
+      int i=0, j= n-1;
+      while(i < j)
+      {
+          if(vec[i].first+ vec[j].first== target)
+          {
+             return {vec[i].second, vec[j].second};
+          }
+          else if(vec[i].first+ vec[j].first < target)
+          {
+             i++;
+          }
+          else
+          {
+             j--;
+          }
+
+      }
+    return {};
+    }
+};
+
+
+
+
+
+
+
 // Appraoch 2 -> using unordered_map
 // TC= O(N)
 
+/*
+
 class Solution{
 public:
-  vector<int> twoSum(vector<int> &nums,int target)
-  {
+  vector<int> twoSum(vector<int> &nums,int target){
       int n= nums.size();
 
       // value, index
@@ -22,6 +67,7 @@ public:
   }
 };
 
+*/
 
 
 
