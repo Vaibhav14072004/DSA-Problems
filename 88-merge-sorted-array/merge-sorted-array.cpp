@@ -1,5 +1,52 @@
+// Approach 2 -> Without using extra space + Sorting
+// Start from end of arr1 and start of arr2 
+
+// TC= O(min(N,M)) + O(N log N) + O(M log M)
+
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i= m-1;
+        int j= 0;
+
+        while(i>= 0 && j < n)
+        {
+            if(nums1[i] > nums2[j])
+            {
+                swap(nums1[i],nums2[j]);
+                i--;
+                j++;
+            }
+
+            // if nums1[i] <= nums2[j] , then all elements before i and after j is already sorted
+            else
+            {
+                break;
+            }
+        }
+        
+        // in ques it is given that nums1 has (n+m) length having 0 appended in last
+        // we have to sort only upto length m
+        sort(nums1.begin(), nums1.begin()+m);
+        sort(nums2.begin(),nums2.end());
+        
+        for(int i=0; i<n; i++)
+        {
+            nums1[i+m]= nums2[i];
+        }
+    }
+};
+
+
+
+
+
+
+
 // Approach 1 -> Using extra space + 2 Pointers
-// TC= O(M*N)
+// TC= O(M+N)
+
+/*
 
 class Solution {
 public:
@@ -38,3 +85,5 @@ public:
         }
     }
 };
+
+*/
