@@ -1,6 +1,48 @@
-// Approach 1 => Using PrefixMax( LeftMax) and SuffixMax( RightMax)
+// Approach 1.2 -> Using PrefixMax and SufixMax
+// Using space of only 1 extra vector...
+
+// TC= O(2*N)
+// SC= O(2*N)
+
+class Solution{
+ public:
+   int trap(vector<int> &height)
+   {
+        int n= height.size();
+        int ans= 0;
+
+        vector<int> leftMax(n,0);
+        leftMax[0]= height[0];
+
+        for(int i=1; i<n; i++)
+        {
+            leftMax[i]= max(leftMax[i-1],height[i]);
+        } 
+
+        int rightMax= height[n-1];
+        for(int i=n-2; i>=0; i--)
+        {
+            rightMax= max(rightMax, height[i]);
+            leftMax[i]= min(leftMax[i], rightMax)- height[i];
+            ans+= leftMax[i];
+        }
+      return ans;  
+   }
+};
+
+
+
+
+
+
+
+// Approach 1.1 => Using PrefixMax( LeftMax) and SuffixMax( RightMax)
+// Using space of 2 extra  vectors...
+
 // TC= O(3*N) 
-// SC= O(2*N) -> using space of 2 extra  vectors...
+// SC= O(2*N) 
+
+/*
 
 class Solution {
 public:
@@ -32,3 +74,5 @@ public:
     return ans;
     }
 };
+
+*/
