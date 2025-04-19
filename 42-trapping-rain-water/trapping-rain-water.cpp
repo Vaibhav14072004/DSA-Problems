@@ -1,8 +1,52 @@
+// Approach 2 -> Using 2 Pointers
+// TC= O(N)
+// SC= O(1)
+
+class Solution{
+  public:
+     int trap(vector<int> &height)
+     {
+         int n= height.size();
+         int left= 0, right= n-1;
+         int leftMax= height[0];
+         int rightMax= height[n-1];
+         
+         int ans= 0; 
+         while(left <= right)
+         {
+             leftMax= max(leftMax,height[left]);
+             rightMax= max(rightMax,height[right]);
+
+             if(leftMax <= rightMax)
+             {
+                 ans+= leftMax-height[left];
+                 left++;
+             }
+
+             // if rightMax > leftMax
+             else
+             {
+                ans+= rightMax- height[right];
+                right--;
+             }
+         }
+    return ans;
+     }
+};
+
+
+
+
+
+
+
 // Approach 1.2 -> Using PrefixMax and SufixMax
 // Using space of only 1 extra vector...
 
 // TC= O(2*N)
 // SC= O(2*N)
+
+/*
 
 class Solution{
  public:
@@ -29,6 +73,8 @@ class Solution{
       return ans;  
    }
 };
+
+*/
 
 
 
