@@ -1,5 +1,51 @@
+// Approach 2 -> Greedy Approach
+// TC= O(N)
+
+class Solution{
+  public:
+    int leastInterval(vector<char>& tasks, int n)
+    {
+        vector<int> freq(26,0);
+        for(char it: tasks){
+            freq[it-'A']++;
+        }
+
+        sort(freq.begin(),freq.end());
+
+        int gaddhe= freq[25]-1;
+        int idleSpots= n* (gaddhe);
+        
+        // now start from descending order and not from 25, bcoz we have allocated firstly the element having max freq
+        for(int i=24; i>=0; i--)
+        {
+            if(freq[i] > 0)
+            {
+                idleSpots-= min(freq[i], gaddhe);
+                if(idleSpots== 0)
+                {
+                    break;
+                }
+            }
+        }
+       
+       if(idleSpots <= 0)
+       {
+          return tasks.size();
+       }
+
+       return tasks.size()+ idleSpots;
+    }
+};
+
+
+
+
+
+
 // Approach 1 -> Using max heap (priority_queue)
 // TC= O(N* log(26)) ->> O(N)
+
+/*
 
 class Solution {
 public:
@@ -57,3 +103,4 @@ public:
     }
 };
 
+*/
