@@ -1,6 +1,45 @@
+// Approach 4 -> Using Binary Search
+// TC= O(N* log N)
+
+// lower bound gives index of first >= element
+// upper bound gives index of first > element
+
+class Solution{
+  public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n= nums.size();
+        vector<int> temp;
+        temp.push_back(nums[0]);
+
+        for(int i=0; i<n; i++)
+        {
+            if(!temp.empty() && nums[i] > temp.back())
+            {
+                temp.push_back(nums[i]);
+            }
+
+            // else find first >= element than curr and replace it with curr
+            else
+            {
+                int firstGreater= lower_bound(temp.begin(),temp.end(),nums[i])- temp.begin();
+                temp[firstGreater]= nums[i];
+            }
+        }
+    return temp.size();
+    }
+};
+
+
+
+
+
+
+
 // Approach 3 -> Tabulation (Space Optimized)
 // TC= O(N^2)
 // SC= O(1)
+
+/*
 
 class Solution{
   public:
@@ -28,6 +67,7 @@ return nextRow[0];
     }
 };
 
+*/
 
 
 
