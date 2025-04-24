@@ -1,6 +1,8 @@
 // Approach 1 -> Sliding Window 
 // TC= O(2*N)
 
+/*
+
 class Solution {
 public:
     int countCompleteSubarrays(vector<int>& nums) {
@@ -37,3 +39,39 @@ public:
       return cnt;  
     }
 };
+
+*/
+
+
+
+
+// Approach 1 -> Brute Force Approach
+// TC= O(N^2)
+
+class Solution {
+public:
+    int countCompleteSubarrays(vector<int>& nums) {
+        int n= nums.size();
+        int cnt= 0;
+        unordered_set<int> st(nums.begin(),nums.end());
+
+        int unique= st.size();
+
+        // generate all possible subarrays..
+        for(int i=0; i<n; i++)
+        {
+            unordered_map<int,int> mp;
+            for(int j=i; j<n; j++)
+            {
+                mp[nums[j]]++;
+                if(mp.size()== unique)
+                {
+                    cnt++;
+                }
+            }
+        }
+     return cnt;   
+    }
+};
+
+
