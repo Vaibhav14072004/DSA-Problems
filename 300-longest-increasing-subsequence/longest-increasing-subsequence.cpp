@@ -1,8 +1,42 @@
+// Approach 5 -> Tabulation Approach- 2
+// TC= O(N^2)
+
+class Solution{
+  public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n= nums.size();
+        vector<int> dp(n+1,1);
+
+        int maxLen= 0;
+        for(int i=0; i<n; i++)
+        {
+            for(int prev= 0; prev < i; prev++)
+            {
+                if(nums[i] > nums[prev] && dp[i] < 1+ dp[prev])
+                {
+                    dp[i]= 1+ dp[prev];
+                }
+            }
+            maxLen= max(maxLen, dp[i]);
+        }
+     return maxLen;   
+    }
+};
+
+
+
+
+
+
+
+
 // Approach 4 -> Using Binary Search
 // TC= O(N* log N)
 
 // lower bound gives index of first >= element
 // upper bound gives index of first > element
+
+/*
 
 class Solution{
   public:
@@ -29,13 +63,15 @@ class Solution{
     }
 };
 
+*/
 
 
 
 
 
 
-// Approach 3 -> Tabulation (Space Optimized)
+
+// Approach 3 -> Tabulation 1 (Space Optimized)
 // TC= O(N^2)
 // SC= O(1)
 
@@ -73,7 +109,7 @@ return nextRow[0];
 
 
 
-// Approach 2 -> Bottom Up (Tabulation)
+// Approach 2 -> Bottom Up (Tabulation) 1
 // TC= O(N^2)
 // SC= O(N^2)
 
