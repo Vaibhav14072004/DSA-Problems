@@ -1,5 +1,59 @@
+// Approach 2 -> Using for loops..
+// TC= O(N)
+
+
+class Solution {
+public:
+    string reverseWords(string str) {
+        int n= str.length();
+
+        string temp= "";
+        string ans= "";
+
+        stack<string> st;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== ' ')
+            {
+                continue;
+            }
+
+            while(i < n && str[i] != ' ')
+            {
+                temp+= str[i];
+                i++;
+            }
+
+          st.push(temp);
+          temp= "";
+        }
+    
+    while(!st.empty())
+    {
+       ans+= st.top();
+       st.pop();
+       if(!st.empty())
+       {
+          ans+= ' ';
+       }
+    }
+    return ans;
+  }
+};
+
+
+
+
+
+
+
+
+
+
 // Approach 1 -> While loop
 // TC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -47,3 +101,5 @@ public:
         return ans;
     }
 };
+
+*/
