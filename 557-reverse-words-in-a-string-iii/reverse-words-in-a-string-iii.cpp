@@ -13,9 +13,9 @@ public:
         int i=0;
         while(i < n)
         {
-            while(i< n && str[i]== ' '){
-                i++;
-            }
+            // To skip the leading zeroes..
+            // while(i< n && str[i]== ' '){
+            //     i++; }
 
             while(i< n && str[i] != ' ')
             {
