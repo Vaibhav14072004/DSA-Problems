@@ -1,5 +1,59 @@
+// Approach 2 -> Using map
+// TC= O(2*N)
+
+class Solution{
+public:
+    int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
+        int n= tops.size();
+
+        int maxi= -1, maxFreq= -1;
+        unordered_map<int,int> mp;
+        
+        for(int i=0; i<n; i++)
+        {
+            mp[tops[i]]++;
+            mp[bottoms[i]]++;
+            if(mp[tops[i]] > maxFreq)
+            {
+                maxFreq= mp[tops[i]];
+                maxi= tops[i];
+            }
+
+            if(mp[bottoms[i]] > maxFreq)
+            {
+                maxFreq= mp[bottoms[i]];
+                maxi= bottoms[i];
+            }
+        }
+
+        if(maxFreq < n) return -1;
+
+        int cnt1= 0, cnt2= 0;
+        for(int i=0; i<n; i++)
+        {
+            if(tops[i] != maxi && bottoms[i] != maxi)
+            {
+                return -1;
+            }
+            else if(tops[i] != maxi){
+                cnt1++;
+            }
+            else if(bottoms[i] != maxi){
+                cnt2++;
+            }
+        }
+     return min(cnt1,cnt2);   
+    }
+};
+
+
+
+
+
 // Approach 1 -> Brute Force Approach -> Try for all possible values (1 to 6)
 // TC= O(6*N)
+
+/*
 
 class Solution{
 public:
@@ -42,6 +96,7 @@ public:
    }
 };
 
+*/
 
 
 
