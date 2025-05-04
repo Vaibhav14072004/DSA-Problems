@@ -1,8 +1,44 @@
+// Approach 3 -> Using unordered_map
+// TC= O(N)
+
+class Solution{
+ public:
+    int numEquivDominoPairs(vector<vector<int>> &dominoes)
+    {
+        int n= dominoes.size();
+        int cnt= 0;
+        
+        unordered_map<string,int> mp;
+        for(int i=0; i<n; i++)
+        {
+            int a= dominoes[i][0];
+            int b= dominoes[i][1];
+            if(a > b)
+            {
+              swap(a,b);
+            }
+
+            string temp= to_string(a)+ "_"+ to_string(b);
+            cnt+= mp[temp];
+            mp[temp]++;
+        }
+     return cnt;   
+    }
+};
+
+
+
+
+
+
+
+
 // Approach 2 -> Using ordered map (map<pair<int,pair<int,int>>> mp) 
 // We cannot use pair<int,int> in unordered_map
 
 // TC= O(N* log N)
 
+/*
 class Solution{
  public:
     int numEquivDominoPairs(vector<vector<int>> &dominoes)
@@ -31,6 +67,10 @@ class Solution{
     return cnt;
     }
 };
+
+*/
+
+
 
 
 
