@@ -1,5 +1,8 @@
-// Approach 3 -> Using unordered_map
+// Approch 4 -> Using vector of size- 100 bcoz dominoes[i] can be max- 9 
+//    10* a + b =>> 90+9 ->> 99
+
 // TC= O(N)
+// SC= O(100) -> O(1)
 
 class Solution{
  public:
@@ -7,7 +10,42 @@ class Solution{
     {
         int n= dominoes.size();
         int cnt= 0;
-        
+        vector<int> vec(100,0);
+
+        for(int i=0; i<n; i++)
+        {
+            int a= dominoes[i][0];
+            int b= dominoes[i][1];
+            if(a > b)
+            {
+                swap(a,b);
+            }
+
+            int num= 10*a+ b;
+            cnt+= vec[num];
+            vec[num]++;
+        }
+      return cnt;  
+    }
+};
+
+
+
+
+
+
+
+// Approach 3 -> Using unordered_map
+// TC= O(N)
+
+/*
+class Solution{
+ public:
+    int numEquivDominoPairs(vector<vector<int>> &dominoes)
+    {
+        int n= dominoes.size();
+        int cnt= 0;
+
         unordered_map<string,int> mp;
         for(int i=0; i<n; i++)
         {
@@ -26,6 +64,7 @@ class Solution{
     }
 };
 
+*/
 
 
 
