@@ -1,8 +1,9 @@
-// Approach 1 -> Using DFS
+// Approach -> Using DFS and BFS
 // TC= O(N)
 
 class Solution {
 public:
+/*
     void DFS(int node,vector<bool> &visited,vector<int> &dist,vector<int> &edges)
     {
         if(visited[node]){
@@ -16,6 +17,28 @@ public:
         {
             dist[neighbour]= 1+ dist[node];
             DFS(neighbour,visited,dist,edges);
+        }  }
+
+*/
+
+    void BFS(int node,vector<bool> &visited,vector<int> &dist,vector<int> &edges)
+    {
+        visited[node]= true;
+        queue<int> q;
+        q.push(node);
+
+        while(!q.empty())
+        {
+            int curr= q.front();
+            q.pop();
+            visited[curr]= true;
+
+            int neighbour= edges[curr];
+            if(neighbour != -1 && !visited[neighbour])
+            {
+                dist[neighbour]= 1+ dist[curr];
+                q.push(neighbour);
+            }
         }
     }
 
@@ -29,12 +52,12 @@ public:
         vector<bool> visited(n,false);
         dist1[node1]= 0;
 
-        DFS(node1,visited,dist1,edges);
+        BFS(node1,visited,dist1,edges);
 
         fill(visited.begin(),visited.end(),false);
 
         dist2[node2]= 0;
-        DFS(node2,visited,dist2,edges);
+        BFS(node2,visited,dist2,edges);
 
         int node= -1;
         int minDist= INT_MAX;
