@@ -1,4 +1,42 @@
+// Approach 2 -> Without using unordered_set
 // TC= O(N^2)
+
+class Solution {
+public:
+    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {
+        int n= nums.size();
+        vector<int> ans;
+
+        for(int i=0; i<n; i++)
+        {
+            if(nums[i]== key)
+            {
+                int start= max(0,i-k);
+                int end=  min(i+k,n-1);
+
+                if(!ans.empty() && ans.back() >= start)
+                {
+                    start= ans.back()+1;
+                }
+
+                for(int j=start; j<=end; j++)
+                {
+                    ans.push_back(j);
+                }
+            }
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+// Approach 1-> Using extra space (unordered_set)
+// TC= O(N^2)+ O(N* log N)
+
+/*
 
 class Solution {
 public:
@@ -25,3 +63,5 @@ public:
       return ans;  
     }
 };
+
+*/
