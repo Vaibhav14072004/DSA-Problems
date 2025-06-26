@@ -13,11 +13,9 @@ public:
             if(str[i]== '0'){
                 len++;
             }
-
-            // k- (str[i]-'0')*(pow(2,len)) >= 0
             else if(len < 63)
             {
-                long long curr= 1LL<< len;
+                long long curr= (str[i]- '0')* (pow(2.0,len));
                 if(val + curr <= k)
                 {
                     len++;
