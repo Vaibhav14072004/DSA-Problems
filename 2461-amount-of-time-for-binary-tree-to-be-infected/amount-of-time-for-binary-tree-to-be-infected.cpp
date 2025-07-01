@@ -11,13 +11,68 @@
  */
 
 
-// Approach 1.2 -> Other way of storing parent using recursion..
+// Approach 2 ->> Using DFS
+// Optimised approach -> only 1 pass solution...
 
+// TC= O(N)
+// SC= O(N) -> for recursive stack space
+
+class Solution {
+public:
+    int DFS(TreeNode* root, int start, int &ans)
+    {
+        if(!root){
+            return 0;
+        }
+
+        int leftHt= DFS(root->left,start,ans);
+        int rightHt= DFS(root->right,start,ans);
+
+        if(root->val== start)
+        {
+           ans= max(leftHt,rightHt);
+           return -1; // to include that start node is found..
+        }
+
+        else if(leftHt >= 0 && rightHt >= 0)
+        {
+            return 1+ max(leftHt,rightHt);
+        }
+
+        // if any one of left or right Ht is negative, indicates startNode is found
+        else
+        {
+            ans= max(ans, abs(leftHt)+ abs(rightHt));
+            return min(leftHt,rightHt)-1;
+        }
+        return 0;
+    }
+
+    int amountOfTime(TreeNode* root, int start){
+        // base case
+        if(root== NULL) return 0;
+
+        int ans= 0;
+        DFS(root,start,ans);
+        return ans;
+    }
+};
+
+
+
+
+
+
+// Approach 1.2 -> Using BFS
+
+// Other way of storing parent using recursion..
 // Creating adjacency list of each node instead of storing parent of each node
 // and traverse level wise using adj list and queue
 
 // TC= O(2*N)
-// SC= O(N)
+// SC= O(2*N) -> N for recurison stack space, N for queue
+
+/*
 
 class Solution{
  public:
@@ -92,7 +147,7 @@ class Solution{
     }
 };
 
-
+*/
 
 
 
@@ -101,6 +156,8 @@ class Solution{
 
 
 // Approach 1.1 -> Using BFS
+
+// Storing parent of each node using queue
 // First store parent of each node in map, then traverse level wise and push nodes in queue with time+1
 
 // TC= O(2*N)
