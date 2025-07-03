@@ -10,12 +10,55 @@
  * };
  */
 
+// Approach 2 -> BFS
+// TC= O(N)
+// TC= O(N)
+
+class Solution{
+  public:
+    vector<int> rightSideView(TreeNode* root)
+    {
+        if(!root) return {};
+        queue<TreeNode*> q;
+        q.push(root);
+
+        vector<int> ans;
+        while(!q.empty())
+        {
+            int n= q.size();
+            for(int i=0; i<n; i++)
+            {
+                TreeNode* curr= q.front();
+                q.pop();
+
+                if(i== n-1)
+                {
+                    ans.push_back(curr->val);
+                }
+                if(curr->left){
+                    q.push(curr->left);
+                }
+                if(curr->right){
+                    q.push(curr->right);
+                }
+            }
+        }
+     return ans;   
+    }
+};
+
+
+
+
+
+
 // Approach 1 -> Using DFS
 // TC= O(N)
 
 // SC= O(Height of tree) bcoz of recursion stack space
 // SC= O(log n) in balanced tree, O(n) for skewed tree
 
+/*
 
 class Solution {
 public:
@@ -43,3 +86,5 @@ public:
         return vec;
     }
 };
+
+*/
