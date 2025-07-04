@@ -1,3 +1,4 @@
+
 /*
 Intuition ->> After doing operation 0, kth char will be same as (k - len/2)th char
      bcoz len becomes double after each operation copying same values...
@@ -13,6 +14,7 @@ Intuition ->> After doing operation 0, kth char will be same as (k - len/2)th ch
 
 // TC= O(log k)
 // SC= O(log k)
+
 
 class Solution {
 public:
@@ -54,3 +56,44 @@ public:
      return ch;
     }
 };
+
+
+
+
+
+
+/* ----- Giving TLE -------
+
+class Solution {
+public:
+    char kthCharacter(long long k, vector<int>& operations) {
+        int n= operations.size();
+        string word= "a";
+        for(int i=0; i<n; i++)
+        {
+            if(word.size() >= k) break;
+
+            if(operations[i]== 0)
+            {
+                word+= word;
+            }
+            else
+            {
+                string temp= "";
+                for(int i=0; i<word.length(); i++)
+                {
+                    int val= ((word[i]-'a')+1) % 26;
+                    char ch= val+ 'a';
+                    temp+= ch;
+                }
+                word+= temp;   
+            }
+        }
+      return word[k-1];  
+    }
+};
+
+*/
+
+
+
