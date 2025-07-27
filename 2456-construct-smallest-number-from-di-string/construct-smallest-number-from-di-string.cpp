@@ -1,7 +1,41 @@
+// Approach 2 ->> Optimized Approach using Stack
+// TC= O(N)
+
+class Solution{
+  public:
+    string smallestNumber(string pattern) {
+        int n= pattern.size();
+         string ans= "";
+
+         stack<int> st;
+         int cnt= 1;
+         for(int i=0; i<=n; i++)
+         {
+            st.push(cnt);
+             cnt++;
+             if(i== n || pattern[i]== 'I')
+             {
+                while(!st.empty())
+                {
+                    ans+= (st.top()+ '0');
+                    st.pop();
+                }
+            }
+         }
+       return ans;  
+    }
+};
+
+
+
+
+
 // Approach 1 -> Brute Force Approach
 // Generating all permutations... and checking for it 
 
 // TC= O(N* (N+1)!)
+
+/*
 
 class Solution {
 public:
@@ -37,3 +71,5 @@ public:
     return temp;  
     }
 };
+
+*/
