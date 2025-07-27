@@ -1,13 +1,39 @@
+// Approach 1 -> Brute Force Approach
+// Generating all permutations... and checking for it 
+
+// TC= O(N* (N+1)!)
+
 class Solution {
 public:
-    string smallestNumber(string pattern) {
-        string ans = "1", temp;
-        for (int i = 0; i < pattern.size(); i++) {
-            if (pattern[i] == 'I') 
-                ans += temp + char(i + '2'), temp = ""; // Flush temp and add next
-            else 
-                temp = char(ans.back()) + temp, ans.pop_back(), ans += char(i + '2'); // Store in temp
+    bool valid(string &pattern,string &temp)
+    {
+        for(int i=0; i<pattern.size(); i++)
+        {
+            if(pattern[i]== 'I' && temp[i] > temp[i+1])
+            {
+                return false;
+            }
+            else if(pattern[i]== 'D' && temp[i] < temp[i+1])
+            {
+                return false;
+            }
         }
-        return ans + temp;
+      return true;  
+    }
+    
+    string smallestNumber(string pattern) {
+        int n= pattern.size();
+        string temp= "";
+
+        // temp-> 1 2 3 4 5 6 7 8 9
+        for(int i=1; i<=n+1; i++){
+            temp+= i+ '0';
+        }
+
+        while(!valid(pattern,temp)){
+            next_permutation(temp.begin(),temp.end());
+        }
+
+    return temp;  
     }
 };
