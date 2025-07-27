@@ -10,7 +10,45 @@
  * };
  */
 
+
+// Approach 2 ->> Simple Queue traversal, (pushing right first, then left)
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root){
+        if(!root) return -1;
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        TreeNode* node= root;
+
+        while(!q.empty())
+        {
+            node= q.front();
+            q.pop();
+            
+            // first push right node
+            if(node->right){
+                q.push(node->right);
+            }
+
+            if(node->left){
+                q.push(node->left);
+            }
+        }
+      return node->val;  
+    }
+};
+
+
+
+
+
  // Approach 1 -> Level Wise Traversal
+ // TC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -44,3 +82,5 @@ public:
       return bottomLeft;     
     }
 };
+
+*/
