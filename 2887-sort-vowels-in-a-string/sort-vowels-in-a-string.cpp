@@ -1,5 +1,58 @@
-// Approach 2 -> Using only 1 vector
-// TC= O(N)+ O(N* log N)
+// Approach 3 -> Without sorting, storing freq in unordered_map
+// TC= O(N)
+
+class Solution {
+public:
+    string sortVowels(string str) {
+        int n= str.length();
+
+        // sorted order of vowels acc to ascii codes
+        string vowels= "AEIOUaeiou";
+
+        unordered_map<char,int> mp;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+                  mp[str[i]]++;
+               }
+        }
+        
+        int j=0;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+                  if(mp[vowels[j]] > 0)
+                  {
+                      str[i]= vowels[j];
+                      mp[vowels[j]]--;
+                      if(mp[vowels[j]]== 0)
+                      {
+                          j++;
+                      }
+                  }
+                  else
+                  {
+                     j++;
+                     i--; 
+                  }
+               }
+        }
+    return str;
+    }
+};
+
+
+
+
+
+// Approach 2 -> Using only 1 vector, Changing the given string, 
+// TC= O(N)+ O(N* log N) + O(N)
+
+/*
 
 class Solution {
 public:
@@ -30,6 +83,9 @@ public:
     return str;
     }
 };
+
+*/
+
 
 
 
