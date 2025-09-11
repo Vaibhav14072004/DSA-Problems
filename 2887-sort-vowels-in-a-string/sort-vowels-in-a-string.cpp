@@ -1,4 +1,44 @@
+// Approach 2 -> Using only 1 vector
+// TC= O(N)+ O(N* log N)
+
+class Solution {
+public:
+    string sortVowels(string str) {
+        int n= str.length();
+        vector<char> vowels;
+
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+                  vowels.push_back(str[i]);
+               }
+        }
+
+        sort(vowels.begin(),vowels.end());
+        int j=0;
+
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+                  str[i]= vowels[j++];
+               }
+        }
+    return str;
+    }
+};
+
+
+
+
+
+// Approach 1
 // TC= O(N)+ O(N* LOG N)+ O(N)
+
+/*
 
 class Solution {
 public:
@@ -41,3 +81,5 @@ public:
         return output;
     }
 };
+
+*/
