@@ -1,4 +1,4 @@
-// Approach 3 -> Without sorting, storing freq in unordered_map
+// Approach 3.2 ->  Without sorting, storing freq in unordered_map,using while loop
 // TC= O(N)
 
 class Solution {
@@ -25,6 +25,54 @@ public:
             if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
                str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
                {
+                   while(j < vowels.size() && mp[vowels[j]] == 0)
+                   {
+                      j++;
+                   }
+                   str[i]= vowels[j];
+                   mp[vowels[j]]--;
+               }
+        }
+    return str;
+    }
+};
+
+
+
+
+
+
+
+// Approach 3.1 -> Without sorting, storing freq in unordered_map, using if loop
+// TC= O(N)
+
+/*
+
+class Solution {
+public:
+    string sortVowels(string str) {
+        int n= str.length();
+
+        // sorted order of vowels acc to ascii codes
+        string vowels= "AEIOUaeiou";
+
+        unordered_map<char,int> mp;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+                  mp[str[i]]++;
+               }
+        }
+        
+        int j=0;
+        for(int i=0; i<n; i++)
+        {
+            if(str[i]== 'A' || str[i]== 'E' || str[i]== 'I' || str[i]== 'O' || str[i]== 'U' ||
+               str[i]== 'a' || str[i]== 'e' || str[i]== 'i' || str[i]== 'o' || str[i]== 'u')
+               {
+
                   if(mp[vowels[j]] > 0)
                   {
                       str[i]= vowels[j];
@@ -44,6 +92,10 @@ public:
     return str;
     }
 };
+
+*/
+
+
 
 
 
