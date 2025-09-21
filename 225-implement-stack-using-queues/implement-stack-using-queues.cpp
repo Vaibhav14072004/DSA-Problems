@@ -1,4 +1,5 @@
 // We can do it using 2 queues as well as single queue as well
+// TC= O(N)
 
 class MyStack {
 public:
@@ -10,6 +11,19 @@ public:
     
     void push(int x) 
     {
+
+        // Using only 1 Queue
+        q1.push(x);
+
+        for(int i=0; i<q1.size()-1; i++)
+        {
+            q1.push(q1.front());
+            q1.pop();
+        }
+
+
+        /* ---- Using 2 Queues ----
+
         while(!q1.empty()){
             q2.push(q1.front());
             q1.pop();
@@ -22,6 +36,8 @@ public:
             q1.push(q2.front());
             q2.pop();
         }
+
+        */
     }
     
     int pop()
