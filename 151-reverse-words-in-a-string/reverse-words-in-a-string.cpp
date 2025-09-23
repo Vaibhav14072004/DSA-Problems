@@ -1,5 +1,55 @@
-// Approach 4 ->> Using stringstream
-// TC= O()
+class Solution{
+  public:
+    string reverseWords(string str) {
+        int n= str.length();
+        stack<string> st;
+        int i=0;
+        string ans= "";
+
+        while(i < n)
+        {
+            // skip leading zeroes...
+            while(i<n && str[i]== ' '){
+                i++;
+            }
+
+            string temp= "";
+            while(i< n && str[i] != ' ')
+            {
+                temp+= str[i];
+                i++;
+            }
+
+            if(!temp.empty())
+            {
+                st.push(temp);
+            }
+        }
+
+        while(!st.empty())
+        {
+            ans+= st.top();
+            st.pop();
+
+            // to avoid last gap after the last one
+            if(!st.empty())
+            {
+                ans+= " ";
+            }
+        }
+    return ans;
+    }
+};
+
+
+
+
+
+
+// Approach 3 ->> Using stringstream
+// TC= O(N)
+
+/*
 
 class Solution{
   public:
@@ -28,10 +78,7 @@ class Solution{
     }
 };
 
-
-
-
-
+*/
 
 
 
