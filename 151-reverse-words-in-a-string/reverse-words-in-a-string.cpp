@@ -1,6 +1,46 @@
+// Approach 4 ->> Using stringstream
+// TC= O()
+
+class Solution{
+  public:
+    string reverseWords(string str) {
+        int n= str.length();
+        stringstream ss(str);
+        string token= "";
+        
+        stack<string> st;
+        while(ss >> token)
+        {
+            st.push(token);
+        }
+         
+        string ans= "";
+        while(!st.empty())
+        {
+            ans+= st.top();
+            st.pop();
+            ans+= " ";
+        }
+
+        // to remove the last extra " "
+        ans.pop_back();
+      return ans;  
+    }
+};
+
+
+
+
+
+
+
+
+
+
 // Approach 2 -> Using for loops..
 // TC= O(N)
 
+/*
 
 class Solution {
 public:
@@ -41,8 +81,7 @@ public:
   }
 };
 
-
-
+*/
 
 
 
