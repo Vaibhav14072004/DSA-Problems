@@ -1,5 +1,59 @@
+// Using BFS
+// TC= O(N* (10+N)) => O(N^2)
+
+class Solution {
+public:
+    string findLexSmallestString(string str, int a, int b) {
+        int n= str.length();
+        string ans= str;
+
+        unordered_set<string> st;
+        queue<string> q;
+        q.push(str);
+        st.insert(str);
+
+        while(!q.empty())
+        {
+            string front= q.front();
+            q.pop();
+            if(front < ans)
+            {
+                ans= front;
+            }
+
+           // change odd indexes of string by 'a'
+           string temp= front;
+           for(int i=1; i<n; i+=2)
+           {
+               temp[i]= ((temp[i]-'0' + a) % 10)+ '0';
+           } 
+            
+            if(!st.count(temp))
+            {
+                q.push(temp);
+                st.insert(temp);
+            }
+
+           // shift the string front by 'b'
+            string rotated= front.substr(b)+ front.substr(0,b);
+            
+           if(!st.count(rotated))
+           {
+               q.push(rotated);
+               st.insert(rotated);
+           }
+        }
+      return ans;  
+    }
+};
+
+
+
+
 // Approach 1 -> Using DFS 
 // TC= O(N)
+
+/*
 
 class Solution{
 public:
@@ -56,7 +110,7 @@ public:
     }
 };
 
-
+*/
 
 
 
