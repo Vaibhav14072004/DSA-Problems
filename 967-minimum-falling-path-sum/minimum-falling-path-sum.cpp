@@ -1,6 +1,65 @@
+// Approach 3 -> Space Optimized
+// TC= O(N^2)
+// SC= O(N)
+
+class Solution{
+ public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n= matrix.size();
+        int m= matrix[0].size();
+        vector<int> curr(m,0);
+        
+        for(int j=0; j<m; j++)
+        {
+            curr[j]= matrix[n-1][j];
+        }
+
+        for(int i=n-2; i>=0; i--)
+        {
+            vector<int> next(m,0);
+            for(int j=0; j<m; j++)
+            {
+                int down= INT_MAX;
+                if(i+1< n)
+                {
+                    down= matrix[i][j]+ curr[j];
+                }
+
+                int leftDia= INT_MAX;
+                if(i+1 < n && j-1 >= 0)
+                {
+                    leftDia= matrix[i][j]+ curr[j-1];
+                }
+
+                int rightDia= INT_MAX;
+                if(i+1 < n && j+1 < m)
+                {
+                    rightDia= matrix[i][j]+ curr[j+1];
+                }
+
+                next[j]= min(down,min(rightDia,leftDia));
+            }
+        curr= next;  
+        }
+    
+    int ans= INT_MAX;
+    for(int j=0; j<m; j++)
+    {
+       ans= min(ans,curr[j]);
+    }
+
+    return ans;
+  }
+};
+
+
+
+
 // Approach 2 -> Bottom Up
 // Move in opposite direction from N-1 to 0
 // TC= O(N^2)
+
+/*
 
 class Solution{
  public:
@@ -47,6 +106,9 @@ class Solution{
       return ans;  
     }
 };
+
+*/
+
 
 
 
