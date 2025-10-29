@@ -1,8 +1,25 @@
+// Approach 3 ->> (2^ N -1 ) will always have set bits
+// TC= O(1)
+
+// To find power of 2 -> (1<<bits)
+class Solution{
+  public:
+    int smallestNumber(int n) 
+    {
+        int no_bits= 1+ log2(n);
+        return (1<<no_bits)-1;
+    }
+};
+
+
+
+
 // Approach 2 -> 
 // (2^N - 1) will have all have set bits
 // TC= O(log N)
 
 // 1 3 7 15
+/*
 
 class Solution{
   public:
@@ -17,7 +34,7 @@ class Solution{
     }
 };
 
-
+*/
 
 
 
