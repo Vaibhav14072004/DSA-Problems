@@ -1,5 +1,6 @@
 # Approach 1 -> window function (dense_rank)
 
+/*
 WITH CTE AS(
     select d.name as Department, e.name as Employee, e.salary as Salary, 
     dense_rank() over (partition by e.departmentId order by e.salary desc) as drank
@@ -7,3 +8,16 @@ WITH CTE AS(
 )
 
 select Department, Employee, Salary from CTE where drank <= 3;
+*/
+
+
+# Approach 2 -> window function (dense_rank)
+
+select Department, Employee, Salary from (
+select d.name as Department, e.name as Employee, e.salary as Salary,
+dense_rank() over (partition by e.departmentId order by e.salary desc) as drank
+from Employee e join Department d on e.departmentId= d.id) t
+
+where t.drank <= 3;
+
+
