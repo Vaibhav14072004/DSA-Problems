@@ -1,5 +1,46 @@
+// Approach 
+// TC= O(2*N)
+
+class Solution{
+ public:
+   int longestOnes(vector<int> &nums, int k)
+   {
+      int n= nums.size();
+      int zeroes= 0;
+      int maxi= 0;
+
+      int i=0, j= 0;
+      while(j < n)
+      {
+          while(i<= j && zeroes > k )
+          {
+              if(nums[i]== 0) zeroes--;
+              i++;
+          }
+
+          if(nums[j]== 0) 
+          {
+             zeroes++;
+          }
+
+          if(zeroes <= k)
+          {
+             maxi= max(maxi, j-i+1);
+          }
+          j++;
+      }  
+    return maxi;  
+   }
+};
+
+
+
+
+
 // Approach -> sliding Window
 // TC= O(N)
+
+/*
 
 class Solution {
 public:
@@ -27,3 +68,5 @@ public:
       return maxi;  
     }
 };
+
+*/
