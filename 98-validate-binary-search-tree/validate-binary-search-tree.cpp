@@ -10,9 +10,49 @@
  * };
  */
 
+
+ // Approach 2 -> BFS
+ // TC= O(N)
+
+class Solution{
+ public:
+   bool isValidBST(TreeNode* root)
+   {
+      if(!root) return true;
+      queue<pair<TreeNode*, pair<TreeNode*, TreeNode*>>> q;
+      q.push({root,{NULL,NULL}});
+
+      while(!q.empty())
+      {
+         TreeNode* node= q.front().first;
+         TreeNode* mini= q.front().second.first;
+         TreeNode* maxi= q.front().second.second;
+         q.pop();
+
+         if(maxi != NULL && node->val >= maxi->val) return false;
+         if(mini != NULL && node->val <= mini->val) return false;
+
+         if(node->left)
+         {
+            q.push({node->left, {mini,node}});
+         }
+
+         if(node->right)
+         {
+            q.push({node->right,{node,maxi}});
+         }
+      }
+     return true; 
+   }
+};
+
+
+
+
 // Approach 1 -> DFS
 // TC= O(N)
 
+/*
 class Solution{
   public:
     bool DFS(TreeNode* root, TreeNode* mini, TreeNode* maxi)
@@ -33,3 +73,4 @@ class Solution{
     }
 };
 
+*/
