@@ -9,48 +9,48 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// Approach 1 -> Using BFS
+ // TC= O(N)
+
 class Solution {
 public:
-    int maxLevelSum(TreeNode* root) 
-    {
-        // if(!root)
-        // {
-        //     return 0;
-        // }
-        queue<TreeNode*>q;
+    int maxLevelSum(TreeNode* root) {
+        if(!root) return 0;
+        
+        queue<TreeNode*> q;
         q.push(root);
-        int maxi= root->val;//can be initialized to INT_MIN
-        int level=1;
-        int ans=1;
-        while(q.size())
-        {
-            int size= q.size();
 
-            int sum=0;//initialized to 0 for each level
-            
-            //computation for a level
-            for(int i=0;i<size;i++)
+        int maxi= INT_MIN;
+        int level= 0, ans= 0;
+
+        while(!q.empty())
+        {
+            int n= q.size();
+            int sum= 0;
+            level++;
+
+            while(n--)
             {
-                TreeNode* temp= q.front();
+                TreeNode* node= q.front();
                 q.pop();
-                sum+=temp->val;
-                if(temp->left)
+                sum+= node->val;
+                if(node->left)
                 {
-                    q.push(temp->left);
+                    q.push(node->left);
                 }
-                if(temp->right)
+                if(node->right)
                 {
-                    q.push(temp->right);
+                    q.push(node->right);
                 }
             }
-            //want min level hence no equal sign
-            if(sum>maxi)
+            
+            if(maxi < sum)
             {
-                maxi=sum;
-                ans=level;
+                maxi= sum;
+                ans= level;
             }
-            level++;//increment after updating
         }
-        return ans;
+    return ans;
     }
 };
