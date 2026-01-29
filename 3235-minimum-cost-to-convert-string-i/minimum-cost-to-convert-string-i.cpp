@@ -1,4 +1,55 @@
-// Using Floyd Warshall 
+// // Approach 2 -> Using Dijsktra for all nodes...
+
+// class Solution{
+// public:
+//      long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost)
+//     {
+//         // first create adj list...
+//         unordered_map<char, vector<pair<char,int>>> adj;
+
+//         for(int i=0; i<original.size(); i++)
+//         {
+//             adj[original[i]].push_back({changed[i], cost[i]});
+//         }
+        
+//         vector<vector<int>> costMatrix(26, vector<int> (26, INT_MAX));
+        
+//         // Min heap (Priority_queue)
+//         // priority_queue<int, vector<int>, greater<int>> pq;
+
+//         priority_queue<pair<int,char>, vector<pair<int,char>>, greater<pair<int,char>>> pq; 
+//         pq.push({0, source[0]});
+
+//         // finding shortest dist from all nodes to al other nodes..
+//         for(int i=0; i<source.size(); i++)
+//         {
+//              while(!pq.empty())
+//              {
+//                 int dist= pq.top().first;
+//                 char ch= pq.top().second;
+//                 pq.pop();
+
+//                 for(auto it: adj[ch])
+//                 {
+//                     int wt= it.first;
+//                     char neighbour= it.second;
+
+//                     if(dist+ wt <= costMatrix[neighbour])
+//                     {
+//                         if
+//                     }
+//                 }
+//              }
+//         }
+
+//     }
+// };
+
+
+
+
+
+// Best Approach ->> Using Floyd Warshall 
 
 // TC= O(26^3)+ O(2* N)
 // SC= O(N^2)
