@@ -1,32 +1,23 @@
 class Solution {
 public:
-    vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
-        int m=box.size();
-        int n=box[0].size();
-
-        for(auto &row:box){
-            int cntEmpty=0;
-            for(int j=n-1;j>=0;j--){
-                if(row[j]=='.')cntEmpty++;
-                else if(row[j]=='*')cntEmpty=0;
-                else{
-                    if(cntEmpty==0)continue;
-                    row[j+cntEmpty]='#';
-                    row[j]='.';
-                }
+    vector<vector<char>> rotateTheBox(vector<vector<char>>& grid) {
+        int rows = grid.size(), cols = grid[0].size();
+        for (int r = 0; r < rows; r++) {
+            int p = 0;
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == '.') {
+                    swap(grid[r][c], grid[r][p]);
+                    p++;
+                } else if (grid[r][c] == '*')
+                    p = c + 1;
             }
         }
-
-        vector<vector<char>>res;
-
-        for(int col=0;col<n;col++){
-            vector<char>temp;
-            for(int row=m-1;row>=0;row--){
-                temp.push_back(box[row][col]);
-            }
-            res.push_back(temp);
-        }
-
+        
+        vector<vector<char>> res(cols, vector<char>(rows));
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                res[c][rows - 1 - r] = grid[r][c];
+                
         return res;
     }
 };
