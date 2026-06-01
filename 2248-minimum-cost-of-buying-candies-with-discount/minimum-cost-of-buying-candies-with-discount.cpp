@@ -1,29 +1,29 @@
 class Solution {
 public:
-    int minimumCost(vector<int>& cost) 
-    {
+    int minimumCost(vector<int>& cost) {
         int n= cost.size();
-        int ans=0;
-        sort(begin(cost),end(cost));
-        int b= n-1;
-        int a= n-2;
-        while(true)
+        priority_queue<int> pq(cost.begin(),cost.end());
+
+        int ans= 0;
+        while(pq.size() >= 3)
         {
-            if(b>=0 && a>=0)
+            int a= pq.top();
+            pq.pop();
+            int b= pq.top();
+            pq.pop();
+            if(pq.top() <= b)
             {
-                ans+= cost[a];
-                ans+= cost[b];
-                a-=3;
-                b-=3;
+               ans+= a;
+               ans+= b;
+               pq.pop();
             }
-            else if(b>=0)
-            {
-                ans+= cost[b];
-                break;
-            }
-            else
-            {
-                break;
+        }
+
+        if(pq.size() < 3)
+        {
+            while(!pq.empty()){
+                ans+= pq.top();
+                pq.pop();
             }
         }
         return ans;
