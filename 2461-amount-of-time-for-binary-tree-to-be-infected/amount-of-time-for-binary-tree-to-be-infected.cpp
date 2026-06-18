@@ -11,45 +11,44 @@
  */
 
 
-// Approach 2 ->> Using DFS
-// Optimised approach -> only 1 pass solution...
+// Approach 3 -> Most Optimized -> One paas solution 
+// Using DFS
 
 // TC= O(N)
-// SC= O(N) -> for recursive stack space
+// SC= O(N) -> recursive stack space
 
-class Solution {
-public:
-    int DFS(TreeNode* root, int start, int &ans)
+
+class Solution{
+  public:
+    int DFS(TreeNode* root,int start,int &ans)
     {
-        if(!root){
-            return 0;
-        }
+        if(root== NULL) return 0;
 
         int leftHt= DFS(root->left,start,ans);
         int rightHt= DFS(root->right,start,ans);
 
         if(root->val== start)
         {
-           ans= max(leftHt,rightHt);
-           return -1; // to include that start node is found..
+            ans= max(leftHt,rightHt);
+            return -1;
         }
 
+        // if both heights are positive, means root not found int his path
         else if(leftHt >= 0 && rightHt >= 0)
         {
-            return 1+ max(leftHt,rightHt);
+            return max(leftHt,rightHt)+1;
         }
 
-        // if any one of left or right Ht is negative, indicates startNode is found
+         // if one of them is negative ,means root is there in its path
         else
         {
-            ans= max(ans, abs(leftHt)+ abs(rightHt));
-            return min(leftHt,rightHt)-1;
+           ans= max(ans, abs(leftHt)+ abs(rightHt));
+           return min(leftHt,rightHt)-1;
         }
-        return 0;
     }
 
-    int amountOfTime(TreeNode* root, int start){
-        // base case
+    int amountOfTime(TreeNode* root, int start) 
+    {
         if(root== NULL) return 0;
 
         int ans= 0;
@@ -63,7 +62,8 @@ public:
 
 
 
-// Approach 1.2 -> Using BFS
+
+// Approach 1.2 -> Using BFS + (DFS for storing parent of each node)
 
 // Other way of storing parent using recursion..
 // Creating adjacency list of each node instead of storing parent of each node
@@ -75,81 +75,77 @@ public:
 /*
 
 class Solution{
- public:
-    void createAdj(TreeNode* root,TreeNode* parent,unordered_map<TreeNode*,vector<TreeNode*>> &adj, TreeNode* &startNode, int &start)
+  public:  
+    void findParent(TreeNode* root,unordered_map<TreeNode*,TreeNode*> &parent, int &start, TreeNode* &startNode)
     {
-        // base case
-        if(root== NULL){
-            return;
+        if(root== NULL) return;
+
+        if(root->val== start) startNode= root;
+
+        if(root->left)
+        {
+            parent[root->left]= root;
         }
 
-        if(parent != NULL){
-            adj[root].push_back(parent);
+        if(root->right)
+        {
+            parent[root->right]= root;
         }
 
-        if(root->val== start){
-            startNode= root;
-        }
-   
-        if(root->left){
-            adj[root].push_back(root->left);
-        }
-
-        if(root->right){
-            adj[root].push_back(root->right);
-        }
-
-        createAdj(root->left,root,adj,startNode,start);
-        createAdj(root->right,root,adj,startNode,start);
+        findParent(root->left,parent,start,startNode);
+        findParent(root->right,parent,start,startNode);
     }
 
-    int amountOfTime(TreeNode* root, int start)
-    { 
-        // base case
-        if(root== NULL) return 0; 
 
-        unordered_map<TreeNode*,vector<TreeNode*>> adj;
+    int amountOfTime(TreeNode* root, int start) 
+    {
+        if(root== NULL) return 0;
+        unordered_map<TreeNode*,TreeNode*> parent;
 
         TreeNode* startNode= NULL;
-        TreeNode* parent= NULL;
-        createAdj(root,parent,adj,startNode,start);
+        findParent(root,parent,start,startNode);
 
-        int time= 0;
+        queue<TreeNode*> q;
         unordered_set<TreeNode*> visited;
 
-        queue<pair<TreeNode*,int>> q;
-        q.push({startNode,0});
+        q.push(startNode);
         visited.insert(startNode);
 
-        // now level wise traverse the nodes...
+        int level= 0;
         while(!q.empty())
         {
             int n= q.size();
-            time= max(time,q.front().second);
+            level++;
 
             while(n--)
             {
-                TreeNode* node= q.front().first;
-                int t= q.front().second;
+                TreeNode* node= q.front();
                 q.pop();
-                
-                for(auto it: adj[node])
+
+                if(node->left && !visited.count(node->left))
                 {
-                    if(!visited.count(it))
-                    {
-                        q.push({it,t+1});
-                        visited.insert(it);
-                    }
+                    visited.insert(node->left);
+                    q.push(node->left);
+                }
+
+                if(node->right && !visited.count(node->right))
+                {
+                    visited.insert(node->right);
+                    q.push(node->right);
+                }
+
+                if(parent.count(node) && !visited.count(parent[node]))
+                {
+                    visited.insert(parent[node]);
+                    q.push(parent[node]);
                 }
             }
         }
-    return time;
+        return level-1;
     }
 };
 
 */
-
-
 
 
 
@@ -167,76 +163,85 @@ class Solution{
 
 class Solution {
 public:
-    int amountOfTime(TreeNode* root, int start)
-    {
-        // base case
-        if(root== NULL){
-            return 0;
-        }
+   TreeNode* findParent(TreeNode* root, unordered_map<TreeNode*,TreeNode*> &parent, int start)
+   {
+        if(root== NULL) return NULL;
 
-        unordered_map<TreeNode*,TreeNode*> mp;
         queue<TreeNode*> q;
         q.push(root);
-        TreeNode* startNode= NULL;
 
-        // first store parent of each node, so that we can traverse in both directions..
+        TreeNode* startNode;
         while(!q.empty())
         {
-            TreeNode* curr= q.front();
+            TreeNode* node= q.front();
             q.pop();
 
-            if(curr->val== start)
+            if(node->val== start)
             {
-                startNode= curr;
+                startNode= node;
             }
 
-            if(curr->left){
-                mp[curr->left]= curr;
-                q.push(curr->left);
+            if(node->left)
+            {
+                parent[node->left]= node;
+                q.push(node->left);
             }
 
-            if(curr-> right){
-                mp[curr->right]= curr;
-                q.push(curr->right);
+            if(node->right)
+            {
+                parent[node->right]= node;
+                q.push(node->right);
             }
         }
+        return startNode;
+   }
 
-        queue<pair<TreeNode*,int>> Queue;
+    int amountOfTime(TreeNode* root, int start) 
+    {
+        if(root== NULL) return 0;
+        int ans= 0;
+        
+        unordered_map<TreeNode*,TreeNode*> parent;
+        TreeNode* startNode= findParent(root,parent,start);
+
+        queue<TreeNode*> q;
+        q.push(startNode);
+
         unordered_set<TreeNode*> visited;
-        Queue.push({startNode,0});
         visited.insert(startNode);
-
-        int time= 0;
-        while(!Queue.empty())
+        
+        int level= 0;
+        while(!q.empty())
         {
-            int n= Queue.size();
-            time= max(time,Queue.front().second);
-            while(n--)
-            {
-                TreeNode* node= Queue.front().first;
-                int t= Queue.front().second;
-                Queue.pop();
+           int n= q.size();
+           while(n--)
+           {
+              TreeNode* node= q.front();
+              q.pop();
+              
+              if(node->left && !visited.count(node->left))
+              {
+                 visited.insert(node->left);
+                 q.push(node->left);
+              }
 
-                if(node->left && !visited.count(node->left))
-                {
-                    visited.insert(node->left);
-                    Queue.push({node->left,t+1});
-                }
+              if(node->right && !visited.count(node->right))
+              {
+                visited.insert(node->right);
+                q.push(node->right);
+              }
 
-                if(node->right && !visited.count(node->right))
-                {
-                    visited.insert(node->right);
-                    Queue.push({node->right,t+1});
-                }
-
-                if(mp.count(node) && !visited.count(mp[node]))
-                {
-                    visited.insert(mp[node]);
-                    Queue.push({mp[node],t+1});
-                }
-            }
+              if(parent.count(node) && !visited.count(parent[node]))
+              {
+                visited.insert(parent[node]);
+                q.push(parent[node]);
+              }
+           }
+           level++;
         }
-     return time;   
+
+    // bcoz at the end, one extra level have been incremented
+    return level-1;
     }
 };
 
