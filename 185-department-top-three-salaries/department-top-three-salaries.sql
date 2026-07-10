@@ -1,23 +1,6 @@
-# Approach 1 -> window function (dense_rank)
+# Write your MySQL query statement below
 
-/*
-WITH CTE AS(
-    select d.name as Department, e.name as Employee, e.salary as Salary, 
-    dense_rank() over (partition by e.departmentId order by e.salary desc) as drank
-     FROM Employee e JOIN Department d on e.departmentId= d.id
-)
+with cte as (
+select d.name as Department, e.name as Employee, e.salary as Salary, dense_rank() OVER (PARTITION BY d.name ORDER BY e.salary DESC) as drank from Employee e INNER JOIN Department d ON e.departmentId= d.id )
 
-select Department, Employee, Salary from CTE where drank <= 3;
-*/
-
-
-# Approach 2 -> window function (dense_rank)
-
-select Department, Employee, Salary from (
-select d.name as Department, e.name as Employee, e.salary as Salary,
-dense_rank() over (partition by e.departmentId order by e.salary desc) as drank
-from Employee e join Department d on e.departmentId= d.id) t
-
-where t.drank <= 3;
-
-
+select Department, Employee, Salary from cte where drank <= 3
