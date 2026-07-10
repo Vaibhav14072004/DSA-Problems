@@ -1,20 +1,9 @@
-# approach 1 -> window function (dense rank)
+# Write your MySQL query statement below
 
-/*
-select Department, Employee, Salary from
-(select d.name as Department, e.name as Employee, e.salary as Salary, dense_rank() OVER (
-PARTITION BY d.name ORDER BY e.salary desc) AS drank
-from Employee e JOIN Department d on e.departmentId= d.id) t
-where t.drank= 1 
-*/
+with cte as (
+    select d.name as Department, e.name as Employee, e.salary as Salary,
+     dense_rank() over (partition by d.name order by e.salary desc) as drank
+    from Employee e JOIN Department d on e.departmentId= d.id
+)
 
-
-# approach 2 -> window func (dense rank)
-
-WITH CTE AS (
-    select d.name as Department, e.name as Employee, e.salary as Salary, dense_rank() 
-    OVER (PARTITION BY d.name ORDER BY e.salary desc) AS drank
-    FROM Employee e JOIN Department d on e.departmentId= d.id
-) 
-
-SELECT Department,Employee,Salary from CTE where drank= 1;
+select Department,Employee,Salary from cte where drank = 1
