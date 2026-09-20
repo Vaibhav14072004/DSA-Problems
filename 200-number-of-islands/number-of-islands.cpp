@@ -1,5 +1,51 @@
+// DFS Approach 2
+// TC= O(N*M)
+
+class Solution{
+    public:
+    void DFS(int i, int j,vector<vector<char>> &grid, vector<vector<bool>> &visited,int n,int m)
+    {
+        if(i< 0 || i>= n || j< 0 || j>= m || visited[i][j] || grid[i][j]== '0')
+        {
+            return;
+        }
+         
+        visited[i][j]= 1;
+        DFS(i-1,j,grid,visited,n,m);
+        DFS(i,j+1,grid,visited,n,m);
+        DFS(i+1,j,grid,visited,n,m);
+        DFS(i,j-1,grid,visited,n,m);
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+         int n= grid.size();
+         int m= grid[0].size();
+
+         vector<vector<bool>> visited(n,vector<bool> (m,false));
+        int ans= 0;
+
+         for(int i=0; i<n; i++)
+         {
+            for(int j=0; j<m; j++)
+            {
+                if(!visited[i][j] && grid[i][j]== '1')
+                {
+                    ans++;
+                    DFS(i,j,grid,visited,n,m);
+                }
+            }
+         }
+        return ans;      
+}
+};
+
+
+
+
 // DFS Approach 1
 // TC= O(N*M)
+
+/*
 
 class Solution{
 public:
@@ -42,6 +88,9 @@ public:
         return ans; 
        }
 };
+
+*/
+
 
 
 
