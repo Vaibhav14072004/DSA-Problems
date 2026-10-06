@@ -1,31 +1,18 @@
-// TC= O(N)
-
 class Solution {
 public:
     int minAddToMakeValid(string s) {
-        int n= s.length();
-        
-        int open= 0;
-        int unbalance= 0;
-        for(int i=0; i<n; i++)
-        {
-            if(s[i]== '(')
-            {
+        int open = 0, add = 0;
+        for (char c : s) {
+            if (c == '(') {
                 open++;
-            }
-            
-            // if open > 0, we have '(' then if we get closing bracket s[i]== ')', they get balance
-            else if(open > 0)
-            {
-               open--;
-            }
-
-            else
-            {
-                unbalance++;
+            } else {
+                if (open > 0) {
+                    open--;
+                } else {
+                    add++;
+                }
             }
         }
-
-        return unbalance+open;
+        return add + open;
     }
 };
